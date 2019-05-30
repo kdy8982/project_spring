@@ -1,0 +1,258 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<style>
+.uploadResult {
+	width: 100%;
+	background-color: gray;
+}
+
+.uploadResult ul {
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.uploadResult ul li {
+	list-style: none;
+	padding: 10px;
+}
+
+.uploadResult ul li img {
+	padding-right: 5px;
+	width: 100px;
+}
+
+.uploadResult ul li span {
+	color: white;
+}
+
+.bigPictureWrapper {
+	position: absolute;
+	display: none;
+	justify-content: center;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
+	z-index: 100;
+	background: rbga(255, 255, 255, 0.5);
+}
+
+.bigPicture {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bigPicture img {
+	width: 600px;
+}
+</style>
+
+
+<%@include file="../includes/header.jsp"%>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">게시물 등록</h1>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+		
+			<div class="panel-heading">새글 쓰기</div>
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				
+				<form role="form" action="/board/register" method="post">
+					<div class="form-group">
+						<label>제목</label>
+						<input class="form-control" name='title'>
+					</div>
+					
+					<div class="form-group">
+						<label>글 내용</label>
+						<textarea class="form-control" rows="3" name='content'></textarea>
+					</div>
+					
+					<div class="form-group">
+						<label>작성자</label>
+						<input class="form-control" name='writer'>
+					</div>
+					
+					<button type="submit" class="btn btn-default btn-outline-secondary">Submit</button>
+					<button type="reset" class="btn btn-default btn-outline-secondary">Reset Button</button>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+		
+			<!-- 파일 업로드 -->
+			<div class="panel-heading">File Attach</div>
+				<div class="panel-body">
+					<div class="form-group uploadDiv">
+						<input type="file" name="uploadFile" multiple>
+					</div>
+					<div class="uploadResult">
+						<ul>
+						</ul>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</div>
+
+
+<%@include file="../includes/footer.jsp"%>
+<!-- Bootstrap core JavaScript-->
+<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="js/demo/datatables-demo.js"></script>
+
+
+<script>
+	// 삭제 버튼
+	$(".uploadResult").on("click", "button", function(e) {
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+
+		var targetLi = $(this).closest("li");
+		
+		$.ajax({
+			url : '/deleteFile',
+			data : {fileName : targetFile, type : type},
+			dataType : 'text',
+			type : 'POST',
+			success : function(result) {
+				alert(result);
+				targetLi.remove();
+			}
+		});
+		
+	})
+
+	$(document).ready(function(e) {
+		var formObj = $("form[role='form']");
+		var cloneObj = $(".uploadDiv").clone();
+		
+		$("button[type='submit']").on("click", function(e) {
+			e.preventDefault(); // 기본 submit 동작을 막는다.
+		})
+		
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var maxSize = 5242880;
+		
+		function checkExtension(fileName, fileSize) { // 파일 확장자 및 사이즈 체크 메서드.
+			if(fileSize > maxSize) {
+				alert("파일 사이즈 초과 !!");
+				return false;
+			}
+		
+			if(regex.test(fileName)) {
+				alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+				return false;
+			}
+			return true;
+		} // checkExtension(fileName, fileSize)
+		
+		
+		$("input[type='file']").change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
+			var formData = new FormData();
+			var inputFile = $("input[name='uploadFile']");
+			var files = inputFile[0].files;
+			
+			for(var i=0; i<files.length; i++) {
+				if(!checkExtension(files[i].name, files[i].size)) {
+					return false;
+				} 
+				formData.append("uploadFile", files[i]);
+			}
+			
+			$.ajax({
+				url : "/uploadAjaxAction",
+				processData : false,
+				contentType : false,
+				data : formData,
+				type : "post",
+				dataType : "json",
+				success : function(result) {
+					$(".uploadDiv").html(cloneObj.html());
+					showUploadedFile(result);
+				}
+			}) // $.ajax()
+
+		}) // $("input[type='file']").change
+
+		
+		function showUploadedFile(uploadResultArr) {
+			
+			if(!uploadResultArr || uploadResultArr.length == 0) {return;}
+			
+			var uploadResult = $(".uploadResult ul");
+			var str = "";
+			
+			$(uploadResultArr).each(function(i, obj) {
+				if(obj.image) {
+
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"+ obj.uuid + "_" + obj.fileName);
+					var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
+					
+					originPath = originPath.replace(new RegExp(/\\/g), "/");
+					
+					str += "<li><div>";
+					str += "<span>" + obj.fileName +"</span>";
+					str += "<button type='button' class='btn btn-warning btn-circle' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
+					str += "<img src='/display?fileName="+ fileCallPath +"'>";
+					// str += "<a href=\"javascript:showImage('" + originPath + "')\"><img src='/display?fileName=" + fileCallPath + "'></a>"; 
+					// str += "<span data-file=\'" + fileCallPath + "\' data-type='image'> x </span>";
+					str += "</div></li>";
+				
+				} else {
+					
+					var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+					var fileLink = fileCallPath.replace(new RegExp(/\\/g), "/");
+					
+					str += "<li";
+					str += "data-path='" + obj.uploadPath + "' data-uuid= '" + obj.uuid + "' data-fileName"
+				}
+			});
+			alert(str);
+			uploadResult.append(str);
+		} // showUploadedFile(uploadResultArr)
+		
+	}) // $(document).ready
+
+</script>
+
+</body>
+
+</html>
