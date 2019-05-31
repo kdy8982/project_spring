@@ -121,22 +121,6 @@
 
 
 <%@include file="../includes/footer.jsp"%>
-<!-- Bootstrap core JavaScript-->
-<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="js/demo/datatables-demo.js"></script>
 
 
 <script>
@@ -166,7 +150,24 @@
 		
 		$("button[type='submit']").on("click", function(e) {
 			e.preventDefault(); // 기본 submit 동작을 막는다.
-		})
+			
+			console.log("submit clicked");
+			
+			var str = "";
+			
+			$(".uploadResult ul li").each(function(i, obj) {
+				var jobj = $(obj);
+				console.log(jobj);
+				
+				str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+				str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
+				
+			});
+			//alert(formObj.append(str));
+			formObj.append(str).submit();
+		});
 		
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 		var maxSize = 5242880;
@@ -228,7 +229,7 @@
 					
 					originPath = originPath.replace(new RegExp(/\\/g), "/");
 					
-					str += "<li><div>";
+					str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
 					str += "<span>" + obj.fileName +"</span>";
 					str += "<button type='button' class='btn btn-warning btn-circle' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
 					str += "<img src='/display?fileName="+ fileCallPath +"'>";
@@ -245,7 +246,7 @@
 					str += "data-path='" + obj.uploadPath + "' data-uuid= '" + obj.uuid + "' data-fileName"
 				}
 			});
-			alert(str);
+			// alert(str);
 			uploadResult.append(str);
 		} // showUploadedFile(uploadResultArr)
 		
