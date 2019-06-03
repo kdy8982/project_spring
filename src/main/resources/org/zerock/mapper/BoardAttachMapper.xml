@@ -11,8 +11,9 @@
 		delete from tbl_attach where uuid = #{uuid}
 	</delete>
 	
+	
 	<delete id="deleteAll">
-		delete from tbl_attach
+		delete from tbl_attach where bno = #{bno}
 	</delete>
 	
 	

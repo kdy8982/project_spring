@@ -25,7 +25,6 @@ public class BoardAttachMapperTests {
 	
 	@Before
 	public void setUp() {
-		mapper.deleteAll();
 		
 		BoardAttachVO vo = new BoardAttachVO();
 		vo.setUuid(UUID.randomUUID().toString());
@@ -51,7 +50,6 @@ public class BoardAttachMapperTests {
 	
 	@Test
 	public void testDeleteAll() {
-		mapper.deleteAll();
 		log.info("deleteAll");
 	}
 	
