@@ -107,10 +107,6 @@ public class BoardController {
 		return "redirect:/board/list" + cri.getListLink();
 	}
 
-	@RequestMapping("/gallery")
-	public String bomin() {
-		return "gallery";
-	}
 	
 	@GetMapping(value = "/getAttachList", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody // 화면에 바로 출력하는 것이 아닌, 헤더에 Json데이터로 넘긴다. , @RestController가 선언되어있는 클래스는 모든 메서드에 ResponseBody가 적용된다.
@@ -118,6 +114,7 @@ public class BoardController {
 		log.info("getAttachList : " + bno);
 		return new ResponseEntity<>(service.getAttachList(bno), HttpStatus.OK);
 	}
+	
 	
 	/*일반 파일 및 이미지, 썸네일의 '실제 파일 삭제' 메서드*/
 	private void deleteFiles(List<BoardAttachVO> attachList) {
