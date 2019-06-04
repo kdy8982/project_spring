@@ -65,10 +65,13 @@ public class BoardServiceImpl implements BoardService {
 		attachMapper.deleteAll(board.getBno());
 		
 		boolean modifyResult = mapper.update(board) == 1;
-		
+		log.info("modifyResult : " + modifyResult);
+		log.info(board);
 		if(modifyResult && board.getAttachList().size() > 0) {
 			board.getAttachList().forEach(attach -> {
 				attach.setBno(board.getBno());
+				log.info("attach : ");
+				log.info(attach);
 				attachMapper.insert(attach);
 			});
 		}
@@ -89,5 +92,12 @@ public class BoardServiceImpl implements BoardService {
 		
 		return attachMapper.findByBno(bno);
 	}
+
+	@Override
+	public List<BoardAttachVO> getPreviewImg() {
+		log.info("get Preview Img...");
+		return attachMapper.getPreviewImg();
+	}
+
 
 }

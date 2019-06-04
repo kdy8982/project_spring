@@ -33,7 +33,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/board/*")
+@RequestMapping(value = {"/board/*", "/gallery/*"} )
 @AllArgsConstructor
 public class BoardController {
 
@@ -44,13 +44,19 @@ public class BoardController {
 		log.info("list:" + cri);
 		model.addAttribute("list", service.getList(cri));
 		// model.addAttribute("pageMaker", new PageDTO(cri, 123));
+		// model.addAttribute("previewList", service.getPreviewImg());
 
 		int total = service.getTotal(cri);
 		log.info("total : " + total);
 
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-
+	
+	@RequestMapping(value = "/getPreviewImg", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<BoardAttachVO>> getPreviewImg() {
+		return new ResponseEntity<>(service.getPreviewImg(), HttpStatus.OK);
+	}
+	
 	@GetMapping("/register")
 	public void register() {
 	}
@@ -81,6 +87,7 @@ public class BoardController {
 	@RequestMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify : " + board);
+		
 		if (service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
 		}

@@ -10,6 +10,8 @@ public class BoardAttachVO {
 	private String fileName;
 	private boolean fileType;
 	
+	private boolean previewImg;
+	
 	private Long bno;
 	
 }

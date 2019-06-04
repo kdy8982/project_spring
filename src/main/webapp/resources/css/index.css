@@ -24,6 +24,11 @@
 	border-radius:20px;
 	overflow:hidden;
 }
+#container_index .cont1 ul li a>.preview{
+	height:198px;
+	overflow:hidden;
+}
+#container_index .cont1 ul li:nth-child(5){clear:both}
 #container_index .cont1 ul li a>div:nth-child(1){
 	background-color:#fde7e7;
 	transition: all .2s ease-in-out;
