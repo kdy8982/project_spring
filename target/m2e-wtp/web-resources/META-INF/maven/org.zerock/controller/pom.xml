@@ -214,7 +214,17 @@
 			<version>5.0.7.RELEASE</version>
 		</dependency>
 
-		<!-- 스프링 시큐리티 시작 끝-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>5.0.7.RELEASE</version>
+		</dependency>
+
+
+
+
+		<!-- 스프링 시큐리티 시작 끝 -->
 
 
 		<!-- added by book ; END -->
