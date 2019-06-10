@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <header id="header">
 	<div class="header_inner">
-		<h1><a href="/test/view/index.html"><img src="/resources/images/common/logo.png" alt="sanrio pangyo"></a></h1>
+		<h1><a href="/resources/index.html"><img src="/resources/images/common/logo.png" alt="sanrio pangyo"></a></h1>
 		<nav>
 			<ul>
 				<li><a href="#">COMPANY</a></li>

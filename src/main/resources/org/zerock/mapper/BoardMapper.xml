@@ -81,11 +81,10 @@
 	<update id="update">
 		update tbl_board
 		set title = #{title},
-		content =
-		#{content},
+		content = #{content},
 		writer = #{writer},
 		updateDate = sysdate
-		where bno =#{bno}
+		where bno = #{bno}
 	</update>
 	
 	<update id="updateReplyCnt">

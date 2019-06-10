@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -57,10 +58,12 @@ public class BoardController {
 		return new ResponseEntity<>(service.getPreviewImg(), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("isAuthenticated()") // 스프링 시큐리티 애노테이션. 인증된 사용자 인지.
 	@GetMapping("/register")
 	public void register() {
 	}
-
+	
+	@PreAuthorize("isAuthenticated()") // 스프링 시큐리티 애노테이션. 인증된 사용자 인지.
 	@PostMapping("/register")
 	public void register(BoardVO board, RedirectAttributes rttr) {
 		log.info("============================================================");
@@ -76,32 +79,36 @@ public class BoardController {
 		service.register(board);
 		//rttr.adedirect:/board/list"dFlashAttribute("result", board.getBno());
 	}
-
+	
 	@GetMapping({ "/get", "/modify" })
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
 
 		log.info("/get or modify");
 		model.addAttribute("board", service.get(bno)); // jsp view에서 사용할 객체를 보낸다.
 	}
-
+	
+	@PreAuthorize("principal.username == #board.writer")
 	@RequestMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify : " + board);
+		log.info(board.getBno());
 		
 		if (service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
 		}
-
+		/*
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("keyword", cri.getKeyword());
 		rttr.addAttribute("type", cri.getType());
-		return "redirect:/board/list";
+		*/
+		return "redirect:/board/list" + cri.getListLink();
 	}
 	
 	/* 게시글 삭제 */
+	@PreAuthorize("principal.username == #writer")
 	@RequestMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, String writer) {
 		log.info("remove : " + bno);
 		
 		List<BoardAttachVO> attachList = service.getAttachList(bno); // 첨부된 모든 파일의 정보를 구해온다. 
@@ -148,6 +155,7 @@ public class BoardController {
 			}
 		});
 	}
+	
 	
 	
 }

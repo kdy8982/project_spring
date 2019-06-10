@@ -57,7 +57,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	
-	@Transactional
+	@Transactional // 게시글을 지운 뒤, 첨부파일을 지운다. 만일 첨부파일을 지우다가 에러가 나면 롤백시킨다.
 	@Override
 	public boolean modify(BoardVO board) {
 		log.info("modify..........." + board);
@@ -66,15 +66,21 @@ public class BoardServiceImpl implements BoardService {
 		
 		boolean modifyResult = mapper.update(board) == 1;
 		log.info("modifyResult : " + modifyResult);
-		log.info(board);
-		if(modifyResult && board.getAttachList().size() > 0) {
-			board.getAttachList().forEach(attach -> {
-				attach.setBno(board.getBno());
-				log.info("attach : ");
-				log.info(attach);
-				attachMapper.insert(attach);
-			});
-		}
+		
+		if (board.getAttachList() != null) {
+
+			if(modifyResult && board.getAttachList().size() > 0) {
+				
+				log.info("여기 들어옴!!");
+				board.getAttachList().forEach(attach -> {
+					attach.setBno(board.getBno());
+					log.info("attach : ");
+					log.info(attach);
+					attachMapper.insert(attach);
+				});
+			}
+		
+		} 
 		
 		return modifyResult;
 	}

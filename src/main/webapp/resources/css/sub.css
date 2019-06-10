@@ -1,0 +1,245 @@
+#container_index{
+	padding-top:96px;
+	padding-bottom:430px;
+	background:url(/resources/images/index/bg_crt.png) no-repeat center bottom;
+	background-color:#8ed9f9;
+}
+#container_index .cont1{
+	width:1200px;
+	margin:0 auto;
+}
+#container_index .cont1 h2{
+	margin-bottom: 35px;
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+}
+#container_index .cont1 ul{
+	overflow:hidden;
+}
+#container_index .cont1 ul li{
+	float:left;
+	width:calc(25% - 22px);
+	margin:11px;
+	border-radius:20px;
+	overflow:hidden;
+	cursor:pointer;
+}
+#container_index .cont1 ul li a>div:nth-child(1){
+	background-color:#fde7e7;
+	transition: all .2s ease-in-out;
+	height:199px;
+	overflow-y:hidden;
+	position:relative;
+}
+#container_index .cont1 ul li .alert{
+	display:none;
+}
+#container_index .cont1 ul li.noupload i{
+	display: block;
+    font-size: 101px;
+    color: #333;
+	position:absolute;
+	transition:0.2s all ease-out;
+}
+#container_index .cont1 ul li.noupload a>div:nth-child(1):hover .alert{
+		top:-88px;
+}
+#container_index .cont1 ul li.noupload a>div:nth-child(1):hover .add{
+	bottom:40px;
+}
+#container_index .cont1 ul li.noupload .alert{
+	top:60px;
+	left:121px;
+}
+#container_index .cont1 ul li.noupload .add{
+	bottom:-96px;
+	left:101px;
+}
+#container_index .cont1 ul li.noupload img{
+	display:none;
+}
+#container_index .cont1 ul li:nth-child(1):hover  a>div:nth-child(1){background-color:#ffa09c;}
+#container_index .cont1 ul li:nth-child(2):hover  a>div:nth-child(1){background-color:#fdcb80;}
+#container_index .cont1 ul li:nth-child(3):hover  a>div:nth-child(1){background-color:#fcaec7;}
+#container_index .cont1 ul li:nth-child(4):hover  a>div:nth-child(1){background-color:#47d4ff;}
+#container_index .cont1 ul li:nth-child(5):hover  a>div:nth-child(1){background-color:#ddd658;}
+#container_index .cont1 ul li:nth-child(6):hover  a>div:nth-child(1){background-color:#c0cb4d;}
+#container_index .cont1 ul li:nth-child(7):hover  a>div:nth-child(1){background-color:#f6d726;}
+#container_index .cont1 ul li:nth-child(8):hover  a>div:nth-child(1){background-color:#febcd8;}
+#container_index .cont1 ul li:nth-child(9):hover  a>div:nth-child(1){background-color:#ffbab8;}
+#container_index .cont1 ul li:nth-child(10):hover  a>div:nth-child(1){background-color:#dab970;}
+#container_index .cont1 ul li:nth-child(11):hover  a>div:nth-child(1){background-color:#7ecd9d;}
+#container_index .cont1 ul li:nth-child(12):hover  a>div:nth-child(1){background-color:#c2c0c0;}
+#container_index .cont1 ul li:nth-child(13):hover  a>div:nth-child(1){background-color:#79d3f6;}
+#container_index .cont1 ul li:nth-child(14):hover  a>div:nth-child(1){background-color:#f0bd90;}
+#container_index .cont1 ul li:nth-child(15):hover  a>div:nth-child(1){background-color:#70c6fa;}
+#container_index .cont1 ul li:nth-child(16):hover  a>div:nth-child(1){background-color:#dab970;}
+
+#container_index .cont1 ul li a  img{
+	width:100%;
+}
+#container_index .cont1 ul li a>div:nth-child(2){
+	padding:15px 10px;
+	background-color:#fff;
+	text-align:center;
+	font-weight:300;
+}
+#container_index .cont1 ul li a>div:nth-child(2) h3{
+	color:#444;
+	font-size:23px;
+	margin-bottom:1px;
+	font-weight:600;
+}
+#container_index .cont1 ul li a>div:nth-child(2) p{
+	color:#ccc;
+	font-size:12px;
+	font-weight:600;
+}
+.gallery_pop_wrap{
+	position:fixed;
+	z-index:9999;
+	width:100%; height:100%;
+	top:0; left:0;
+	background:rgba(0,0,0,0.5);
+}
+#gallery_pop{
+	width:500px;
+	background:#fff;
+	border-radius:30px;
+	position:relative;
+	margin-top:150px;
+	margin-left:auto; margin-right:auto;
+}
+#gallery_pop .kitty_head{
+	position:absolute;
+	top:-79px;
+	left:-29px;
+}
+#gallery_pop .btn_close{
+	font-size:33px;
+	display:inline-block;
+	position:absolute;
+	top:13px;
+	right:26px;
+	cursor:pointer;
+}
+#gallery_pop .btn_close:hover{
+	opacity:0.7;
+}
+#gallery_pop{
+	padding:48px 30px 21px 30px;
+	background:#fde8e7;
+	font-size:14px;
+}
+#gallery_pop h2{
+	text-align:center;
+	font-size:30px;
+	margin-bottom:30px;
+}
+
+#gallery_upload #gallery_pop .name_area>div{
+	line-height:30px;
+	margin-bottom:6px;
+}
+#gallery_upload #gallery_pop .name_area input[type=text]{
+	width:calc(100% - 78px);
+	height:30px;
+	padding: 0 10px;
+	box-sizing:border-box;
+}
+#gallery_upload #gallery_pop label{
+	width:60px;
+	display:inline-block;
+	margin-right:5px;
+}
+#gallery_upload #gallery_pop .frontig_label{
+	width:auto;
+	margin:0;
+}
+#gallery_upload #gallery_pop  input[type=file]{
+	width:calc(100% - 182px);
+	display:none;
+}
+#gallery_upload #gallery_pop .filebox{
+	margin-left:-3px;
+	width:calc(100% - 182px);
+	display:inline-block;
+	padding: 3px;
+	background:#ffa09c;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+#gallery_upload #gallery_pop .filebox .text{
+	display:inline-block;
+	width:225px;
+	color:#fff;
+	 overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+}
+#gallery_upload #gallery_pop  .frontig_label{
+	margin-left:12px;
+}
+#gallery_upload #gallery_pop  .frontig_label input{
+	margin-left:5px;
+	height:30px;
+}
+#gallery_upload #gallery_pop .btn_add:hover{
+	text-decoration:underline;
+	opacity:0.8;
+}
+#gallery_upload #gallery_pop .btn_add{
+	cursor:pointer;
+	margin-top:10px;
+}
+#gallery_upload #gallery_pop .img_add>div{
+	margin-bottom:6px;
+}
+#gallery_upload #gallery_pop .btn_wrap{
+	margin-top:20px;
+	text-align:center;
+}
+
+#gallery_view #gallery_pop .chara_list li{
+	text-align:center;
+}
+#gallery_view #gallery_pop .chara_list li img{
+	margin-top:-25px;
+}
+#gallery_view #gallery_pop .chara_list li p{
+	font-weight:600;
+	font-size:15px;
+	position:relative;
+	top:-20px;
+	line-height:34px;
+}
+#gallery_view #gallery_pop .chara_list li p.name{
+	font-size:28px;
+}
+#gallery_view #gallery_pop .chara_list li p.name2{
+	color:#ccc;
+}
+#gallery_view #gallery_pop  .slider_wrap .bx-controls-auto{
+	display:none;
+}
+#gallery_view #gallery_pop  .slider_wrap .bx-controls-direction{
+	    position: absolute;
+		top: 50%;
+		margin-top:-41px;
+		left:0;
+		width:100%;
+}
+#gallery_view #gallery_pop  .slider_wrap .bx-controls-direction a{
+	font-size:61px;
+	position:absolute;
+}
+#gallery_view #gallery_pop  .slider_wrap .bx-controls-direction a:hover{
+	opacity:0.7;
+}
+#gallery_view #gallery_pop  .slider_wrap .bx-controls-direction a.bx-next{
+		right:40px;
+}
+#gallery_view #gallery_pop  .slider_wrap .bx-controls-direction a.bx-prev{
+		left:40px;
+}
