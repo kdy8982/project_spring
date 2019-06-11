@@ -19,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -70,8 +71,10 @@ public class UploadController {
 	}
 	
 	
-	/* 파일 업로드 ajax요청(디비와 상관없이, 정해진 경로에 */
-	@PostMapping("/uploadAjaxAction")
+	/* 파일 업로드 ajax요청(결과로 디비와 상관없이 정해진 로컬 경로에 파일을 생성한다) */
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value="/uploadAjaxAction", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 		log.info("update ajax post..........");
 		
@@ -204,6 +207,7 @@ public class UploadController {
 	}
 	
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/deleteFile")
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName, String type) {

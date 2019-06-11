@@ -125,8 +125,12 @@
 
 
 <script>
+
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
 	// 삭제 버튼
-	$(".uploadResult").on("click", "button", function(e) {
+	$(".uploadResult").on("click", "button", function(e) { // 첨부파일 1시방향에 있는 x버튼을 누를 때 이벤트.
 		var targetFile = $(this).data("file");
 		var type = $(this).data("type");
 
@@ -137,6 +141,9 @@
 			data : {
 				fileName : targetFile,
 				type : type
+			},
+			beforeSend : function (xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 			},
 			dataType : 'text',
 			type : 'POST',
@@ -218,7 +225,8 @@
 							}
 							return true;
 						} // checkExtension(fileName, fileSize)
-
+						
+						
 						$("input[type='file']")
 								.change(
 										function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
@@ -240,6 +248,9 @@
 												url : "/uploadAjaxAction",
 												processData : false,
 												contentType : false,
+												beforeSend: function(xhr) {
+													xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+												},
 												data : formData,
 												type : "post",
 												dataType : "json",
@@ -247,6 +258,9 @@
 													$(".uploadDiv").html(
 															cloneObj.html());
 													showUploadedFile(result);
+												},
+												error : function (request,status,error) {
+											        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 												}
 											}) // $.ajax()
 

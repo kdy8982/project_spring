@@ -273,6 +273,9 @@ $(document).ready(function() {
 		}
 		return true;
 	} // checkExtension(fileName, fileSize)
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 
 	$("input[type='file']")
 			.change(
@@ -283,25 +286,34 @@ $(document).ready(function() {
 						var cloneObj = $(".uploadDiv").clone();
 
 						for (var i = 0; i < files.length; i++) {
-							if (!checkExtension(
-									files[i].name,
-									files[i].size)) {
+							if (!checkExtension(files[i].name, files[i].size)) {
 								return false;
 							}
-							formData.append("uploadFile",
-									files[i]);
+							formData.append("uploadFile", files[i]);
 						}
 
 						$.ajax({
 							url : "/uploadAjaxAction",
 							processData : false,
 							contentType : false,
+							beforeSend : function(xhr) {
+								/* 
+								for (var value of formData.values()) {  // 브라우저 정책상, console.log(formData)로 확인이 안된다.
+  									console.log(value);
+								}
+								 */ 
+								xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+							},
 							data : formData,
 							type : "post",
 							dataType : "json",
 							success : function(result) {
+								console.log(result);
 								$(".uploadDiv").html(cloneObj.html());
 								showUploadedFile(result);
+							},
+							error : function (request,status,error) {
+						        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 							}
 						}) // $.ajax()
 
