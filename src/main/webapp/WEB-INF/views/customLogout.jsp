@@ -6,17 +6,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here1</title>
+<script src="/resources/vendor/jquery/jquery.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+		$("#logoutForm").submit();
+	})
+</script>
+
 </head>
 <body>
-	<h1>Custom Logout Page</h1>
-		
-	<form method="post" action="/customLogout">
-		
+	<form id="logoutForm" method="post" action="/customLogout">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		<button type="submit">로그아웃</button>
-		
 	</form>
-	
 </body>
 </html>

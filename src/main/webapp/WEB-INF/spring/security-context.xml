@@ -12,7 +12,7 @@
 	<!-- <bean id="customPasswordEncoder" class="org.zerock.security.CustomNoOpPasswordEncoder"></bean> -->
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<bean id="customUserDetailService" class="org.zerock.security.CustomUserDetailService"></bean>
-	
+	<bean id="customLogoutSuccess" class="org.zerock.security.CustomLogoutSuccessHandler"></bean>
 	
 	<security:http>
 		<security:intercept-url pattern="/sample/all" access="permitAll" />
@@ -29,7 +29,7 @@
 		<security:access-denied-handler ref="customAccessDenied" />
 		
 		<!-- 로그아웃 페이지 화면 설정 -->
-		<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me, JESESSIONID" />
+		<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me, JESESSIONID" success-handler-ref="customLogoutSuccess" />
 		
 		<!-- Spring Remember Me 설정 : DB테이블 생성 필요 -->
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>

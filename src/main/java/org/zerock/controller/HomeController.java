@@ -20,7 +20,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		log.info("Main page call!");
-		return "gallery";
+		return "/includes/home";
 	}
 	
 }

@@ -1,29 +1,41 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!Doctype html>
 <html>
 <head>
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>Study Homepage</title>
-
-<!-- Custom fonts for this template -->
-<link href="/resources/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="/resources/css/sb-admin-2.css" rel="stylesheet">
-
-<!-- Custom styles for this page -->
-<link href="/resources/vendor/datatables/dataTables.bootstrap4.min.css"
-	rel="stylesheet">
+	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<title>Study Homepage</title>
+	
+	<!-- Custom fonts for this template -->
+	<link href="/resources/vendor/fontawesome-free/css/all.min.css"
+		rel="stylesheet" type="text/css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
+	
+	<!-- Custom styles for this template -->
+	<link href="/resources/css/sb-admin-2.css" rel="stylesheet">
+	
+	<!-- Custom styles for this page -->
+	<link href="/resources/vendor/datatables/dataTables.bootstrap4.min.css"
+		rel="stylesheet">
+	
+	<script src="/resources/vendor/jquery/jquery.min.js"></script>
+	<script src="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			
+		}) 
+	</script>
 
 </head>
 
@@ -157,7 +169,7 @@
 									<div class="font-weight-bold">
 										<div class="text-truncate">Hi there! I am wondering if
 											you can help me with a problem I've been having.</div>
-										<div class="small text-gray-500">Emily Fowler � 58m</div>
+										<div class="small text-gray-500">Emily Fowler · 58m</div>
 									</div>
 								</a> <a class="dropdown-item d-flex align-items-center" href="#">
 									<div class="dropdown-list-image mr-3">
@@ -168,7 +180,7 @@
 									<div>
 										<div class="text-truncate">I have the photos that you
 											ordered last month, how would you like them sent to you?</div>
-										<div class="small text-gray-500">Jae Chun � 1d</div>
+										<div class="small text-gray-500">Jae Chun · 1d</div>
 									</div>
 								</a> <a class="dropdown-item d-flex align-items-center" href="#">
 									<div class="dropdown-list-image mr-3">
@@ -180,7 +192,7 @@
 										<div class="text-truncate">Last month's report looks
 											great, I am very happy with the progress so far, keep up the
 											good work!</div>
-										<div class="small text-gray-500">Morgan Alvarez � 2d</div>
+										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
 									</div>
 								</a> <a class="dropdown-item d-flex align-items-center" href="#">
 									<div class="dropdown-list-image mr-3">
@@ -192,7 +204,7 @@
 										<div class="text-truncate">Am I a good boy? The reason I
 											ask is because someone told me that people say this to all
 											dogs, even if they aren't good...</div>
-										<div class="small text-gray-500">Chicken the Dog � 2w</div>
+										<div class="small text-gray-500">Chicken the Dog · 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
 									href="#">Read More Messages</a>
@@ -201,37 +213,52 @@
 						<div class="topbar-divider d-none d-sm-block"></div>
 
 						<!-- Nav Item - User Information -->
-						<li class="nav-item dropdown no-arrow"><a
-							class="nav-link dropdown-toggle" href="#" id="userDropdown"
+						
+						<li class="nav-item dropdown no-arrow">
+						<a  class="nav-link dropdown-toggle" href="#" id="userDropdown"
 							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <span
-								class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie
-									Luna</span> <img class="img-profile rounded-circle"
-								src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+							aria-expanded="false"> 
+							<span class="mr-2 d-none d-lg-inline text-gray-600 small">
+								<sec:authorize access="isAuthenticated()">
+									<sec:authentication property="principal.member.userName"/>
+									<img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+								</sec:authorize>
+								
+								<sec:authorize access="isAnonymous()">
+									<span>로그인이 필요합니다<span> 
+								</sec:authorize>
+<!-- 							</span> -->
+
 						</a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 								aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="#"> <i
-									class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
-								</a> <a class="dropdown-item" href="#"> <i
-									class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+								
+								<sec:authorize access="isAuthenticated()">
+								
+								<a class="dropdown-item" href="#"> <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 
+									Profile
+								</a>
+								<a class="dropdown-item" href="#"> <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
 									Settings
-								</a> <a class="dropdown-item" href="#"> <i
-									class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+								</a> <a class="dropdown-item" href="#"> <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
 									Activity Log
 								</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#" data-toggle="modal"
-									data-target="#logoutModal"> <i
-									class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-									Logout
-								</a>
+									<a class="dropdown-item logout" href="/customLogout"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+										Logout
+									</a>
+								</sec:authorize> 
+								
+								<sec:authorize access="isAnonymous()">
+									<a class="dropdown-item" href="/customLogin"> <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+										Login
+									</a>
+								</sec:authorize>
+
 							</div></li>
 
 					</ul>
 
 				</nav>
 				<!-- End of Topbar -->
-				<script src="/resources/vendor/jquery/jquery.min.js"></script>
-				<script src="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

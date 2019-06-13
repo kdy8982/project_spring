@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.extern.log4j.Log4j;
 
@@ -35,16 +37,16 @@ public class CommonController {
 		}
 	}
 	
-	
-	@GetMapping("/customLogout")
+
+	@RequestMapping(value="/customLogout",method={RequestMethod.GET})
 	public void logout() {
 		log.info("custom logout page load.");
 	}
 	
-	
-	@PostMapping("/customLogout")
+	@RequestMapping(value="/customLogout",method={RequestMethod.POST})
 	public void logoutPost() {
 		log.info("post custom logout!!");
+		
 	}
 	
 }
