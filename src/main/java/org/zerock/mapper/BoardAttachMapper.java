@@ -16,4 +16,5 @@ public interface BoardAttachMapper {
 
 	public List<BoardAttachVO> getPreviewImg();
 	
+	public List<BoardAttachVO> getGalleryList();	
 }
