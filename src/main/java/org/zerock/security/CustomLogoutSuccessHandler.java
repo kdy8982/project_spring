@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+/**
+ * @author USER
+ * 로그아웃  후처리 핸들러 (자동으로 다시 /board/list로 리다이렉트 시킨다)
+ */
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
 	@Override
