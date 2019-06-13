@@ -389,9 +389,8 @@
 			var originalReplyer = modalInputReplyer.val();
 			var reply = {rno : modal.data("rno"), reply : modalInputReply.val(), replyer : originalReplyer};
 			
-			console.log("RNO : " + reply.rno);
+			console.log("RNO!! : " + reply.rno);
 			console.log("REPLYER : " + replyer);
-			
 			
 			if(!replyer) {
 				alert("로그인 후에 수정하실 수 있습니다.");
@@ -408,10 +407,12 @@
 			replyService.update(reply, function(result) {
 				alert(result);
 			})
+			
 			$("#replyModal").modal("hide");
 			
+			/* 
 			showList(1);
-			
+			 */
 		})
 		
 		modalRemoveBtn.on("click", function(e) {
