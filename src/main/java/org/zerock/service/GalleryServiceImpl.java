@@ -19,6 +19,7 @@ public class GalleryServiceImpl implements GalleryService{
 	
 	@Override
 	public List<BoardAttachVO> getList() {
+		
 		return boardAttachMapper.getGalleryList();
 	}
 

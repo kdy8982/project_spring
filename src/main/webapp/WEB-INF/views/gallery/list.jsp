@@ -1,4 +1,8 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="org.zerock.domain.*"%>
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>
 <script>
 	var view_pop = "false";
@@ -38,36 +42,65 @@
 </script>
 </head>
 <body>
+
 	<div id="wrap">
 		<jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 		<jsp:include page="../inc/gallery_upload.jsp" flush="true"></jsp:include>
 		<jsp:include page="../inc/gallery_view.jsp" flush="true"></jsp:include>
 		<div id="container_index">
+		
 			<section class="cont1">
 				<h2 class="title">GALLERY</h2>
+				
 				<ul class="character_col">
-					<li class="yesupload"><!-- 업로드 완료 리스트 -->
-						<a onclick="javascript:open_pop(this)">
-							<div><img src="/resources/images/index/main_crt1.png"></div>
-							<div>
-								<h3>헬로키티</h3>
-								<p>HELLO KITTY</p>
-							</div>
-						</a>
-					</li>
-					<li class="noupload"><!-- 업로드 전 리스트 -->
-						<a onclick="javascript:open_pop()">
-							<div>
-								<img src="/resources/images/index/main_crt1.png">
-								<i class="fa fa-exclamation alert" aria-hidden="true"></i>
-								<i class="fa fa-plus add" aria-hidden="true"></i>
-							</div>
-							<div>
-								<h3>헬로키티</h3>
-								<p>HELLO KITTY</p>
-							</div>
-						</a>
-					</li>
+					
+					<c:forEach items="${galleryList}" var="gallery" varStatus="galleryStatus">
+						<c:forEach items="${gallery.attachList}" var="attach" varStatus="attachStatus">
+							
+							<c:if test="${attach.previewImg ne false}"> <!-- 대표이미지가 설정된 경우 -->
+								<li class="yesupload"><!-- 업로드 완료 리스트 -->
+									<a onclick="javascript:open_pop(this)">
+										
+										<c:set target="${attach}" property="previewFilePath" value="${attach.uploadPath}/s_${attach.uuid}_${attach.fileName}" />
+										<%
+											BoardAttachVO vo = (BoardAttachVO)pageContext.getAttribute("attach");
+											pageContext.setAttribute("imgPath", URLEncoder.encode(vo.getPreviewFilePath()));
+										%>
+										<div>
+											<img src="/display?fileName=<c:url value='${imgPath}'/>"> -
+										</div>
+										
+										<div>
+											<h3><c:out value="${gallery.title}"/></h3>
+											<p><c:out value="${attach.previewImg}"/></p>
+											<p><c:out value="${gallery.writer}"/></p>
+										</div>
+									</a>
+								</li>
+							</c:if>
+							
+						
+							<c:if test="${attach.fileName eq null || attach.fileName eq ''}"> <!-- 대표이미지가 설정되어 있지 않은 경우 -->
+								<li class="noupload"><!-- 업로드 전 리스트 -->
+									<a onclick="javascript:open_pop()">
+							
+										<div>
+											<img src="/resources/images/index/main_crt1.png">
+											<i class="fa fa-exclamation alert" aria-hidden="true"></i>
+											<i class="fa fa-plus add" aria-hidden="true"></i>
+										</div>
+										
+										<div>
+											<h3><c:out value="${gallery.title}"/></h3>
+											<p><c:out value="${gallery.writer}"/></p>
+										</div>
+									</a>
+								</li>
+							</c:if>
+							
+						</c:forEach>
+					</c:forEach>
+					
 				</ul>
 			</section>
 		</div>

@@ -17,11 +17,9 @@ public class GalleryController {
 	@Autowired
 	GalleryService galleryService;
 	
-	
-	
 	@GetMapping("list")
 	public void list(Model model) {
-		model.addAttribute("gallery", galleryService.getList());
+		model.addAttribute("galleryList", galleryService.getList());
 		log.info("/gallery/list call...");
 	}
 
