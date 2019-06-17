@@ -72,9 +72,19 @@
 		
 		
 		function addFileInfoToTag(resultArr) {
+			
+			$(".img_add .area_img ").each(function(i, obj) {
+				$(this).attr("data-filename", resultArr[i].fileName);
+				console.log(resultArr)
+				
+			})
+			
+			/* 
 			$(resultArr).each(function(i, obj) {
 				console.log(i);
 			})
+			 */
+			
 		}
 		
 		
