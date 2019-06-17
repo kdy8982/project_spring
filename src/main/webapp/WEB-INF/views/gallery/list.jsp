@@ -53,34 +53,33 @@
 				<h2 class="title">GALLERY</h2>
 				
 				<ul class="character_col">
-					
+								
 					<c:forEach items="${galleryList}" var="gallery" varStatus="galleryStatus">
 						<c:forEach items="${gallery.attachList}" var="attach" varStatus="attachStatus">
-							
-							<c:if test="${attach.previewImg ne false}"> <!-- 대표이미지가 설정된 경우 -->
+								
+							<c:if test="${attach.previewImg eq 1}"> <!-- 대표이미지가 설정된 경우 -->
 								<li class="yesupload"><!-- 업로드 완료 리스트 -->
 									<a onclick="javascript:open_pop(this)">
-										
-										<c:set target="${attach}" property="previewFilePath" value="${attach.uploadPath}/s_${attach.uuid}_${attach.fileName}" />
+							
+										<c:set target="${attach}" property="wholeFilePath" value="${attach.uploadPath}/s_${attach.uuid}_${attach.fileName}" />
 										<%
-											BoardAttachVO vo = (BoardAttachVO)pageContext.getAttribute("attach");
-											pageContext.setAttribute("imgPath", URLEncoder.encode(vo.getPreviewFilePath()));
+											GalleryAttachVO vo = (GalleryAttachVO)pageContext.getAttribute("attach");
+											pageContext.setAttribute("imgPath", URLEncoder.encode(vo.getWholeFilePath()));
 										%>
 										<div>
-											<img src="/display?fileName=<c:url value='${imgPath}'/>"> -
+											<img src="/display?fileName=<c:url value='${imgPath}'/>">
 										</div>
 										
 										<div>
-											<h3><c:out value="${gallery.title}"/></h3>
-											<p><c:out value="${attach.previewImg}"/></p>
-											<p><c:out value="${gallery.writer}"/></p>
+											<h3><c:out value="${gallery.koreaName}"/></h3>
+											<p><c:out value="${gallery.engName}"/></p>
+											
 										</div>
 									</a>
 								</li>
 							</c:if>
 							
-						
-							<c:if test="${attach.fileName eq null || attach.fileName eq ''}"> <!-- 대표이미지가 설정되어 있지 않은 경우 -->
+							<c:if test="${attach.previewImg eq 0}"> <!-- 대표이미지가 설정되어 있지 않은 경우 -->
 								<li class="noupload"><!-- 업로드 전 리스트 -->
 									<a onclick="javascript:open_pop()">
 							
@@ -91,16 +90,15 @@
 										</div>
 										
 										<div>
-											<h3><c:out value="${gallery.title}"/></h3>
-											<p><c:out value="${gallery.writer}"/></p>
+											<h3><c:out value="${gallery.koreaName}"/></h3>
+											<p><c:out value="${gallery.engName}"/></p>
 										</div>
-									</a>
+									</a>	
 								</li>
 							</c:if>
 							
 						</c:forEach>
-					</c:forEach>
-					
+					</c:forEach> 
 				</ul>
 			</section>
 		</div>

@@ -92,7 +92,7 @@
 					<button type="reset" class="btn btn-default btn-outline-secondary">Reset
 						Button</button>
 						
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>
 
 			</div>
@@ -154,7 +154,8 @@ var csrfTokenValue = "${_csrf.token}";
 		});
 
 	})
-
+	
+	// 글 등록 버튼
 	$(document)
 			.ready(
 					function(e) {

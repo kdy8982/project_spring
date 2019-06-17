@@ -2,8 +2,9 @@ package org.zerock.service;
 
 import java.util.List;
 
-import org.zerock.domain.BoardAttachVO;
+import org.zerock.domain.GalleryAttachVO;
+import org.zerock.domain.GalleryVO;
 
 public interface GalleryService {
-	public List<BoardAttachVO> getList();
+	public List<GalleryVO> getList();
 }
