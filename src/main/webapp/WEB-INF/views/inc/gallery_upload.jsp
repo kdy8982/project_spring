@@ -23,7 +23,6 @@
 
 		/* 파일을 첨부할 때 마다, 호출되는 이벤트 (로컬경로에 파일 저장)*/
 		$(".img_add").change(function(e) {
-			alert("!!!!")	
 			var formData = new FormData();
  			var inputFile = $("input[name='uploadFile']");
 			var files = inputFile[0].files;
@@ -44,6 +43,7 @@
 				dataType : 'json',
 				type : 'post',
 				success : function (result) {
+					alert("성공!")
 					addFileInfoToTag(result)
 				},
 				error : function (request, status, error){
@@ -52,6 +52,7 @@
 			})
 		})
 		
+		/* submit 버튼 클릭 ; 서버로 전송 */
 		var formObj = $("form[role='form']");
 		var csrfHeaderName = "${_csrf.headerName}";
 		var csrfTokenValue = "${_csrf.token}";
@@ -60,33 +61,28 @@
 			
 			var str = "";
 			
+			// form 에 hidden type으로 붙여넣는다.
 			$(".img_add .area_img ").each(function(i, obj) {
 				console.log($(obj));
 				var jobj = $(obj);
-				str += "<input type='hidden' name='attachList[" + i + "].fileName' value='" + jobj.data("fileName") + "'>";
+				str += "<input type='hidden' name='attachList[" + i + "].fileName' value='" + jobj.data("filename") + "'>";
+				str += "<input type='hidden' name='attachList[" + i + "].uuid' value='" + jobj.data("uuid") + "'>";
+				str += "<input type='hidden' name='attachList[" + i + "].fileType' value='" + jobj.data("type") + "'>";
+				str += "<input type='hidden' name='attachList[" + i + "].uploadPath' value='" + jobj.data("path") + "'>";
 			})
-			
-			formObj.append(str)
+			formObj.append(str).submit();
 		}) 
 		
 		
 		
 		function addFileInfoToTag(resultArr) {
-			
 			$(".img_add .area_img ").each(function(i, obj) {
 				$(this).attr("data-filename", resultArr[i].fileName);
-				console.log(resultArr)
-				
+				$(this).attr("data-path", resultArr[i].uploadPath);
+				$(this).attr("data-uuid", resultArr[i].uuid);
+				$(this).attr("data-type", resultArr[i].image)
 			})
-			
-			/* 
-			$(resultArr).each(function(i, obj) {
-				console.log(i);
-			})
-			 */
-			
 		}
-		
 		
 	})
 </script>
@@ -98,9 +94,10 @@
 		
 			<form role="form" action="/gallery/register" method="post">
 				<div class="name_area">
-					<div class="name_han"><label>한글이름</label><input type="text" placeholder="한글이름을 넣어주세요"></div>
-					<div class="name_eng"><label>영문이름</label><input type="text" placeholder="영문이름을 넣어주세요."></div>
+					<div class="name_han"><label>한글이름</label><input type="text" name="koreaName" placeholder="한글이름을 넣어주세요"></div>
+					<div class="name_eng"><label>영문이름</label><input type="text" name="engName" placeholder="영문이름을 넣어주세요."></div>
 				</div>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			</form>
 			
 			<div class="img_add">

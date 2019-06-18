@@ -156,28 +156,17 @@ var csrfTokenValue = "${_csrf.token}";
 	})
 	
 	// 글 등록 버튼
-	$(document)
-			.ready(
-					function(e) {
+	$(document).ready(function(e) {
 						var formObj = $("form[role='form']");
 						var cloneObj = $(".uploadDiv").clone();
 
-						$("button[type='submit']")
-								.on(
-										"click",
-										function(e) {
+						$("button[type='submit']").on("click", function(e) {
 											e.preventDefault(); // 기본 submit 동작을 막는다.
-
 											console.log("submit clicked");
-
 											var str = "";
-
-											$(".uploadResult ul li")
-													.each(
-															function(i, obj) {
+											$(".uploadResult ul li").each(function(i, obj) {
 																var jobj = $(obj);
-																console
-																		.log(jobj);
+																console.log(jobj);
 
 																str += "<input type='hidden' name='attachList["
 																		+ i

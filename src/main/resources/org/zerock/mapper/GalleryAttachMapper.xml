@@ -18,12 +18,24 @@
 		<result property="fileName" column="filename"/>
 		<result property="fileType" column="filetype"/>
 		<result property="previewImg" column="previewimg"/>
-		<result property="bno" column="bno"/>
+		<result property="gno" column="gno"/>
 	</resultMap>
 	
-
 	<select id="getGalleryList" resultMap="galleryMap">
 		select gallery.gno, koreaname, engname, regdate, updatedate, uuid, uploadpath, filename, previewimg 
-		from tbl_gallery gallery left outer join tbl_attach attach on gallery.gno = attach.bno
+		from tbl_gallery gallery left outer join tbl_attach attach on gallery.gno = attach.no
 	</select>
+	
+	
+	<insert id="insert">
+	
+		<selectKey keyProperty="gno" order="BEFORE" resultType="long">
+			select seq_attach.nextval from dual
+		</selectKey>
+	
+		insert into tbl_attach(uuid, uploadpath, filename, filetype, no, previewimg)
+		values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{gno}, 1)
+	</insert>
+	
+	
 </mapper>

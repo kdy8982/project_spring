@@ -12,6 +12,8 @@ public class GalleryAttachVO {
 	
 	private Long bno;
 	
+	private Long gno;
+		
 	private String wholeFilePath;
 	
 }

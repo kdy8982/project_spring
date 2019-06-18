@@ -23,7 +23,7 @@
 		<result property="bno" column="bno"/>
 	</resultMap>
 	<insert id="insert">
-		insert into tbl_attach(uuid, uploadpath, filename, filetype, bno, previewimg)
+		insert into tbl_attach(uuid, uploadpath, filename, filetype, no, previewimg)
 		values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno}, #{previewImg})
 	</insert>
 	
@@ -32,17 +32,17 @@
 	</delete>
 	
 	<delete id="deleteAll">
-		delete from tbl_attach where bno = #{bno}
+		delete from tbl_attach where no = #{bno}
 	</delete>
 	
 	<select id="findByBno" resultType="org.zerock.domain.BoardAttachVO">
 		select *
 		from tbl_attach
-		where bno = #{bno}		
+		where no = #{bno}		
 	</select>
 
 	<select id="getGalleryList" resultMap="boardMap">
 		select board.bno, writer, title, uploadpath, uuid, filename, previewimg
-		from tbl_board board left outer join tbl_attach attach on board.bno = attach.bno
+		from tbl_board board left outer join tbl_attach attach on board.bno = attach.no
 	</select>
 </mapper>
