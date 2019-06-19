@@ -31,14 +31,14 @@ public class BoardAttachMapperTests {
 		vo.setUploadPath("justTestPath1");
 		vo.setFileName("justTestFileName1");
 		vo.setFileType(true);
-		vo.setBno(1L);
+		vo.setAno(1L);
 		
 		BoardAttachVO vo2 = new BoardAttachVO();
 		vo2.setUuid(UUID.randomUUID().toString());
 		vo2.setUploadPath("justTestPath2");
 		vo2.setFileName("justTestFileName2");
 		vo2.setFileType(true);
-		vo2.setBno(2L);
+		vo2.setAno(2L);
 		mapper.insert(vo2);
 	}
 	

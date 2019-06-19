@@ -23,7 +23,7 @@
 	</sql>
 	<select id="getList" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
-			select * from tbl_board where no > 0
+			select * from tbl_board where bno > 0
 		]]>
 	</select>
 
@@ -31,11 +31,11 @@
 		resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
 			select 
-				no, title, content, writer, regdate, updatedate, replyCnt
+				bno, title, content, writer, regdate, updatedate, replyCnt
 			from 
 			(
 			select /*+INDEX_DESC(tbl_board pk_board) */
-				rownum rn, no, title, content, writer, regdate, updatedate, replyCnt
+				rownum rn, bno, title, content, writer, regdate, updatedate, replyCnt
 			from 
 				tbl_board
 			where
@@ -50,32 +50,32 @@
 
 	<select id="getTotalCount" resultType="int">
 		select count(*) from
-		tbl_board where no > 0
+		tbl_board where bno > 0
 	</select>
 
 	<insert id="insert">
-		insert into tbl_board (no, title, content, writer)
+		insert into tbl_board (bno, title, content, writer)
 		values (seq_board.nextval, #{title}, #{content}, #{writer})
 	</insert>
 
 	<insert id="insertSelectKey">
-		<selectKey keyProperty="no" order="BEFORE"
+		<selectKey keyProperty="bno" order="BEFORE"
 			resultType="long">
 			select seq_board.nextval from dual
 		</selectKey>
 
-		insert into tbl_board (no, title, content, writer)
+		insert into tbl_board (bno, title, content, writer)
 		values (#{bno},
 		#{title}, #{content}, #{writer})
 	</insert>
 
 	<select id="read" resultType="org.zerock.domain.BoardVO">
-		select * from tbl_board where no =
+		select * from tbl_board where bno =
 		#{bno}
 	</select>
 
 	<delete id="delete">
-		delete tbl_board where no = #{bno}
+		delete tbl_board where bno = #{bno}
 	</delete>
 				
 	<update id="update">
@@ -84,11 +84,11 @@
 		content = #{content},
 		writer = #{writer},
 		updateDate = sysdate
-		where no = #{bno}
+		where bno = #{bno}
 	</update>
 	
 	<update id="updateReplyCnt">
-		update tbl_board set replycnt = replycnt + #{amount} where no = #{bno}
+		update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
 	
 	</update>
 </mapper>

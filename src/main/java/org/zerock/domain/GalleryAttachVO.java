@@ -10,9 +10,7 @@ public class GalleryAttachVO {
 	private String uuid;
 	private String previewImg;
 	
-	private Long bno;
-	
-	private Long gno;
+	private Long gano;
 		
 	private String wholeFilePath;
 	

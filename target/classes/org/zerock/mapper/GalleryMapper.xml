@@ -3,11 +3,6 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.GalleryMapper">
 
-	<insert id="insert">
-		insert into tbl_board (bno, title, content, writer)
-		values (seq_board.nextval, #{title}, #{content}, #{writer})
-	</insert>
-
 	<insert id="insertSelectKey">
 		<selectKey keyProperty="gno" order="BEFORE"
 			resultType="long">

@@ -5,16 +5,15 @@
 
 <jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>
 <script>
-	var view_pop = "false";
+	var isRequiredBxSlider = "true";
 
 	function open_pop(id){
-
 			var type = $(id).parent().parent().find("li").attr("class");
 
 			if( type=="yesupload"){
 				$("#gallery_view").fadeIn("fast",function(){
 
-					if( view_pop == "false"){		
+					if( isRequiredBxSlider == "true"){		
 							$('.chara_list').bxSlider({
 								auto: true, 
 								speed: 500, 
@@ -32,13 +31,24 @@
 							$(".bx-controls-direction .bx-prev").append("<i class='fa fa-chevron-left' aria-hidden='true'></i>");
 							$(".bx-controls-direction .bx-next").append("<i class='fa fa-chevron-right' aria-hidden='true'></i>");
 						}
-
-						view_pop = 'true';
+					isRequiredBxSlider = 'false';
 				});	
-			}else{
+			} else {
 				$("#gallery_upload").fadeIn("fast");
 			}	
 	}
+	
+	/* 페이지 상단 Write 버튼 클릭 */
+	function clickUploadBtn() {
+		$("#gallery_upload").fadeIn("fast");
+	}
+	
+	$(".yesupload").on("click", function() {
+		
+		
+	})
+	
+	
 </script>
 </head>
 <body>
@@ -51,7 +61,9 @@
 		
 			<section class="cont1">
 				<h2 class="title">GALLERY</h2>
-				
+				<div class="btn_wrap">
+					<button onclick="clickUploadBtn()" class="write_btn btn_normal2">Write</button>
+				</div>
 				<ul class="character_col">
 								
 					<c:forEach items="${galleryList}" var="gallery" varStatus="galleryStatus">
@@ -99,6 +111,10 @@
 							
 						</c:forEach>
 					</c:forEach> 
+					
+					<form id="actionForm" action="/board/list" method="get">
+												
+					</form>
 				</ul>
 			</section>
 		</div>

@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		board.getAttachList().forEach(attach -> {
-			attach.setBno(board.getBno());
+			attach.setAno(board.getBno());
 			attachMapper.insert(attach);
 		});
 	}
@@ -73,7 +73,7 @@ public class BoardServiceImpl implements BoardService {
 				
 				log.info("여기 들어옴!!");
 				board.getAttachList().forEach(attach -> {
-					attach.setBno(board.getBno());
+					attach.setAno(board.getBno());
 					log.info("attach : ");
 					log.info(attach);
 					attachMapper.insert(attach);

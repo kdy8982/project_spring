@@ -12,7 +12,7 @@ public class BoardAttachVO {
 	
 	private boolean previewImg;
 
-	private Long bno;
+	private Long ano;
 	
 	
 	private String previewFilePath;

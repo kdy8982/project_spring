@@ -8,6 +8,13 @@
 	width:1200px;
 	margin:0 auto;
 }
+#container_index .btn_wrap{
+	text-align:right;
+}
+#container_index .cont1 .write_btn{
+	margin-bottom:5px;
+}
+
 #container_index .cont1 h2{
 	margin-bottom: 35px;
     font-size: 50px;
