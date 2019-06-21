@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 
 <script>
-	self.location="/board/list"
+	self.location="/index"
 </script>
 
 </head>
