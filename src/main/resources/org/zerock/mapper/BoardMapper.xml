@@ -89,6 +89,13 @@
 	
 	<update id="updateReplyCnt">
 		update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
-	
 	</update>
+	
+	<select id="getNoticeList" resultType="org.zerock.domain.BoardVO">
+		select * from 
+		tbl_board
+		where type = 'notice'
+		order by bno
+	</select>
+	
 </mapper>

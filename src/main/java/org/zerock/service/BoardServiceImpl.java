@@ -105,5 +105,11 @@ public class BoardServiceImpl implements BoardService {
 		return attachMapper.getPreviewImg();
 	}
 
+	@Override
+	public List<BoardVO> getNoticeList() {
+		log.info("get Notice List...");
+		return mapper.getNoticeList();
+	}
+
 
 }

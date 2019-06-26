@@ -72,6 +72,18 @@
 	width:4%;
 	text-align:right;
 }
+
+#header .header_inner .login_area{
+    width: 100px;
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 6px;
+}
+
+#header .header_inner .login_area .login_icon{
+	margin-right: 5px;
+}
+
 #footer .inner{
     padding:40px;
     background-color: #222222
@@ -95,9 +107,9 @@
 	display:table-cell;
 	width:60px;
 	height:60px;
-	background-color:#4a679e;
+	background-color:#DBB557;
 	color:#fff;
-	border-radius:10px;
+	border-radius:50px;
 	cursor:pointer;
 	vertical-align:middle;
 	font-size:14px;
@@ -106,4 +118,16 @@
 #btn_top span:before{
 	display:block;
 	content:url(/resources/images/common/top_arr.png);
+}
+
+.container {
+	margin : 0 auto;
+	width : 1200px;
+}
+
+.main_tit {
+	margin-bottom: 15px;
+    font-size: 2.9rem;
+    text-align: center;
+    text-transform: uppercase;
 }

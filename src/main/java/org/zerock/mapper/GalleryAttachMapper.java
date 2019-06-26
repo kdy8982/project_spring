@@ -7,5 +7,6 @@ import org.zerock.domain.GalleryVO;
 
 public interface GalleryAttachMapper {
 	public List<GalleryVO> getGalleryList();
+	public List<GalleryVO> getHomeGalleryList();
 	public void insert(GalleryAttachVO vo);
 }

@@ -27,6 +27,11 @@ public class GalleryServiceImpl implements GalleryService{
 	public List<GalleryVO> getList() {
 		return galleryAttachMapper.getGalleryList();
 	}
+	
+	@Override
+	public List<GalleryVO> getHomeList() {
+		return galleryAttachMapper.getHomeGalleryList();
+	}
 
 
 	@Override
@@ -45,7 +50,7 @@ public class GalleryServiceImpl implements GalleryService{
 			galleryAttachMapper.insert(attach); 
 		});
 		
-		
 	}
+
 
 }

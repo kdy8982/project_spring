@@ -17,4 +17,6 @@ public interface BoardService {
 	public List<BoardAttachVO> getAttachList(Long bno);
 	public List<BoardAttachVO> getPreviewImg();
 	
+	public List<BoardVO> getNoticeList();
+	
 }

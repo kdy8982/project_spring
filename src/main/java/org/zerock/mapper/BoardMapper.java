@@ -27,5 +27,7 @@ public interface BoardMapper {
 	
 	// myBatis에 파라미터를 두개 이상 넘기기 위해 , 애노테이션을 등록함.  
 	public void updateReplyCnt(@Param("bno")Long bno, @Param("amount")int cnt);
+
+	public List<BoardVO> getNoticeList();
 	
 }

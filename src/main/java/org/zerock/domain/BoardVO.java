@@ -15,6 +15,8 @@ public class BoardVO {
 	private Date regdate;
 	private Date updatedate;
 	
+	private String type;
+	
 	private int replyCnt;
 	
 	private List<BoardAttachVO> attachList;

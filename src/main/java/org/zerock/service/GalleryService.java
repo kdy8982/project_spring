@@ -8,6 +8,8 @@ import org.zerock.domain.GalleryVO;
 public interface GalleryService {
 	public List<GalleryVO> getList();
 	
+	public List<GalleryVO> getHomeList();
+	
 	public void register(GalleryVO gallery);
 	
 }

@@ -2,9 +2,8 @@
 <footer id="footer">
 	<div class="inner">
 		<div class="copy_box">
-			<p class="pc1">㈜산리오코리아 대표 : 유코츠지, 사업자등록번호 : 214-86-24755, Tel : 02-543-3810</p>
-			<p class="pc2">ADD : 서울시 강남구 테헤란로 509, 4층 (삼성동, 엔씨타워1), E-MAIL :  webmaster@sanriokorea.co.kr</p>
-			<p class="pc3">Copyright© All Rights Reserved</p>
+			<p class="pc1">더사랑교회 담임목사 : 이요섭, 사업자등록번호 : #, Tel : #</p>
+			<p class="pc2">주소 : 경기도 이천시 신둔면 장동리 443, E-MAIL : #</p>
 		</div>
 	</div>
 </footer>

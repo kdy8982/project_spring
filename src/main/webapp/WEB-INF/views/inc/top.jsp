@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <header id="header">
 	<div class="header_inner">
-		<h1><a href="/resources/index.html"><img src="/resources/images/common/logo.png" alt="sanrio pangyo"></a></h1>
+		<h1><a href="/	"><img src="#" alt="the Love Comunity"></a></h1>
 		<nav>
 			<ul>
-				<li><a href="#">COMPANY</a></li>
-				<li><a href="#">CHARACTER</a></li>
-				<li><a href="#">SHOP</a></li>
-				<li><a href="#">RECRUIT</a></li>
+				<li><a href="#">교회</a></li>
+				<li><a href="#">이미지게시판</a></li>
+				<li><a href="#">자유게시판</a></li>
+				<li><a href="#">오시는 길</a></li>
 			</ul>
 		</nav>
-		<span class="f_icon"><img src="/resources/images/common/i_fb_pc.png" alt="페이스북바로가기"></span>
+		<span class="login_area" alt="로그인">로그인</span>
 	</div>
 </header>
 

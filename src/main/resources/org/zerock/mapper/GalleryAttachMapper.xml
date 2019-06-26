@@ -21,6 +21,20 @@
 		<result property="gano" column="ano"/>
 	</resultMap>
 	
+	
+	<select id="getHomeGalleryList" resultMap="galleryMap">
+	
+		select * from 
+			(
+					select gallery.gno, koreaname, engname, regdate, updatedate, uuid, uploadpath, filename, previewimg 
+					from tbl_gallery gallery left outer join tbl_attach attach on gallery.gno = attach.ano
+			        order by regdate desc
+			)
+		<![CDATA[
+		where rownum <= 8
+		]]>
+	</select>
+	
 	<select id="getGalleryList" resultMap="galleryMap">
 		select gallery.gno, koreaname, engname, regdate, updatedate, uuid, uploadpath, filename, previewimg 
 		from tbl_gallery gallery left outer join tbl_attach attach on gallery.gno = attach.ano

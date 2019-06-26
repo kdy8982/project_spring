@@ -250,3 +250,10 @@
 #gallery_view #gallery_pop  .slider_wrap .bx-controls-direction a.bx-prev{
 		left:40px;
 }
+
+
+
+/* 공지 페이지 (/notice/list) */
+.container .title {
+	margin-top: 50px;
+}
