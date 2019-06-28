@@ -112,8 +112,8 @@
 
 
 .main_row2 .swipe_wrap li .notice_box{
-	padding: 30px 25px 30px 25px;
-    height: 161px;
+    padding: 40px 25px 30px 25px;
+    height: 140px;
     background-color: #FFFFFF;
     border-radius: 13px;
 }
@@ -136,6 +136,7 @@
     color: #808080;
     letter-spacing: -1px;
     line-height: 1.2;
+    text-align: right;
 }
 
 

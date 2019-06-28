@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.zerock.domain.Criteria;
 import org.zerock.service.BoardService;
 
 import lombok.extern.log4j.Log4j;
@@ -17,8 +18,8 @@ public class NoticeController {
 	BoardService boardService;
 
 	@RequestMapping("/list")
-	public void list(Model model) {
+	public void list(Criteria cri, Model model) {
 		log.info("Notice controller list call..");
-		model.addAttribute("noticeList", boardService.getNoticeList());
+		model.addAttribute("noticeList", boardService.getNoticeList(cri));
 	}
 }

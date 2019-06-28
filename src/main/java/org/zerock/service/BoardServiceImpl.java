@@ -106,9 +106,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> getNoticeList() {
+	public List<BoardVO> getNoticeList(Criteria cri) {
 		log.info("get Notice List...");
-		return mapper.getNoticeList();
+		return mapper.getNoticeList(cri);
 	}
 
 

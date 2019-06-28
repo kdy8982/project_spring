@@ -91,11 +91,25 @@
 		update tbl_board set replycnt = replycnt + #{amount} where bno = #{bno}
 	</update>
 	
-	<select id="getNoticeList" resultType="org.zerock.domain.BoardVO">
-		select * from 
-		tbl_board
-		where type = 'notice'
-		order by bno
+	<select id="getNoticeList" resultType="org.zerock.domain.BoardVO">		
+		<![CDATA[
+			select 
+				bno, title, content, writer, regdate, updatedate, replyCnt, type
+			from 
+			(
+			select /*+INDEX_DESC(tbl_board pk_board) */
+				BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE, REPLYCNT, TYPE
+			from 
+				tbl_board
+			where type = 'notice'
+			and
+		]]>
+		<include refid="criteria"></include>
+		<![CDATA[
+			rownum <= #{pageNum} * #{amount}	
+			)
+		where rownum > (#{pageNum}-1) * #{amount}
+		]]>
 	</select>
 	
 </mapper>

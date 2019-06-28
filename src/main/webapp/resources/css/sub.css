@@ -257,3 +257,40 @@
 .container .title {
 	margin-top: 50px;
 }
+
+.container .list_wrap.notice_wrap{
+	margin-top : 50px;
+}
+
+.notice_table {
+	
+	width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 10px;
+}
+
+.notice_table th {
+	width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.notice_table td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+}
+
+.notice_table .even {
+	background: #efefef;
+}
+
+
+
+
+

@@ -34,7 +34,7 @@ public class HomeController {
 		log.info("Main page call!");
 		
 		model.addAttribute("galleryList", galleryService.getHomeList());
-		model.addAttribute("noticeList", boardService.getNoticeList());
+		model.addAttribute("noticeList", boardService.getNoticeList(cri));
 		return "/index";
 	}
 	

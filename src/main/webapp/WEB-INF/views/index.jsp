@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.zerock.domain.*"%>
 <jsp:include page="inc/headTop.jsp" flush="true"></jsp:include>
@@ -146,11 +147,11 @@
 										<div class="notice_box">
 											<a>
 												<p class="main_notice"><c:out value="${notice.title}"></c:out></p>
-												<p class="sub_notice"><c:out value="${notice.content}"></c:out></p>
+												<p class="sub_notice"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></p>
 											</a>
 										</div>
 									</li>
-								</c:forEach>
+								</c:forEach> 
 							</ul>
 						</div>
 					</div>
