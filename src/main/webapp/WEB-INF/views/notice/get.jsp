@@ -64,7 +64,7 @@ $(document).ready(function() {
 													
 							<c:if test="${status.count % 2 == 0}">
 								<tr>
-									<td><a href="#"><c:out value="${notice.title}"></c:out></a></td>
+									<td><a href="#"><c:out value="${notice.title}"></a></c:out></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
 								</tr>
 							</c:if>

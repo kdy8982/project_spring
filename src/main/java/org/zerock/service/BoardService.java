@@ -18,5 +18,6 @@ public interface BoardService {
 	public List<BoardAttachVO> getPreviewImg();
 	
 	public List<BoardVO> getNoticeList(Criteria cri);
+	public int getTotalNotice(Criteria cri);
 	
 }

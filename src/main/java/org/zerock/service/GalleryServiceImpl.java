@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zerock.domain.Criteria;
 import org.zerock.domain.GalleryAttachVO;
 import org.zerock.domain.GalleryVO;
 import org.zerock.mapper.GalleryAttachMapper;
@@ -29,8 +30,8 @@ public class GalleryServiceImpl implements GalleryService{
 	}
 	
 	@Override
-	public List<GalleryVO> getHomeList() {
-		return galleryAttachMapper.getHomeGalleryList();
+	public List<GalleryVO> getHomeList(Criteria cri) {
+		return galleryAttachMapper.getHomeGalleryList(cri);
 	}
 
 

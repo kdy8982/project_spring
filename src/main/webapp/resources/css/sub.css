@@ -253,13 +253,20 @@
 
 
 
-/* 공지 페이지 (/notice/list) */
+/* 怨듭� �럹�씠吏� (/notice/list) */
 .container .title {
 	margin-top: 50px;
 }
 
+.container .sub_title{
+	opacity:0.4;
+    margin-top: 30px;
+    text-align: right;
+}
+
+
 .container .list_wrap.notice_wrap{
-	margin-top : 50px;
+	margin-top : 25px;
 }
 
 .notice_table {
@@ -290,6 +297,27 @@
 	background: #efefef;
 }
 
+.bottom_wrap {
+	padding-left: 30px;
+	width : 100%;
+	margin-bottom : 70px;
+}
+
+.bottom_wrap .search_box {
+	float : left;
+	width : 75%;
+}
+
+.page_box ul li {
+	display : inline-block;
+	font-size : 15px;
+	margin-right : 10px;
+}
+
+.page_box ul li.active {
+    text-decoration: underline;
+    font-weight: 700;
+}
 
 
 

@@ -30,11 +30,12 @@ public class HomeController {
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Criteria cri, Model model) {
+	public String home(Model model) {
 		log.info("Main page call!");
 		
-		model.addAttribute("galleryList", galleryService.getHomeList());
-		model.addAttribute("noticeList", boardService.getNoticeList(cri));
+		model.addAttribute("galleryList", galleryService.getHomeList(new Criteria(1,8)));
+		
+		model.addAttribute("noticeList", boardService.getNoticeList(new Criteria(1, 6)));
 		return "/index";
 	}
 	

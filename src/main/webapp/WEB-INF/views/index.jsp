@@ -82,6 +82,77 @@
 		
 				<section class="main_row1" id="section01">
 					<div class="container">
+						<h2 class="main_tit">NOTICE</h2>
+						<a class="view_btn" href="/notice/list">view more</a>
+						<div class="notice_wrap">
+							<ul class="swipe_wrap">
+								<c:forEach items="${noticeList}" var="notice">
+									<li>
+										<div class="notice_box">
+											<a>
+												<p class="main_notice"><c:out value="${notice.title}"></c:out></p>
+												<p class="sub_notice"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></p>
+											</a>
+										</div>
+									</li>
+								</c:forEach> 
+							</ul>
+						</div>
+					</div>
+				</section>
+				
+				
+				<section class="main_row2 even_row" id="section02">
+					<div class="container">
+						<h2 class="main_tit">Book</h2>
+						<a class="view_btn" href="#">view more</a>
+						<ul class="book_li">
+							<li>
+								<a>
+									<div class="thumb">
+										<img src="/resources/images/index/bookcoversample.png">
+									</div>
+									
+									<div class="desc">
+										<h3><span class="book_title">책제목</span></h3>
+										<p class="book_author">저자</p>
+									</div>
+								</a>
+							</li>
+							
+							<li>
+								<a>
+									<div class="thumb">
+										<img src="/resources/images/index/bookcoversample.png">
+									</div>
+									
+									<div class="desc">
+										<h3><span class="book_title">책제목</span></h3>
+										<p class="book_author">저자</p>
+									</div>
+								</a>
+							</li>
+							
+							<li>
+								<a>
+									<div class="thumb">
+										<img src="/resources/images/index/bookcoversample.png">
+									</div>
+									
+									<div class="desc">
+										<h3><span class="book_title">책제목</span></h3>
+										<p class="book_author">저자</p>
+									</div>
+								</a>
+							</li>						
+						</ul>
+	
+					</div>
+				</section>
+				
+				
+				<section class="main_row3" id="section03">
+					<div class="container">
 						<h2 class="main_tit">Photo</h2>
 						<a class="view_btn" href="#">view more</a>
 						<ul class="gallery_li">
@@ -135,31 +206,11 @@
 						</ul>
 					</div>
 				</section>
-		
-				<section class="main_row2" id="section02">
+
+
+				<section class="main_row4 even_row" id="section04">
 					<div class="container">
-						<h2 class="main_tit">NOTICE</h2>
-						<a class="view_btn" href="/notice/list">view more</a>
-						<div class="notice_wrap">
-							<ul class="swipe_wrap">
-								<c:forEach items="${noticeList}" var="notice">
-									<li>
-										<div class="notice_box">
-											<a>
-												<p class="main_notice"><c:out value="${notice.title}"></c:out></p>
-												<p class="sub_notice"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></p>
-											</a>
-										</div>
-									</li>
-								</c:forEach> 
-							</ul>
-						</div>
-					</div>
-				</section>
-		
-				<section class="main_row3" id="section03">
-					<div class="container">
-						<h2 class="main_tit">About Us</h2>
+						<h2 class="main_tit">ABOUT US</h2>
 						<ul>
 							<li>
 								<div class="icon">
@@ -186,6 +237,7 @@
 	
 					</div>
 				</section>
+
 			</div>
 		</div>
 		<jsp:include page="./inc/footer.jsp" flush="true"></jsp:include>

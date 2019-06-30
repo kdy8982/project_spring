@@ -105,10 +105,22 @@ public class BoardServiceImpl implements BoardService {
 		return attachMapper.getPreviewImg();
 	}
 
+	
 	@Override
 	public List<BoardVO> getNoticeList(Criteria cri) {
 		log.info("get Notice List...");
+		log.info(cri.getPageNum());
+		log.info(cri.getAmount());
 		return mapper.getNoticeList(cri);
+	}
+	
+	@Override
+	public int getTotalNotice(Criteria cri) {
+		log.info("get Notice Total...");
+		log.info(cri.getPageNum());
+		log.info(cri.getAmount());
+		
+		return mapper.getTotalNoticeCount(cri);
 	}
 
 
