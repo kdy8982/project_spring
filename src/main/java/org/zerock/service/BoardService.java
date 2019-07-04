@@ -19,5 +19,6 @@ public interface BoardService {
 	
 	public List<BoardVO> getNoticeList(Criteria cri);
 	public int getTotalNotice(Criteria cri);
+	public BoardVO getNotice(Long bno);
 	
 }

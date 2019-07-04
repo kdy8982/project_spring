@@ -123,5 +123,10 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getTotalNoticeCount(cri);
 	}
 
+	@Override
+	public BoardVO getNotice(Long bno) {
+		return mapper.getNotice(bno);
+	}
+
 
 }

@@ -41,6 +41,10 @@
     animation: ani-mouse 2.5s linear infinite;
 }
 
+.main_visual_wrap {
+	background-color: #EFEFEF;
+}
+
 .main_visual {
 	height : 100vh;
 	position : relative;

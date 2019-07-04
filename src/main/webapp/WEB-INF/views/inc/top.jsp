@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <header id="header">
 	<div class="header_inner">
-		<h1><a href="/	"><img src="#" alt="the Love Comunity"></a></h1>
+		<h1><a href="/"><img alt="the Love Comunity"></a></h1>
 		<nav>
 			<ul>
 				<li><a href="#">The Love Comunity</a></li>

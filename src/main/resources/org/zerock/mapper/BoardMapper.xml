@@ -64,9 +64,9 @@
 			select seq_board.nextval from dual
 		</selectKey>
 
-		insert into tbl_board (bno, title, content, writer)
+		insert into tbl_board (bno, title, content, writer, type)
 		values (#{bno},
-		#{title}, #{content}, #{writer})
+		#{title}, #{content}, #{writer}, #{type})
 	</insert>
 
 	<select id="read" resultType="org.zerock.domain.BoardVO">
@@ -119,6 +119,13 @@
 		from tbl_board 
 		where bno > 0 
 		and type='notice'
+	</select>
+	
+	<select id="getNotice" resultType="org.zerock.domain.BoardVO">
+		select *
+		from tbl_board
+		where type='notice'
+		and bno = #{bno}
 	</select>
 	
 </mapper>

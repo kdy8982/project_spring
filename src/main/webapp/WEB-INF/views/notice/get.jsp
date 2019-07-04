@@ -17,7 +17,53 @@ $(document).ready(function() {
 		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 		actionForm.submit();
 	})
+	
+	var openForm = $("#openForm");
+	$("button[data-oper='list']").on("click", function(e) {
+		e.preventDefault();
+		openForm.find("#bno").remove();
+		openForm.attr("action", "/notice/list");
+		openForm.submit();
+	})
+	
+	$("button[data-oper='modify']").on("click",function(e) {
+		e.preventDefault();
+		openForm.attr("action", "/notice/modify").submit();
+	})
+	
+	
+	/* 첨부파일 조회 AJAX */
+	
+	var bno = '<c:out value="${notice.bno}"/>';
+	$.getJSON("/board/getAttachList" , {bno : bno}, function (arr) {
+		console.log(arr);
+		
+		var str="";
+		
+		$(arr).each(function(i, attach) {
+			//image type (썸네일)
+			if(attach.fileType) {
+				var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+ "_" + attach.fileName);
+				
+				str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
+				str += "<div>";
+				str += "<img src='/display?fileName="+ fileCallPath +"'>";
+				str += "</div>"
+				str += "</li>";
+			} else {
+				str += "<li data-path ='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type ='"+ attach.fileType + "'>";
+				str += "<div>"
+				str += "<img src='/resources/img/attach.png'>"
+				str += "</div>"
+				str += "</li>"
+			}
+		});
+		
+		$(".uploadResult ul").html(str);
+	})
 })
+
+
 </script>
 
 <title>Insert title here</title>
@@ -26,7 +72,7 @@ $(document).ready(function() {
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
 	
-	<div class="container">
+	<div class="container page_container">
 		<div class="title">
 			<h2 class="wrap-inner main_tit">NOTICE</h2>
 		</div>
@@ -41,67 +87,45 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="content">
-			<div class="list_wrap notice_wrap">
-				<table class ="notice_table">
-					<colgroup>
-						<col width="60%">
-						<col width="40%">
-					</colgroup>
-					<thead>
-						<tr>
-							<th class="title">소식</th>
-							<th>작성일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${noticeList}" var="notice" varStatus="status" >
-							<c:if test="${status.count % 2 == 1}">
-								<tr>
-									<td class="even"><a href="#"><c:out value="${notice.title}"></c:out></a></td>
-									<td class="even"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
-								</tr>
-							</c:if>
-													
-							<c:if test="${status.count % 2 == 0}">
-								<tr>
-									<td><a href="#"><c:out value="${notice.title}"></a></c:out></td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
-								</tr>
-							</c:if>
-
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="bottom_wrap">
-			<div class="search_box">
-			검색박스
-			</div>
-			<div class="page_box">
-				<ul>
-					<c:if test="${pageMaker.prev}">
-						<li class="page-item">
-							<a class="page-link" href="${pageMaker.startPage -1}" aria-label="Previous">
-					        	<span aria-hidden="true">&laquo;</span>
-								<span class="sr-only">Previous</span>
-							</a>
-						</li>
-					</c:if>
+			<div class="list_wrap notice_get_wrap">
+				<div id="table">
 				
-					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-						<li class="page-item ${pageMaker.cri.pageNum == num ? "active":""} "><a class="page_num" href="${num}">${num}</a></li>
-					</c:forEach>
+					<div class="row notice_title">
+						${notice.title }
+					</div>
 					
-					<c:if test="${pageMaker.next}">
-						<li class="page-item next">
-							<a class="page-link" href="${pageMaker.endPage + 1}" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-	   							<span class="sr-only">Next</span>
-							</a>
-						</li>
-					</c:if>
-				</ul>
+					<div class="row notice_date">
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}"/>
+					</div>
+					
+					<div class="row notice_content_box">
+						<div class="notice_content">
+							${notice.content }
+						</div>
+						
+					<div class="uploadResult">
+						<ul>
+						</ul>
+					</div>
+					</div>
+					
+					<div class="row bottom_wrap">
+						<div class="notice_btn">
+							<button data-oper="list">목록</button>
+							<button data-oper="modify">수정</button>
+							<button onclick="location.href='/notice/delete?bno=' + ${notice.bno}">삭제</button>
+						</div>
+					</div>
+					
+				<form id="openForm" action="/board/modify" method="get">
+					<input type="hidden" id="bno" name="bno" value='<c:out value="${notice.bno}"/>' /> 
+					<input type="hidden" id="pageNum" name="pageNum" value='<c:out value="${cri.pageNum}"/>'> 
+					<input type="hidden" id="amount" name="amount" value='<c:out value="${cri.amount}"/>'> 
+					<input type="hidden" id="keyword" name="keyword" value='<c:out value="${cri.keyword}"/>'> 
+					<input type="hidden" id="type" name="type" value='<c:out value="${cri.type}"/>' />
+				</form>
+					
+				</div>
 			</div>
 		</div>
 	</div>

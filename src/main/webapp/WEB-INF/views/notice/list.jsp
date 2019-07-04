@@ -17,6 +17,17 @@ $(document).ready(function() {
 		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 		actionForm.submit();
 	})
+	
+	
+	var actionForm = $("#actionForm");
+	$(".move").on("click", function(e) {
+		e.preventDefault();
+		console.log($(this).attr('href'));
+		actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr('href') +"'>");
+		actionForm.attr("action", "/notice/get");
+		actionForm.submit();
+		
+	})
 })
 </script>
 
@@ -26,7 +37,7 @@ $(document).ready(function() {
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
 	
-	<div class="container">
+	<div class="container page_container">
 		<div class="title">
 			<h2 class="wrap-inner main_tit">NOTICE</h2>
 		</div>
@@ -57,14 +68,14 @@ $(document).ready(function() {
 						<c:forEach items="${noticeList}" var="notice" varStatus="status" >
 							<c:if test="${status.count % 2 == 1}">
 								<tr>
-									<td class="even"><a href="#"><c:out value="${notice.title}"></c:out></a></td>
+									<td class="even"><a class="move" href='<c:out value="${notice.bno}" />'><c:out value="${notice.title}"></c:out></a></td>
 									<td class="even"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
 								</tr>
 							</c:if>
 													
 							<c:if test="${status.count % 2 == 0}">
 								<tr>
-									<td><a href="#"><c:out value="${notice.title}"></c:out></a></td>
+									<td><a class="move" href='<c:out value="${notice.bno}" />'><c:out value="${notice.title}"></c:out></a></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
 								</tr>
 							</c:if>
@@ -75,9 +86,6 @@ $(document).ready(function() {
 			</div>
 		</div>
 		<div class="bottom_wrap">
-			<div class="search_box">
-			검색박스
-			</div>
 			<div class="page_box">
 				<ul>
 					<c:if test="${pageMaker.prev}">
@@ -102,6 +110,9 @@ $(document).ready(function() {
 						</li>
 					</c:if>
 				</ul>
+			</div>
+			<div class="notice_btn">
+				<button onclick="location.href='/notice/register'">새 공지 쓰기</button>
 			</div>
 		</div>
 	</div>
