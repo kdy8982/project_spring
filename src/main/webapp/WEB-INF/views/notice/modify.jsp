@@ -28,8 +28,8 @@ $(document).ready(function() {
 			str += "<input type='hidden' name='attachList[" + i + "].uuid' value='"+jobj.data("uuid")+"'>";
 			str += "<input type='hidden' name='attachList["+ i +"].uploadPath' value='"+jobj.data("path")+"'>";
 			str += "<input type='hidden' name='attachList[" + i + "].fileType' value='"+jobj.data("type")+"'>";
-		})
-		formObj.append(str);
+		});
+		formObj.append(str).submit();
 		formObj.submit();
 	})
 	
@@ -161,6 +161,34 @@ $(document).ready(function() {
 	} // showUploadedFile(uploadResultArr)
 
 	
+	
+	var bno = '<c:out value="${notice.bno}"/>';
+	$.getJSON("/board/getAttachList", {bno : bno}, function(arr) {
+		console.log(arr);
+		
+		var str="";
+		
+		$(arr).each(function(i, attach) {
+			//image type (썸네일)
+			if(attach.fileType) {
+				var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+ "_" + attach.fileName);
+				
+				str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
+				str += "<div>";
+				str += "<img src='/display?fileName="+ fileCallPath +"'>";
+				str += "</div>"
+				str += "</li>";
+			} else {
+				str += "<li data-path ='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type ='"+ attach.fileType + "'>";
+				str += "<div>"
+				str += "<img src='/resources/img/attach.png'>"
+				str += "</div>"
+				str += "</li>"
+			}
+		});
+		
+		$(".uploadResult ul").html(str);
+	})
 	
 	
 })

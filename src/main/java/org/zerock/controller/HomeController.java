@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.PageDTO;
 import org.zerock.service.BoardService;
 import org.zerock.service.GalleryService;
 
@@ -30,12 +31,16 @@ public class HomeController {
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Criteria cri, Model model) {
 		log.info("Main page call!");
 		
 		model.addAttribute("galleryList", galleryService.getHomeList(new Criteria(1,8)));
-		
 		model.addAttribute("noticeList", boardService.getNoticeList(new Criteria(1, 6)));
+		
+		int total = boardService.getTotalNotice(cri);
+		model.addAttribute("pageMaker", new PageDTO(cri,total));
+		
+		log.info(cri.getPageNum());
 		return "/index";
 	}
 	

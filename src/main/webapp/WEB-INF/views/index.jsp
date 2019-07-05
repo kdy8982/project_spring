@@ -47,8 +47,19 @@
 					autoHover: true,   // 마우스 호버시 정지 여부
 					controls: true,    // 이전 다음 버튼 노출 여부
 					responsive: false,
-					touchEnabled: true
+					touchEnabled : (navigator.maxTouchPoints > 0)
 				});
+				 
+				var actionForm = $("#actionForm");
+				$(".move").on("click", function(e) {
+					e.preventDefault();
+					console.log($(this).attr('href'));
+					actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr('href') +"'>");
+					actionForm.attr("action", "/notice/get");
+					actionForm.submit();
+					
+				})
+				 
 			})
 			
 		</script>
@@ -83,13 +94,13 @@
 				<section class="main_row1" id="section01">
 					<div class="container">
 						<h2 class="main_tit">NOTICE</h2>
-						<a class="view_btn" href="/notice/list">view more</a>
+						<a href="/notice/list">view more</a>
 						<div class="notice_wrap">
 							<ul class="swipe_wrap">
 								<c:forEach items="${noticeList}" var="notice">
 									<li>
 										<div class="notice_box">
-											<a>
+											<a class="move" href='<c:out value="${notice.bno}"/>'>
 												<p class="main_notice"><c:out value="${notice.title}"></c:out></p>
 												<p class="sub_notice"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></p>
 											</a>
@@ -99,6 +110,13 @@
 							</ul>
 						</div>
 					</div>
+					
+					<form id="actionForm" action="/notice/list" method="get">
+						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+						<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+						<input type="hidden" name="type" value="${pageMaker.cri.type }">
+						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+					</form>
 				</section>
 				
 				

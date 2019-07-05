@@ -62,10 +62,15 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/modify") 
-	public void modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify post call..!!");
 		
-		log.info(board);
+		if (boardService.modify(board)) {
+			rttr.addFlashAttribute("result", "success");
+		};
+		
+		return "redirect:/notice/list" + cri.getListLink();
+		
 	}
 	
 }
