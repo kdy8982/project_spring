@@ -3,6 +3,7 @@ package org.zerock.mapper;
 import java.util.List;
 
 import org.zerock.domain.BoardAttachVO;
+import org.zerock.domain.Criteria;
 
 public interface BoardAttachMapper {
 	
@@ -16,5 +17,5 @@ public interface BoardAttachMapper {
 
 	public List<BoardAttachVO> getPreviewImg();
 	
-	public List<BoardAttachVO> getGalleryList();	
+	public List<BoardAttachVO> getGalleryList(Criteria cri);	
 }

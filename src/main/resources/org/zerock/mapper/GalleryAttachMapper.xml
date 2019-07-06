@@ -23,7 +23,6 @@
 	
 	
 	<select id="getHomeGalleryList" resultMap="galleryMap">
-	
 		select * from 
 			(
 					select gallery.gno, koreaname, engname, regdate, updatedate, uuid, uploadpath, filename, previewimg 

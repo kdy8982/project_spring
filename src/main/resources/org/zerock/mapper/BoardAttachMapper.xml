@@ -9,6 +9,7 @@
 		<result property="writer" column="writer"/>
 		<result property="regdate" column="regdate"/>
 		<result property="updatedate" column="updatedate"/>
+		<result property="boardType" column="type"/>
 		<result property="replyCnt" column="replycnt"/>
 		
 		<collection property="attachList" resultMap="boardAttachMap" />
@@ -43,7 +44,14 @@
 	</select>
 
 	<select id="getGalleryList" resultMap="boardMap">
-		select board.bno, writer, title, uploadpath, uuid, filename, previewimg
-		from tbl_board board left outer join tbl_attach attach on board.bno = attach.ano
+		select * from 
+			(
+					select board.bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg 
+					from tbl_board board left outer join tbl_attach attach on board.bno = attach.ano 
+			        order by regdate desc
+			)
+		<![CDATA[
+		where rownum <= #{amount} and type = #{boardType}
+		]]>
 	</select>
 </mapper>

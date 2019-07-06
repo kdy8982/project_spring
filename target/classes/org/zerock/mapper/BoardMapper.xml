@@ -40,6 +40,10 @@
 				tbl_board
 			where
 		]]>
+			<if test="boardType!=null">
+			type=#{boardType}
+			and
+			</if>
 		<include refid="criteria"></include>
 		<![CDATA[
 			rownum <= #{pageNum} * #{amount}	
@@ -103,7 +107,7 @@
 				rownum rn, BNO, TITLE, CONTENT, WRITER, REGDATE, UPDATEDATE, REPLYCNT, TYPE
 			from 
 				tbl_board
-			where type = 'notice'
+			where type = #{boardType}
 			and
 		]]>
 		<include refid="criteria"></include>

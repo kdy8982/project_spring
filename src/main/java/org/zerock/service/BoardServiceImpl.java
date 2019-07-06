@@ -39,9 +39,15 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public List<BoardVO> getList(Criteria cri) {
-		log.info("getList......");
-		return mapper.getListWithPaging(cri);
+	public Object getList(Criteria cri) {
+		if(cri.getBoardType() == "notice" || cri.getBoardType() == null) {
+			log.info("getList.. - notice or all");
+			return mapper.getListWithPaging(cri);
+		} else if (cri.getBoardType() == "photo") {
+			return attachMapper.getGalleryList(cri);
+		}
+		return null;
+		
 	}
 
 	@Override

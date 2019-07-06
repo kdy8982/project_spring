@@ -34,8 +34,8 @@ public class HomeController {
 	public String home(Criteria cri, Model model) {
 		log.info("Main page call!");
 		
-		model.addAttribute("galleryList", galleryService.getHomeList(new Criteria(1,8)));
-		model.addAttribute("noticeList", boardService.getNoticeList(new Criteria(1, 6)));
+		model.addAttribute("galleryList", boardService.getList(new Criteria(1, 8, "photo")));
+		model.addAttribute("noticeList", boardService.getList(new Criteria(1, 6, "notice")));
 		
 		int total = boardService.getTotalNotice(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri,total));

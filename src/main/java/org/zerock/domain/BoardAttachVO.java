@@ -17,5 +17,5 @@ public class BoardAttachVO {
 	
 	private String previewFilePath;
 	
-	
+	private String wholeFilePath;
 }
