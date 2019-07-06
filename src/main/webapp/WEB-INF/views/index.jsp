@@ -93,8 +93,10 @@
 		
 				<section class="main_row1" id="section01">
 					<div class="container">
-						<h2 class="main_tit">NOTICE</h2>
-						<a href="/notice/list">view more</a>
+						<div class="title_wrap">
+								<h2 class="main_tit">NOTICE</h2>
+						</div>
+
 						<div class="notice_wrap">
 							<ul class="swipe_wrap">
 								<c:forEach items="${noticeList}" var="notice">
@@ -109,8 +111,10 @@
 								</c:forEach> 
 							</ul>
 						</div>
+						<div class="viewmore_wrap">
+							<a class="viewmore_btn" href="/notice/list">view more</a>
+						</div>
 					</div>
-					
 					<form id="actionForm" action="/notice/list" method="get">
 						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 						<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
@@ -122,8 +126,9 @@
 				
 				<section class="main_row2 even_row" id="section02">
 					<div class="container">
-						<h2 class="main_tit">Book</h2>
-						<a class="view_btn" href="#">view more</a>
+						<div class="title_wrap">
+							<h2 class="main_tit">Book</h2>
+						</div>
 						<ul class="book_li">
 							<li>
 								<a>
@@ -164,15 +169,18 @@
 								</a>
 							</li>						
 						</ul>
-	
+						<div class="viewmore_wrap">
+							<a class="viewmore_btn" href="/notice/list">view more</a>
+						</div>
 					</div>
 				</section>
 				
 				
 				<section class="main_row3" id="section03">
 					<div class="container">
-						<h2 class="main_tit">Photo</h2>
-						<a class="view_btn" href="#">view more</a>
+						<div class="title_wrap">
+							<h2 class="main_tit">Photo</h2>
+						</div>
 						<ul class="gallery_li">
 							
 							<c:forEach items="${galleryList}" var="gallery" varStatus="galleryStatus">
@@ -220,15 +228,19 @@
 								</c:forEach>
 							</c:forEach> 
 							
-							
 						</ul>
+						
+						<a class="viewmore_btn" href="#">view more</a>
 					</div>
 				</section>
 
 
 				<section class="main_row4 even_row" id="section04">
 					<div class="container">
-						<h2 class="main_tit">ABOUT US</h2>
+					
+						<div class="title_wrap">
+							<h2 class="main_tit">ABOUT US</h2>
+						</div>
 						<ul>
 							<li>
 								<div class="icon">

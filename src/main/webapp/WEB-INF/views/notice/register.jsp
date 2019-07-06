@@ -173,7 +173,7 @@ $(document).ready(function() {
 	
 	
 	<div class="container page_container">
-		<div class="title">
+		<div class="title_wrap">
 			<h2 class="wrap-inner main_tit">NOTICE</h2>
 		</div>
 		

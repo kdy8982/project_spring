@@ -17,7 +17,7 @@ $(document).ready(function() {
 	var formObj = $("form[role='form']");
 	var cloneObj = $(".uploadDiv").clone();
 	
-	$("button[type='submit']").on("click", function(e) {
+	$("button[data-oper='modify']").on("click", function(e) {
 		e.preventDefault();
 		var str = "";
 		str += "<input type='hidden' name='bno' value='"+${notice.bno}+"'>";
@@ -30,6 +30,14 @@ $(document).ready(function() {
 			str += "<input type='hidden' name='attachList[" + i + "].fileType' value='"+jobj.data("type")+"'>";
 		});
 		formObj.append(str).submit();
+		formObj.submit();
+	})
+	
+	$("button[data-oper='delete']").on("click", function(e) {
+		e.preventDefault();
+		formObj.attr("action", "/notice/delete");
+
+		
 		formObj.submit();
 	})
 	
@@ -165,9 +173,7 @@ $(document).ready(function() {
 	var bno = '<c:out value="${notice.bno}"/>';
 	$.getJSON("/board/getAttachList", {bno : bno}, function(arr) {
 		console.log(arr);
-		
 		var str="";
-		
 		$(arr).each(function(i, attach) {
 			//image type (썸네일)
 			if(attach.fileType) {
@@ -186,7 +192,6 @@ $(document).ready(function() {
 				str += "</li>"
 			}
 		});
-		
 		$(".uploadResult ul").html(str);
 	})
 	
@@ -245,8 +250,12 @@ $(document).ready(function() {
 						<ul></ul>
 					</div>
 				</div>
-				
-				<button type="submit">수정 완료</button>
+				<div class="row bottom_wrap">
+					<div class="notice_btn">
+						<button data-oper="modify" type="submit">수정 완료</button>
+						<button data-oper="delete">삭제</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

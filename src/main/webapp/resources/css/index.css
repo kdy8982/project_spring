@@ -69,8 +69,9 @@
 	background-color: #fff;
 }
 
-.main_section section.main_row1{
-	margin-bottom : 46px;
+.section_wrap section {
+	padding: 10px 0px 20px 0px;
+	
 }
 
 .even_row {
@@ -82,9 +83,10 @@
 	font-size : 19px;
 }
 
-.main_row2 .notice_wrap {
-	margin-top: 25px;
+.notice_wrap {
+	min-height : 242px;
 }
+
 
 .bx-wrapper {
 	-webkit-box-shadow: none !important;
@@ -156,6 +158,14 @@
     background: transparent;
     transition: .3s ease;
     -webkit-transition: .3s ease;
+}
+
+.viewmore_btn{
+	display: block;
+    text-align: right;
+	font-size : 15px;
+	padding-right : 10px;
+	text-decoration: underline;
 }
 
 .book_li li {

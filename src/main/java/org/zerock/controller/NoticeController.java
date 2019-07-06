@@ -1,5 +1,10 @@
 package org.zerock.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.BoardAttachVO;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.PageDTO;
@@ -54,11 +60,20 @@ public class NoticeController {
 	}
 	
 	
-	@GetMapping("/delete")
-	public void delete(@RequestParam("bno")Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		log.info("delete call....");
+	@RequestMapping("/delete")
+	public String delete(@RequestParam("bno")Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+		log.info("delete call....!!");
 		log.info(bno);
-		log.info(cri);
+		
+		
+		List<BoardAttachVO> attachList = boardService.getAttachList(bno);
+		
+		if(boardService.remove(bno)) {
+			deleteFiles(attachList);
+			rttr.addAttribute("result", "success");
+		}
+			
+		return "redirect:/notice/list" + cri.getListLink();
 	}
 	
 	@RequestMapping("/modify") 
@@ -70,6 +85,28 @@ public class NoticeController {
 		};
 		
 		return "redirect:/notice/list" + cri.getListLink();
+		
+	}
+	
+	
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		if(attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		attachList.forEach(attach -> {
+			try {
+				Path file = Paths.get("C:\\upload\\" + attach.getUploadPath() + "\\" + attach.getUuid() + "_" + attach.getFileName());
+				
+				Files.deleteIfExists(file);
+					if(Files.probeContentType(file).startsWith("image")) {
+						Path thumbNail = Paths.get("C:\\upload\\" + attach.getUploadPath()+"\\s_" + attach.getUuid() + "_" + attach.getFileName());
+						Files.delete(thumbNail);
+					}
+				} catch (Exception e) {
+					log.error("delete file error" + e.getMessage());
+			}
+		});
 		
 	}
 	
