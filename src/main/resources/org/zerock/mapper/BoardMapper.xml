@@ -70,7 +70,7 @@
 
 		insert into tbl_board (bno, title, content, writer, type)
 		values (#{bno},
-		#{title}, #{content}, #{writer}, #{type})
+		#{title}, #{content}, #{writer}, #{boardType})
 	</insert>
 
 	<select id="read" resultType="org.zerock.domain.BoardVO">

@@ -33,7 +33,7 @@ public class NoticeController {
 	@RequestMapping("/list")
 	public void list(Criteria cri, Model model) {
 		log.info("Notice controller list call..");
-		model.addAttribute("noticeList", boardService.getNoticeList(cri));
+		model.addAttribute("noticeList", boardService.getList(new Criteria(1,10,"notice")));
 		
 		int total = boardService.getTotalNotice(cri); // 페이징 처리를 위해, 전체 공지글 수를 구한다.
 		model.addAttribute("pageMaker" , new PageDTO(cri, total));
@@ -54,9 +54,12 @@ public class NoticeController {
 	
 	
 	@PostMapping("/register")
-	public void insert(BoardVO board) {
+	public String insert(BoardVO board) {
 		log.info("Notice controller register post call..");
+		board.setBoardType("notice");
 		boardService.register(board);
+		
+		return "redirect:/notice/list";
 	}
 	
 	

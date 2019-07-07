@@ -44,7 +44,7 @@ public class BoardServiceImpl implements BoardService {
 			log.info("getList.. - notice or all");
 			return mapper.getListWithPaging(cri);
 		} else if (cri.getBoardType() == "photo") {
-			return attachMapper.getGalleryList(cri);
+			return attachMapper.getPhotoList(cri);
 		}
 		return null;
 		

@@ -76,7 +76,8 @@ public class BoardController {
 		}
 
 		log.info("============================================================");
-
+		
+		board.setBoardType("notice"); // 임시로.....
 		service.register(board);
 		//rttr.adedirect:/board/list"dFlashAttribute("result", board.getBno());
 	}

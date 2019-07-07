@@ -94,7 +94,7 @@
 				<section class="main_row1" id="section01">
 					<div class="container">
 						<div class="title_wrap">
-								<h2 class="main_tit">NOTICE</h2>
+								<h2 class="main_tit">새소식</h2>
 						</div>
 
 						<div class="notice_wrap">
@@ -127,7 +127,7 @@
 				<section class="main_row2 even_row" id="section02">
 					<div class="container">
 						<div class="title_wrap">
-							<h2 class="main_tit">Book</h2>
+							<h2 class="main_tit">독서모임</h2>
 						</div>
 						<ul class="book_li">
 							<li>
@@ -179,7 +179,7 @@
 				<section class="main_row3" id="section03">
 					<div class="container">
 						<div class="title_wrap">
-							<h2 class="main_tit">Photo</h2>
+							<h2 class="main_tit">사진</h2>
 						</div>
 						<ul class="gallery_li">
 							

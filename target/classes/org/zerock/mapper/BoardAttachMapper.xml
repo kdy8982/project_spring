@@ -43,7 +43,7 @@
 		where ano = #{ano}		
 	</select>
 
-	<select id="getGalleryList" resultMap="boardMap">
+	<select id="getPhotoList" resultMap="boardMap">
 		select * from 
 			(
 					select board.bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg 
