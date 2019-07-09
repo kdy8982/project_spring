@@ -210,11 +210,13 @@
 }
 
 .gallery_li li .thumbnail {
+	text-align : center;
 	line-height : 196px;
 }
 
 .gallery_li li .thumbnail img {
 	vertical-align: middle;
+	max-height : 194px;
 }
 
 .gallery_li .desc {

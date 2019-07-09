@@ -57,15 +57,14 @@ $(document).ready(function() {
 		<div class="content">
 			<ul class="gallery_li">
 				<c:forEach var="photo" items="${photoList}">
-					<c:forEach var="attach" items="${photo.attachList}">
-					
-						<c:set target="${attach}" property="wholeFilePath" value="${attach.uploadPath}/s_${attach.uuid}_${attach.fileName}" />	
-						<%
-							BoardAttachVO vo = (BoardAttachVO)pageContext.getAttribute("attach");
-							pageContext.setAttribute("imgPath", URLEncoder.encode(vo.getWholeFilePath()));
-						%>					
 						<li class="yesupload bg1">
 							<div class="thumbnail"> 
+							<c:set target="${attach}" property="wholeFilePath" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
+							<%
+								BoardAttachVO vo = (BoardAttachVO)pageContext.getAttribute("attach");
+								System.out.println(vo.getWholeFilePath());
+								// pageContext.setAttribute("imgPath", URLEncoder.encode(vo.getWholeFilePath()));
+							%>
 								<img src="/display?fileName=<c:url value='${imgPath}'/>"> 
 							</div> 
 							<div class="desc">
@@ -73,8 +72,6 @@ $(document).ready(function() {
 								<p>${photo.writer}</p>
 							</div>
 						</li>		
-									
-					</c:forEach>
 				</c:forEach>
 			</ul>
 		</div>
