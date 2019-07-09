@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@page import="java.net.URLEncoder"%>
+<%@page import="org.zerock.domain.*"%>
+
 <jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>
 <!DOCTYPE html>
 <html>
@@ -39,7 +42,7 @@ $(document).ready(function() {
 	
 	<div class="container page_container">
 		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit">새소식</h2>
+			<h2 class="wrap-inner main_tit">사진</h2>
 		</div>
 		
 		<div class="sub_title">
@@ -52,39 +55,30 @@ $(document).ready(function() {
 		</div>
 		
 		<div class="content">
-			<div class="list_wrap notice_wrap">
-				<table class ="notice_table">
-					<colgroup>
-						<col width="60%">
-						<col width="40%">
-					</colgroup>
-					<thead>
-						<tr>
-							<th class="title">소식</th>
-							<th>작성일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${noticeList}" var="notice" varStatus="status" >
-							<c:if test="${status.count % 2 == 1}">
-								<tr>
-									<td class="even"><a class="move" href='<c:out value="${notice.bno}" />'><c:out value="${notice.title}"></c:out></a></td>
-									<td class="even"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
-								</tr>
-							</c:if>
-													
-							<c:if test="${status.count % 2 == 0}">
-								<tr>
-									<td><a class="move" href='<c:out value="${notice.bno}" />'><c:out value="${notice.title}"></c:out></a></td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
-								</tr>
-							</c:if>
-
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+			<ul class="gallery_li">
+				<c:forEach var="photo" items="${photoList}">
+					<c:forEach var="attach" items="${photo.attachList}">
+					
+						<c:set target="${attach}" property="wholeFilePath" value="${attach.uploadPath}/s_${attach.uuid}_${attach.fileName}" />	
+						<%
+							BoardAttachVO vo = (BoardAttachVO)pageContext.getAttribute("attach");
+							pageContext.setAttribute("imgPath", URLEncoder.encode(vo.getWholeFilePath()));
+						%>					
+						<li class="yesupload bg1">
+							<div class="thumbnail"> 
+								<img src="/display?fileName=<c:url value='${imgPath}'/>"> 
+							</div> 
+							<div class="desc">
+								<h3>${photo.title}</h3>
+								<p>${photo.writer}</p>
+							</div>
+						</li>		
+									
+					</c:forEach>
+				</c:forEach>
+			</ul>
 		</div>
+		
 		<div class="bottom_wrap">
 			<div class="page_box">
 				<ul>

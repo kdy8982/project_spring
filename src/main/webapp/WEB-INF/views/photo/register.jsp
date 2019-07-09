@@ -17,10 +17,10 @@ $(document).ready(function() {
 	var formObj = $("form[role='form']");
 	var cloneObj = $(".uploadDiv").clone();
 	
-	$("button[data-oper='modify']").on("click", function(e) {
+	$("button[type='submit']").on("click", function(e) {
 		e.preventDefault();
 		var str = "";
-		str += "<input type='hidden' name='bno' value='"+${notice.bno}+"'>";
+		
 		$(".uploadResult ul li").each(function(i, obj) {
 			var jobj = $(obj);
 			
@@ -28,15 +28,8 @@ $(document).ready(function() {
 			str += "<input type='hidden' name='attachList[" + i + "].uuid' value='"+jobj.data("uuid")+"'>";
 			str += "<input type='hidden' name='attachList["+ i +"].uploadPath' value='"+jobj.data("path")+"'>";
 			str += "<input type='hidden' name='attachList[" + i + "].fileType' value='"+jobj.data("type")+"'>";
-		});
-		formObj.append(str).submit();
-	})
-	
-	$("button[data-oper='delete']").on("click", function(e) {
-		e.preventDefault();
-		formObj.attr("action", "/notice/delete");
-
-		
+		})
+		formObj.append(str);
 		formObj.submit();
 	})
 	
@@ -169,58 +162,6 @@ $(document).ready(function() {
 
 	
 	
-	var bno = '<c:out value="${notice.bno}"/>';
-	$.getJSON("/board/getAttachList", {bno : bno}, function(arr) {
-		console.log(arr);
-		var str="";
-		$(arr).each(function(i, attach) {
-			//image type (썸네일)
-			if(attach.fileType) {
-				var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+ "_" + attach.fileName);
-				
-				str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
-				str += "<div>";
-				str += "<span>" + attach.fileName +"</span>";
-				str += "<button data-file=\'" + fileCallPath + "\' data-type='image'><i class='fa fa-times'></i></button><br>"
-				str += "<img src='/display?fileName="+ fileCallPath +"'>";
-				str += "</div>"
-				str += "</li>";
-			} else {
-				str += "<li data-path ='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type ='"+ attach.fileType + "'>";
-				str += "<div>"
-				str += "<img src='/resources/img/attach.png'>"
-				str += "</div>"
-				str += "</li>"
-			}
-		});
-		$(".uploadResult ul").html(str);
-	})
-	
-	$(".uploadResult").on("click", "button", function(e){
-		var targetFile = $(this).data("file");
-		var type = $(this).data("type");
-		
-		var targetLi = $(this).closest("li");
-		
-		$.ajax({
-			url : '/deleteFile' ,
-			data : {
-				fileName : targetFile,
-				type : type
-			},
-			beforeSend : function (xhr) {
-				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-			},
-			dataType : 'text',
-			type : 'POST',
-			success : function (result) {
-				alert(result);
-				targetLi.remove();
-			}
-		})
-		
-		
-	});
 	
 })
 </script>
@@ -232,10 +173,8 @@ $(document).ready(function() {
 	
 	
 	<div class="container page_container">
-		<div class="title">
-			<div class="title_wrap">
-				<h2 class="wrap-inner main_tit">새소식</h2>
-			</div>
+		<div class="title_wrap">
+			<h2 class="wrap-inner main_tit">NOTICE</h2>
 		</div>
 		
 		<div class="sub_title">
@@ -249,28 +188,21 @@ $(document).ready(function() {
 		
 		<div class="content">
 			<div class="list_wrap notice_wrap">
-				게시글 수정
-				<form role="form" action="/notice/modify" method="post">
+				<form role="form" action="/notice/register" method="post">
 					
 					<div class="form-group uploadRow">
-						<label>제목</label> <input class="form_title" name='title' value="${notice.title}">
+						<label>제목</label> <input class="form_title" name='title'>
 					</div>
 
 					<div class="form-group uploadRow">
 						<label>글 내용</label>
-						<textarea class="" rows="3" name='content'>${notice.content }</textarea>
+						<textarea class="" rows="3" name='content'></textarea>
 					</div>
 					
 					<div class="form-group uploadRow">
-						<label>작성자</label> <input class="form_writer" name='writer' readonly="readonly" value="${notice.writer }">
+						<label>작성자</label> <input class="form_writer" name='writer' readonly="readonly" value="test-user">
 					</div>
-					<div class="row bottom_wrap">
-						<div class="notice_btn">
-							<button data-oper="modify" type="submit">수정 완료</button>
-							<button data-oper="delete">삭제</button>
-						</div>
-					</div>
-						
+					
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<input type="hidden" name="type" value="notice" />
 				</form>
@@ -279,12 +211,13 @@ $(document).ready(function() {
 					<div class="uploadDiv">
 						<input type="file" name="uploadFile" multiple>
 					</div>
-
+					
 					<div class="uploadResult">
 						<ul></ul>
 					</div>
 				</div>
-
+				
+				<button type="submit">작성완료</button>
 			</div>
 		</div>
 	</div>

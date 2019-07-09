@@ -202,7 +202,6 @@
 												<div class="desc">
 													<h3><c:out value="${gallery.title}"/></h3>
 													<p><c:out value="${gallery.writer}"/></p>
-													
 												</div>
 											</a>
 										</li>
@@ -230,7 +229,7 @@
 							
 						</ul>
 						
-						<a class="viewmore_btn" href="#">view more</a>
+						<a class="viewmore_btn" href="/photo/list">view more</a>
 					</div>
 				</section>
 
