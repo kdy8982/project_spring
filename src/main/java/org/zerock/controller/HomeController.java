@@ -34,14 +34,13 @@ public class HomeController {
 	public String home(Criteria cri, Model model) {
 		log.info("Main page call!");
 		
-		model.addAttribute("galleryList", boardService.getList(new Criteria(1, 8, "photo")));
+		model.addAttribute("photoList", boardService.getList(new Criteria(1, 8, "photo")));
 		model.addAttribute("noticeList", boardService.getList(new Criteria(1, 6, "notice")));
 		
-		int total = boardService.getTotalNotice(cri);
-		model.addAttribute("pageMaker", new PageDTO(cri,total));
+		//int total = boardService.getTotalNotice(cri);
+		//model.addAttribute("pageMaker", new PageDTO(cri, total));
 		
 		log.info(cri.getPageNum());
 		return "/index";
 	}
-	
 }

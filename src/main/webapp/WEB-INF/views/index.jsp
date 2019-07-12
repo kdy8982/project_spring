@@ -54,8 +54,10 @@
 				$(".move").on("click", function(e) {
 					e.preventDefault();
 					console.log($(this).attr('href'));
+					actionForm.append("<input type='hidden' name='amount' value='"+ $(this).data('amount') +"'>");
 					actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr('href') +"'>");
-					actionForm.attr("action", "/notice/get");
+					actionForm.append("<input type='hidden' name='boardType' value='"+ $(this).data('type') +"'>");
+					actionForm.attr("action", $(this).data("url"));
 					actionForm.submit();
 					
 				})
@@ -102,7 +104,7 @@
 								<c:forEach items="${noticeList}" var="notice">
 									<li>
 										<div class="notice_box">
-											<a class="move" href='<c:out value="${notice.bno}"/>'>
+											<a class="move" href='<c:out value="${notice.bno}"/>' data-type="notice" data-url="/notice/get" data-amount="10">
 												<p class="main_notice"><c:out value="${notice.title}"></c:out></p>
 												<p class="sub_notice"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></p>
 											</a>
@@ -115,19 +117,13 @@
 							<a class="viewmore_btn" href="/notice/list">view more</a>
 						</div>
 					</div>
-					<form id="actionForm" action="/notice/list" method="get">
-						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-						<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-						<input type="hidden" name="type" value="${pageMaker.cri.type }">
-						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
-					</form>
 				</section>
 				
 				
 				<section class="main_row2 even_row" id="section02">
 					<div class="container">
 						<div class="title_wrap">
-							<h2 class="main_tit">독서모임</h2>
+							<h2 class="main_tit">더사랑모임</h2>
 						</div>
 						<ul class="book_li">
 							<li>
@@ -182,54 +178,27 @@
 							<h2 class="main_tit">사진</h2>
 						</div>
 						<ul class="gallery_li">
-							
-							<c:forEach items="${galleryList}" var="gallery" varStatus="galleryStatus">
-								<c:forEach items="${gallery.attachList}" var="attach" varStatus="attachStatus">
-										
-									<c:if test="${attach.previewImg eq true}"> <!-- 대표이미지가 설정된 경우 -->
-										<li class="yesupload bg1"><!-- 업로드 완료 리스트 -->
-											<a onclick="javascript:open_pop(this)">
-									
-												<c:set target="${attach}" property="wholeFilePath" value="${attach.uploadPath}/s_${attach.uuid}_${attach.fileName}" />
-												<%
-													BoardAttachVO vo = (BoardAttachVO)pageContext.getAttribute("attach");
-													pageContext.setAttribute("imgPath", URLEncoder.encode(vo.getWholeFilePath()));
-												%>
-												<div class="thumb">
-													<img src="/display?fileName=<c:url value='${imgPath}'/>">
-												</div>
-												
-												<div class="desc">
-													<h3><c:out value="${gallery.title}"/></h3>
-													<p><c:out value="${gallery.writer}"/></p>
-												</div>
-											</a>
-										</li>
-									</c:if>
-									
-									<c:if test="${attach.previewImg eq false}"> <!-- 대표이미지가 설정되어 있지 않은 경우 -->
-										<li class="noupload"><!-- 업로드 전 리스트 -->
-											<a onclick="javascript:open_pop()">
-									
-												<div class="thumb">
-													<i class="fa fa-question question" aria-hidden="true"></i>
-												</div>
-												
-												<div class="desc">
-													<h3><c:out value="${gallery.title}"/></h3>
-													<p><c:out value="${gallery.writer}"/></p>
-												</div>
-											</a>	
-										</li>
-									</c:if>									
-									
-									
-								</c:forEach>
-							</c:forEach> 
-							
+							<c:forEach var="photo" items="${photoList}">
+								<a class="move" href="${photo.bno}" data-type="photo" data-url="/photo/get" data-amount="12">
+									<li class="yesupload bg1">
+										<div class="thumbnail">
+											<c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
+											<%
+												String url = (String)pageContext.getAttribute("attach");
+												pageContext.setAttribute("filepath", URLEncoder.encode(url));
+											%>
+											<img src="/display?fileName=<c:url value='${filepath}'/>">
+										</div> 
+										<div class="desc">
+											<h3>${photo.title}</h3>
+											<p>${photo.writer}</p>
+										</div>
+									</li>
+								</a>
+							</c:forEach>
 						</ul>
 						
-						<a class="viewmore_btn" href="/photo/list">view more</a>
+						<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
 					</div>
 				</section>
 
@@ -269,6 +238,11 @@
 
 			</div>
 		</div>
+		
+		<form id="actionForm" action="/notice/list" method="get">
+			<input type="hidden" name="pageNum" value="1">
+		</form>
+		
 		<jsp:include page="./inc/footer.jsp" flush="true"></jsp:include>
 	</body>
 </html>

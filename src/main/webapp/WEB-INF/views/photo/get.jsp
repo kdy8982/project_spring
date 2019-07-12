@@ -22,19 +22,19 @@ $(document).ready(function() {
 	$("button[data-oper='list']").on("click", function(e) {
 		e.preventDefault();
 		openForm.find("#bno").remove();
-		openForm.attr("action", "/notice/list");
+		openForm.attr("action", "/photo/list");
 		openForm.submit();
 	})
 	
 	$("button[data-oper='modify']").on("click",function(e) {
 		e.preventDefault();
-		openForm.attr("action", "/notice/modify").submit();
+		openForm.attr("action", "/photo/modify").submit();
 	})
 	
 	
 	/* 첨부파일 조회 AJAX */
 	
-	var bno = '<c:out value="${notice.bno}"/>';
+	var bno = '<c:out value="${photo.bno}"/>';
 	$.getJSON("/board/getAttachList" , {bno : bno}, function (arr) {
 		console.log(arr);
 		
@@ -74,7 +74,7 @@ $(document).ready(function() {
 	
 	<div class="container page_container">
 		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit">새소식</h2>
+			<h2 class="wrap-inner main_tit">사진</h2>
 		</div>
 		
 		<div class="sub_title">
@@ -91,16 +91,16 @@ $(document).ready(function() {
 				<div id="table">
 				
 					<div class="row notice_title">
-						${notice.title }
+						${photo.title }
 					</div>
 					
 					<div class="row notice_date">
-						<fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}"/>
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${photo.regdate}"/>
 					</div>
 					
 					<div class="row notice_content_box">
 						<div class="notice_content">
-							${notice.content }
+							${photo.content }
 						</div>
 						
 					<div class="uploadResult">
@@ -111,14 +111,13 @@ $(document).ready(function() {
 					
 					<div class="row bottom_wrap">
 						<div class="notice_btn">
-							<button data-oper="list">목록</button>
-							<button data-oper="modify">수정</button>
-							<button onclick="location.href='/notice/delete?bno=' + ${notice.bno}">삭제</button>
+							<button class="normal_btn" data-oper="list">목록</button>
+							<button class="normal_btn" data-oper="modify">수정</button>
 						</div>
 					</div>
 					
-				<form id="openForm" action="/board/modify" method="get">
-					<input type="hidden" id="bno" name="bno" value='<c:out value="${notice.bno}"/>' /> 
+				<form id="openForm" action="/photo/modify" method="get">
+					<input type="hidden" id="bno" name="bno" value='<c:out value="${photo.bno}"/>' /> 
 					<input type="hidden" id="pageNum" name="pageNum" value='<c:out value="${cri.pageNum}"/>'> 
 					<input type="hidden" id="amount" name="amount" value='<c:out value="${cri.amount}"/>'> 
 					<input type="hidden" id="keyword" name="keyword" value='<c:out value="${cri.keyword}"/>'> 
@@ -130,13 +129,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 		
-	<form id="actionForm" action="/notice/list" method="get">
-		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-		<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-		<input type="hidden" name="type" value="${pageMaker.cri.type }">
-		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
-	</form>
-
 <jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 </body>
 </html>

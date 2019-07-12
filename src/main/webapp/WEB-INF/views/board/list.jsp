@@ -151,6 +151,7 @@ $(document).ready(function() {
 		}
 			$("#myModal").modal("show");
 	}
+	
 	$("#regBtn").on("click", function() {
 		self.location ="/board/register";
 	})

@@ -24,6 +24,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		console.log($(this).attr('href'));
 		actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr('href') +"'>");
+		actionForm.append("<input type='hidden' name='boardType' value='notice'>");
 		actionForm.attr("action", "/notice/get");
 		actionForm.submit();
 		

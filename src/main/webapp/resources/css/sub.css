@@ -264,6 +264,7 @@
 
 .container .content{
 	margin-top : 40px;
+	min-height: calc(100vh - 509px)
 }
 
 .container .list_wrap.notice_wrap form label {
@@ -294,8 +295,8 @@
 	resize: none;	
 }
 
-.container .list_wrap.notice_wrap .uploadDiv input {
-	width : 100%;	
+.container .list_wrap.notice_wrap .uploadDiv {
+	display: none;
 }
 
 .container .list_wrap.notice_wrap .uploadRow {
@@ -401,6 +402,7 @@
 
 .bottom_wrap {
 	margin-top : 15px;
+	margin-bottom: 15px;
 	position : relative;
 	min-height : 55px;
 }
@@ -408,5 +410,9 @@
 .bottom_wrap .notice_btn {
 	position : absolute;
 	right : 0;
+}
+
+.modal .close_btn {
+	float : right;
 }
 

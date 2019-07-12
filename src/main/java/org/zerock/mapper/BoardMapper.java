@@ -33,6 +33,6 @@ public interface BoardMapper {
 
 	public int getTotalNoticeCount(Criteria cri);
 
-	public BoardVO getNotice(Long bno);
+	public BoardVO getBoard(BoardVO board);
 	
 }

@@ -217,6 +217,7 @@
 .gallery_li li .thumbnail img {
 	vertical-align: middle;
 	max-height : 194px;
+	border-radius: 8px;
 }
 
 .gallery_li .desc {

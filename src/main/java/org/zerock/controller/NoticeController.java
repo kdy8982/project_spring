@@ -33,17 +33,18 @@ public class NoticeController {
 	@RequestMapping("/list")
 	public void list(Criteria cri, Model model) {
 		log.info("Notice controller list call..");
-		model.addAttribute("noticeList", boardService.getList(new Criteria(1,10,"notice")));
+		cri.setBoardType("notice");
+		model.addAttribute("noticeList", boardService.getList(cri));
 		
 		int total = boardService.getTotalNotice(cri); // 페이징 처리를 위해, 전체 공지글 수를 구한다.
 		model.addAttribute("pageMaker" , new PageDTO(cri, total));
 	}
 	
 	@GetMapping({"/get", "/modify"})
-	public void get(@RequestParam("bno") Long bno, Model model, @ModelAttribute("cri") Criteria cri) {
+	public void get(BoardVO board, Model model, @ModelAttribute("cri") Criteria cri) {
 		log.info("Notice controller get call..");
 		
-		model.addAttribute("notice", boardService.getNotice(bno));
+		model.addAttribute("notice", boardService.getBoard(board));
 	}
 
 	
@@ -56,7 +57,6 @@ public class NoticeController {
 	@PostMapping("/register")
 	public String insert(BoardVO board) {
 		log.info("Notice controller register post call..");
-		board.setBoardType("notice");
 		boardService.register(board);
 		
 		return "redirect:/notice/list";
@@ -66,8 +66,6 @@ public class NoticeController {
 	@RequestMapping("/delete")
 	public String delete(@RequestParam("bno")Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("delete call....!!");
-		log.info(bno);
-		
 		
 		List<BoardAttachVO> attachList = boardService.getAttachList(bno);
 		

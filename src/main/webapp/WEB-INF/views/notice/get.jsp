@@ -10,13 +10,6 @@
 <script>
 
 $(document).ready(function() {
-	var actionForm = $("#actionForm"); 
-	$(".page_num").on("click", function(e) {
-		console.log("click page_num !!!");
-		e.preventDefault();
-		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-		actionForm.submit();
-	})
 	
 	var openForm = $("#openForm");
 	$("button[data-oper='list']").on("click", function(e) {
@@ -28,6 +21,7 @@ $(document).ready(function() {
 	
 	$("button[data-oper='modify']").on("click",function(e) {
 		e.preventDefault();
+		openForm.append("<input type='hidden' id='boardType' name='boardType' value='notice'>")
 		openForm.attr("action", "/notice/modify").submit();
 	})
 	
@@ -117,7 +111,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					
-				<form id="openForm" action="/board/modify" method="get">
+				<form id="openForm" action="/notice/modify" method="get">
 					<input type="hidden" id="bno" name="bno" value='<c:out value="${notice.bno}"/>' /> 
 					<input type="hidden" id="pageNum" name="pageNum" value='<c:out value="${cri.pageNum}"/>'> 
 					<input type="hidden" id="amount" name="amount" value='<c:out value="${cri.amount}"/>'> 
@@ -130,13 +124,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 		
-	<form id="actionForm" action="/notice/list" method="get">
-		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
-		<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-		<input type="hidden" name="type" value="${pageMaker.cri.type }">
-		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
-	</form>
-
 <jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 </body>
 </html>

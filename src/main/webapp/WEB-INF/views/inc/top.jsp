@@ -5,9 +5,9 @@
 		<nav>
 			<ul>
 				<li><a href="#">The Love Comunity</a></li>
-				<li><a href="#">이미지게시판</a></li>
-				<li><a href="#">자유게시판</a></li>
-				<li><a href="#">오시는 길</a></li>
+				<li><a href="/notice/list">새소식</a></li>
+				<li><a href="/book/list">모임</a></li>
+				<li><a href="/photo/list">사진</a></li>
 			</ul>
 		</nav>
 		<span class="login_area" alt="로그인">로그인</span>

@@ -122,13 +122,13 @@
 		select count(*) 
 		from tbl_board 
 		where bno > 0 
-		and type='notice'
+		and type = #{boardType}
 	</select>
 	
-	<select id="getNotice" resultType="org.zerock.domain.BoardVO">
+	<select id="getBoard" resultType="org.zerock.domain.BoardVO">
 		select *
 		from tbl_board
-		where type='notice'
+		where type = #{boardType}
 		and bno = #{bno}
 	</select>
 	

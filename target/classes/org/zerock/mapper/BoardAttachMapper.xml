@@ -25,8 +25,8 @@
 		<result property="ano" column="ano"/> <!-- 주키이자 외래키 -->
 	</resultMap>
 	<insert id="insert">
-		insert into tbl_attach(uuid, uploadpath, filename, filetype, ano, previewimg)
-		values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{ano}, #{previewImg})
+		insert into tbl_attach(uuid, uploadpath, filename, filetype, bno, ano, previewimg)
+		values (#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno}, seq_attach.nextval, #{previewImg})
 	</insert>
 	
 	<delete id="delete">
@@ -34,24 +34,33 @@
 	</delete>
 	
 	<delete id="deleteAll">
-		delete from tbl_attach where ano = #{ano}
+		delete from tbl_attach where bno = #{bno}
 	</delete>
 	
 	<select id="findByBno" resultType="org.zerock.domain.BoardAttachVO">
 		select *
 		from tbl_attach
-		where ano = #{ano}		
+		where bno = #{bno}		
 	</select>
 
 	<select id="getPhotoList" resultMap="boardMap">
-		select * from 
-			(
-					select board.bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg 
-					from tbl_board board left outer join tbl_attach attach on board.bno = attach.ano 
-			        order by regdate desc
-			)
-		<![CDATA[
-		where rownum <= #{amount} and type = #{boardType}
-		]]>
+		select bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg 
+		from
+		(
+		    select 
+		    row_number() over(partition by bno order by bno) rum, bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg
+		    from
+		    (
+		            select board.bno, board.title, board.content, board.writer, board.regdate, board.updatedate, board.type, board.replycnt, 
+		            attach.uuid, attach.uploadpath, attach.filename, attach.previewimg
+		            from tbl_board board left outer join tbl_attach attach 
+		            on board.bno = attach.bno
+		            order by board.bno desc   
+		    )
+		    <![CDATA[
+		    where rownum <= #{amount}
+		    ]]>
+		)
+		where rum = '1' and type = #{boardType} 
 	</select>
 </mapper>

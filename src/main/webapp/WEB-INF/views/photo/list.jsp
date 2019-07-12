@@ -21,24 +21,60 @@ $(document).ready(function() {
 		actionForm.submit();
 	})
 	
-	
 	var actionForm = $("#actionForm");
 	$(".move").on("click", function(e) {
 		e.preventDefault();
 		console.log($(this).attr('href'));
 		actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr('href') +"'>");
-		actionForm.attr("action", "/notice/get");
+		actionForm.append("<input type='hidden' name='boardType' value='photo'>");
+		actionForm.attr("action", "/photo/get");
 		actionForm.submit();
 		
 	})
+	
+	var result='<c:out value="${result}"/>';
+	checkModal(result);
+	
+	function checkModal(result) {
+		if(result === "") {
+			return;
+		}
+		if(parseInt(result) > 0) {
+			
+		} else {
+			wrapWindowByMask();
+		}
+	}
+	
+    function wrapWindowByMask() {
+        //화면의 높이와 너비를 구한다.
+        var maskHeight = $(document).height();  
+        var maskWidth = $(window).width();
+        
+        //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+        $('#mask').css({'width':maskWidth,'height':maskHeight});  
+
+        $('#mask').fadeTo("slow",0.8);    
+
+        //모달 같은 거 띄운다.
+    	 $('.modal').css("display", "block");
+        //$(".modal").show();
+    }
+    
+    $(".normal_btn.close").on("click", function (){
+    	$(".modal").css("display", "none");
+    	$("#mask").css("display", "none");
+    })
+    
 })
+
+	
 </script>
 
 <title>Insert title here</title>
 </head>
 <body>
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
-	
 	
 	<div class="container page_container">
 		<div class="title_wrap">
@@ -58,19 +94,20 @@ $(document).ready(function() {
 			<ul class="gallery_li">
 				<c:forEach var="photo" items="${photoList}">
 						<li class="yesupload bg1">
-							<div class="thumbnail"> 
-							<c:set target="${attach}" property="wholeFilePath" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
-							<%
-								BoardAttachVO vo = (BoardAttachVO)pageContext.getAttribute("attach");
-								System.out.println(vo.getWholeFilePath());
-								// pageContext.setAttribute("imgPath", URLEncoder.encode(vo.getWholeFilePath()));
-							%>
-								<img src="/display?fileName=<c:url value='${imgPath}'/>"> 
-							</div> 
-							<div class="desc">
-								<h3>${photo.title}</h3>
-								<p>${photo.writer}</p>
-							</div>
+							<a class="move" href="<c:out value='${photo.bno}'/>">
+								<div class="thumbnail">
+									<c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
+									<%
+										String url = (String)pageContext.getAttribute("attach");
+										pageContext.setAttribute("filepath", URLEncoder.encode(url));
+									%>
+									<img src="/display?fileName=<c:url value='${filepath}'/>">
+								</div> 
+								<div class="desc">
+									<h3>${photo.title}</h3>
+									<p>${photo.writer}</p>
+								</div>
+							</a>
 						</li>		
 				</c:forEach>
 			</ul>
@@ -103,17 +140,37 @@ $(document).ready(function() {
 				</ul>
 			</div>
 			<div class="notice_btn">
-				<button onclick="location.href='/notice/register'">새 공지 쓰기</button>
+				<button class="normal_btn middle" onclick="location.href='/photo/register'">사진 올리기</button>
 			</div>
 		</div>
+		<div class="modal">
+				<div class="modal_header row">
+					<div class="modal_title">알림</div>
+					<!-- <button class="close_btn"><i class="fa fa-times" aria-hidden="true"></i></button> -->
+				</div>
+				
+				<div class="modal_body row">
+					정상적으로 처리 되었습니다.
+				</div>
+				
+				<div class="modal_footer row">
+					<button class="normal_btn close">확인</button>
+				</div>
+		</div>
+	</div>
+	
+	
+	<div id="mask">
+	
 	</div>
 		
-	<form id="actionForm" action="/notice/list" method="get">
+	<form id="actionForm" action="/photo/list" method="get">
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 		<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 		<input type="hidden" name="type" value="${pageMaker.cri.type }">
 		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
 	</form>
+	
 
 <jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 </body>

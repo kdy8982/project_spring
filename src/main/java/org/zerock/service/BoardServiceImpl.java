@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		board.getAttachList().forEach(attach -> {
-			attach.setAno(board.getBno());
+			attach.setBno(board.getBno());
 			attachMapper.insert(attach);
 		});
 	}
@@ -63,7 +63,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	
-	@Transactional // 게시글을 지운 뒤, 첨부파일을 지운다. 만일 첨부파일을 지우다가 에러가 나면 롤백시킨다.
+	@Transactional // 등록된 첨부파일(attach)을 모두 지운 뒤, 게시글(board)을 update한다. 만일 첨부파일을 지우다가 에러가 나면 롤백시킨다.
 	@Override
 	public boolean modify(BoardVO board) {
 		log.info("modify..........." + board);
@@ -76,10 +76,8 @@ public class BoardServiceImpl implements BoardService {
 		if (board.getAttachList() != null) {
 
 			if(modifyResult && board.getAttachList().size() > 0) {
-				
-				log.info("여기 들어옴!!");
 				board.getAttachList().forEach(attach -> {
-					attach.setAno(board.getBno());
+					attach.setBno(board.getBno());
 					log.info("attach : ");
 					log.info(attach);
 					attachMapper.insert(attach);
@@ -130,8 +128,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardVO getNotice(Long bno) {
-		return mapper.getNotice(bno);
+	public BoardVO getBoard(BoardVO board) {
+		return mapper.getBoard(board);
 	}
 
 

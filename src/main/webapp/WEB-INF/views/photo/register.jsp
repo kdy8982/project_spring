@@ -33,6 +33,11 @@ $(document).ready(function() {
 		formObj.submit();
 	})
 	
+	$("button[type='upload']").on("click", function(e) {
+		e.preventDefault();
+		$(".input_upload").click();
+	})
+	
 	
 	
 	/* 첨부파일 추가 */
@@ -127,7 +132,7 @@ $(document).ready(function() {
 								str += "<span>"
 										+ obj.fileName
 										+ "</span>";
-								str += "<button type='button' class='btn btn-warning btn-circle' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
+								str += "<button type='button' class='close_btn' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
 								str += "<img src='/display?fileName="
 										+ fileCallPath
 										+ "'>";
@@ -174,7 +179,7 @@ $(document).ready(function() {
 	
 	<div class="container page_container">
 		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit">NOTICE</h2>
+			<h2 class="wrap-inner main_tit">사진</h2>
 		</div>
 		
 		<div class="sub_title">
@@ -188,7 +193,7 @@ $(document).ready(function() {
 		
 		<div class="content">
 			<div class="list_wrap notice_wrap">
-				<form role="form" action="/notice/register" method="post">
+				<form role="form" action="/photo/register" method="post">
 					
 					<div class="form-group uploadRow">
 						<label>제목</label> <input class="form_title" name='title'>
@@ -204,20 +209,19 @@ $(document).ready(function() {
 					</div>
 					
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<input type="hidden" name="type" value="notice" />
+					<input type="hidden" name="boardType" value="photo" />
 				</form>
 				
 				<div class="file_upload_wrap uploadRow">
 					<div class="uploadDiv">
-						<input type="file" name="uploadFile" multiple>
-					</div>
-					
-					<div class="uploadResult">
-						<ul></ul>
+						<input class="input_upload" type="file" name="uploadFile" multiple>
 					</div>
 				</div>
-				
-				<button type="submit">작성완료</button>
+				<button class="normal_btn middle" type="upload">사진 첨부</button>
+				<button class="normal_btn middle" type="submit">작성완료</button>
+				<div class="uploadResult">
+					<ul></ul>
+				</div>
 			</div>
 		</div>
 	</div>

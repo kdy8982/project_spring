@@ -174,7 +174,7 @@ $(document).ready(function() {
 	
 	<div class="container page_container">
 		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit">NOTICE</h2>
+			<h2 class="wrap-inner main_tit">새소식</h2>
 		</div>
 		
 		<div class="sub_title">
@@ -204,7 +204,7 @@ $(document).ready(function() {
 					</div>
 					
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<input type="hidden" name="type" value="notice" />
+					<input type="hidden" name="boardType" value="notice" />
 				</form>
 				
 				<div class="file_upload_wrap uploadRow">
