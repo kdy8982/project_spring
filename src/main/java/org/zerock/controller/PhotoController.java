@@ -32,9 +32,9 @@ public class PhotoController {
 	@RequestMapping("/list")
 	public void list (Criteria cri, Model model) {
 		log.info("photo list ...");
-		log.info("!!!!");
 		log.info(cri);
 		cri.setBoardType("photo");
+		cri.setAmount(12);
 		int total = boardService.getTotalNotice(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		

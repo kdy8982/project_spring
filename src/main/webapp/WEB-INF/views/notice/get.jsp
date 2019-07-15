@@ -105,9 +105,9 @@ $(document).ready(function() {
 					
 					<div class="row bottom_wrap">
 						<div class="notice_btn">
-							<button data-oper="list">목록</button>
-							<button data-oper="modify">수정</button>
-							<button onclick="location.href='/notice/delete?bno=' + ${notice.bno}">삭제</button>
+							<button class="normal_btn" data-oper="list">목록</button>
+							<button class="normal_btn" data-oper="modify">수정</button>
+							<button class="normal_btn" onclick="location.href='/notice/delete?bno=' + ${notice.bno}">삭제</button>
 						</div>
 					</div>
 					

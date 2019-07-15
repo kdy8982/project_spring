@@ -57,7 +57,8 @@
     right: 0;
     bottom: 0;
     background: url(/resources/images/index/index.png)no-repeat top center;
-    background-size: contain;
+    background-size: cover;
+    background-position: center;
 }
 
 .main_visual .slider.fixed {
@@ -168,6 +169,10 @@
 	text-decoration: underline;
 }
 
+.book_li ul {
+	text-align : center;
+}
+
 .book_li li {
 	position: relative;
     width: calc(33% - 25px);
@@ -179,13 +184,16 @@
 }
 
 .book_li li .thumb {
-	height : 230px;
-	padding: 0px 110px;
+	text-align : center;
+}
+
+.book_li li .thumb img{
+	max-height: 40vh;
 }
 
 .book_li li .desc {
+	text-align : center;
     margin-top: 10px;
-	padding: 0px 110px;
 }
 
 .book_li li .desc .book_title {

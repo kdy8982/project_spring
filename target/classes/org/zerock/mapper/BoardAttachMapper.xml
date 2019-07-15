@@ -44,23 +44,27 @@
 	</select>
 
 	<select id="getPhotoList" resultMap="boardMap">
-		select bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg 
+		select bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg
 		from
 		(
-		    select 
-		    row_number() over(partition by bno order by bno) rum, bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg
+		    select rn, bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg
 		    from
 		    (
-		            select board.bno, board.title, board.content, board.writer, board.regdate, board.updatedate, board.type, board.replycnt, 
-		            attach.uuid, attach.uploadpath, attach.filename, attach.previewimg
-		            from tbl_board board left outer join tbl_attach attach 
-		            on board.bno = attach.bno
-		            order by board.bno desc   
+		        select rownum rn, bno, title, content, writer, regdate, updatedate, type, replycnt, uuid, uploadpath, filename, previewimg
+		        from
+		        (
+		            select row_number() over(partition by board.bno order by board.bno) rum, board.bno, board.title, board.content, board.writer, board.regdate, 
+		            board.updatedate, board.type, board.replycnt, attach.uuid, attach.uploadpath, attach.filename, 
+		            attach.previewimg from tbl_board board left outer join tbl_attach attach on board.bno = attach.bno 
+		            where type='photo'
+		            order by board.bno desc
+		         )   
+		        where rum ='1'
 		    )
 		    <![CDATA[
-		    where rownum <= #{amount}
-		    ]]>
+		    where rn <= #{pageNum} * #{amount}
 		)
-		where rum = '1' and type = #{boardType} 
+		where rn > (#{pageNum}-1) * #{amount} 
+		]]> 
 	</select>
 </mapper>

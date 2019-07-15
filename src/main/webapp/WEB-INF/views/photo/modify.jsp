@@ -16,9 +16,8 @@
 	$(document)
 			.ready(
 					function() {
-
 						var formObj = $("form[role='form']");
-						var cloneObj = $(".uploadDiv").clone();
+						// var cloneObj = $(".uploadDiv").clone();
 
 						$("button[data-oper='modify']")
 								.on(
@@ -97,8 +96,8 @@
 						} // checkExtension(fileName, fileSize)
 
 						$("input[type='file']")
-								.change(
-										function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
+								.change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
+											
 											var formData = new FormData();
 											var inputFile = $("input[name='uploadFile']");
 											var files = inputFile[0].files;
@@ -113,27 +112,18 @@
 														files[i]);
 											}
 
-											$
-													.ajax({
+											$.ajax({
 														url : "/uploadAjaxAction",
 														processData : false,
 														contentType : false,
-														beforeSend : function(
-																xhr) {
-															xhr
-																	.setRequestHeader(
-																			csrfHeaderName,
-																			csrfTokenValue);
+														beforeSend : function(xhr) {
+															xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 														},
 														data : formData,
 														type : "post",
 														dataType : "json",
-														success : function(
-																result) {
-															$(".uploadDiv")
-																	.html(
-																			cloneObj
-																					.html());
+														success : function(result) {
+															// $(".uploadDiv").html(cloneObj.html());
 															showUploadedFile(result);
 														},
 														error : function(
@@ -221,14 +211,12 @@
 						} // showUploadedFile(uploadResultArr)
 
 						var bno = '<c:out value="${photo.bno}"/>';
-						$
-								.getJSON(
+						$.getJSON(
 										"/board/getAttachList",
 										{
 											bno : bno
 										},
 										function(arr) {
-											console.log(arr);
 											var str = "";
 											$(arr)
 													.each(
@@ -246,7 +234,7 @@
 																	str += "<span>"
 																			+ attach.fileName
 																			+ "</span>";
-																	str += "<button data-file=\'" + fileCallPath + "\' data-type='image'><i class='fa fa-times'></i></button><br>"
+																	str += "<button class='close_btn' data-file=\'" + fileCallPath + "\' data-type='image'><i class='fa fa-times'></i></button><br>"
 																	str += "<img src='/display?fileName="
 																			+ fileCallPath
 																			+ "'>";
@@ -336,25 +324,24 @@
 						<label>작성자</label> <input class="form_writer" name='writer'
 							readonly="readonly" value="${photo.writer }">
 					</div>
-					<div class="row bottom_w`ap">
+					<div class="row bottom_wrap">
 						<div class="notice_btn">
-							<button class="normal_btn middle" data-oper="upload" type="upload">사진 추가</button>
 							<button class="normal_btn middle" data-oper="modify" type="submit">수정 완료</button>
 							<button class="normal_btn " data-oper="delete">삭제</button>
 						</div>
 					</div>
 
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" /> <input type="hidden" name="type"
-						value="photo" />
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+					<input type="hidden" name="type" value="photo" />
 				</form>
 
 				<div class="file_upload_wrap uploadRow">
+					<button class="normal_btn middle" data-oper="upload" type="upload">사진 추가</button>
 					<div class="uploadDiv">
 						<input class="input_upload" type="file" name="uploadFile" multiple>
 					</div>
 
-					<div class="uploadResult">
+					<div class="uploadResult uploadLev">
 						<ul></ul>
 					</div>
 				</div>

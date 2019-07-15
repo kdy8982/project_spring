@@ -84,6 +84,10 @@
 	margin-right: 5px;
 }
 
+#footer {
+	width : 98vw;
+}
+
 #footer .inner{
     padding:40px;
     background-color: #222222
@@ -122,13 +126,13 @@
 
 .container {
 	margin : 0 auto;
-	width : 1200px;
+	/* width : 1200px; */
 }
 
 .container.page_container {
 	padding-top : 20px;
 	margin : 0 auto;
-	width : 1200px;
+	width : 80vw;
 }
 
 .title_wrap {

@@ -15,7 +15,7 @@ var csrfTokenValue = "${_csrf.token}";
 $(document).ready(function() {
 	
 	var formObj = $("form[role='form']");
-	var cloneObj = $(".uploadDiv").clone();
+	// var cloneObj = $(".uploadDiv").clone();
 	
 	$("button[type='submit']").on("click", function(e) {
 		e.preventDefault();
@@ -86,8 +86,7 @@ $(document).ready(function() {
 							type : "post",
 							dataType : "json",
 							success : function(result) {
-								$(".uploadDiv").html(
-										cloneObj.html());
+								// $(".uploadDiv").html(cloneObj.html());
 								showUploadedFile(result);
 							},
 							error : function (request,status,error) {
@@ -211,15 +210,17 @@ $(document).ready(function() {
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<input type="hidden" name="boardType" value="photo" />
 				</form>
+				<div class="bottom_wrap">
+					<button class="normal_btn middle" type="submit">작성완료</button>
+				</div>
 				
 				<div class="file_upload_wrap uploadRow">
 					<div class="uploadDiv">
 						<input class="input_upload" type="file" name="uploadFile" multiple>
 					</div>
 				</div>
-				<button class="normal_btn middle" type="upload">사진 첨부</button>
-				<button class="normal_btn middle" type="submit">작성완료</button>
-				<div class="uploadResult">
+				<button class="normal_btn middle" type="upload">이미지 첨부</button>
+				<div class="uploadResult uploadLev">
 					<ul></ul>
 				</div>
 			</div>

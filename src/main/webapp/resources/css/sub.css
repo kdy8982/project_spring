@@ -300,7 +300,7 @@
 }
 
 .container .list_wrap.notice_wrap .uploadRow {
-	margin-bottom : 20px;
+	margin-bottom : 15px;
 }
 
 .container .list_wrap.notice_wrap form .form_writer {
@@ -336,8 +336,15 @@
 
 .bottom_wrap {
 	width : 100%;
-	text-align : center;
+	text-align : right;
 }
+
+
+.bottom_wrap .page_box {
+	text-align : center;
+	margin-bottom : 15px;
+}
+
 
 .bottom_wrap .search_box {
 	float : left;
@@ -383,7 +390,22 @@
     padding-bottom: 50px;
     border-top: 2px solid black;
     border-bottom: 2px solid black;
-    min-height: 200px;
+    min-height: 25vh;
+}
+
+.uploadResult {
+}
+
+.uploadResult.uploadLev { 
+	border : 1px solid #CCC;
+	min-height : 150px;
+	margin-bottom: 15px;
+}
+
+.uploadResult.uploadLev li{
+	display : inline-block;
+ 	width: 17%;
+    margin: 10px;
 }
 
 
@@ -404,12 +426,11 @@
 	margin-top : 15px;
 	margin-bottom: 15px;
 	position : relative;
-	min-height : 55px;
 }
 
 .bottom_wrap .notice_btn {
-	position : absolute;
-	right : 0;
+/* 	position : absolute;
+	right : 0; */
 }
 
 .modal .close_btn {
