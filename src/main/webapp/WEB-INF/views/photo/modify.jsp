@@ -326,8 +326,8 @@
 					</div>
 					<div class="row bottom_wrap">
 						<div class="notice_btn">
-							<button class="normal_btn middle" data-oper="modify" type="submit">수정 완료</button>
-							<button class="normal_btn " data-oper="delete">삭제</button>
+							<button class="btn normal_btn middle" data-oper="modify" type="submit">수정 완료</button>
+							<button class="btn normal_btn " data-oper="delete">삭제</button>
 						</div>
 					</div>
 
@@ -336,7 +336,7 @@
 				</form>
 
 				<div class="file_upload_wrap uploadRow">
-					<button class="normal_btn middle" data-oper="upload" type="upload">사진 추가</button>
+					<button class="btn tab_btn" data-oper="upload" type="upload">사진 추가</button>
 					<div class="uploadDiv">
 						<input class="input_upload" type="file" name="uploadFile" multiple>
 					</div>

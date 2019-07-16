@@ -249,7 +249,6 @@ $(document).ready(function() {
 		
 		<div class="content">
 			<div class="list_wrap notice_wrap">
-				게시글 수정
 				<form role="form" action="/notice/modify" method="post">
 					
 					<div class="form-group uploadRow">
@@ -266,8 +265,8 @@ $(document).ready(function() {
 					</div>
 					<div class="row bottom_wrap">
 						<div class="notice_btn">
-							<button data-oper="modify" type="submit">수정 완료</button>
-							<button data-oper="delete">삭제</button>
+							<button class="btn normal_btn middle" data-oper="modify" type="submit">수정 완료</button>
+							<button class="btn normal_btn"data-oper="delete">삭제</button>
 						</div>
 					</div>
 						

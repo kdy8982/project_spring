@@ -120,7 +120,38 @@
 				</section>
 				
 				
-				<section class="main_row2 even_row" id="section02">
+				<section class="main_row2 even_row" id="section03">
+					<div class="container">
+						<div class="title_wrap">
+							<h2 class="main_tit">사진</h2>
+						</div>
+						<ul class="gallery_li">
+							<c:forEach var="photo" items="${photoList}">
+								<a class="move" href="${photo.bno}" data-type="photo" data-url="/photo/get" data-amount="12">
+									<li class="yesupload bg1">
+										<div class="thumbnail">
+											<c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
+											<%
+												String url = (String)pageContext.getAttribute("attach");
+												pageContext.setAttribute("filepath", URLEncoder.encode(url));
+											%>
+											<img src="/display?fileName=<c:url value='${filepath}'/>">
+										</div> 
+										<div class="desc">
+											<h3>${photo.title}</h3>
+											<p>${photo.writer}</p>
+										</div>
+									</li>
+								</a>
+							</c:forEach>
+						</ul>
+						
+						<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
+					</div>
+				</section>
+				
+				
+				<section class="main_row3 " id="section03">
 					<div class="container">
 						<div class="title_wrap">
 							<h2 class="main_tit">더사랑모임</h2>
@@ -172,37 +203,6 @@
 				</section>
 				
 				
-				<section class="main_row3" id="section03">
-					<div class="container">
-						<div class="title_wrap">
-							<h2 class="main_tit">사진</h2>
-						</div>
-						<ul class="gallery_li">
-							<c:forEach var="photo" items="${photoList}">
-								<a class="move" href="${photo.bno}" data-type="photo" data-url="/photo/get" data-amount="12">
-									<li class="yesupload bg1">
-										<div class="thumbnail">
-											<c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
-											<%
-												String url = (String)pageContext.getAttribute("attach");
-												pageContext.setAttribute("filepath", URLEncoder.encode(url));
-											%>
-											<img src="/display?fileName=<c:url value='${filepath}'/>">
-										</div> 
-										<div class="desc">
-											<h3>${photo.title}</h3>
-											<p>${photo.writer}</p>
-										</div>
-									</li>
-								</a>
-							</c:forEach>
-						</ul>
-						
-						<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
-					</div>
-				</section>
-
-
 				<section class="main_row4 even_row" id="section04">
 					<div class="container">
 					

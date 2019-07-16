@@ -347,8 +347,13 @@
 
 
 .bottom_wrap .search_box {
-	float : left;
-	width : 75%;
+	text-align : center;
+}
+
+.bottom_wrap .search_box .keyword {
+	vertical-align: middle;
+    display: inline-block;
+    height: 1.3rem;
 }
 
 .page_box ul li {

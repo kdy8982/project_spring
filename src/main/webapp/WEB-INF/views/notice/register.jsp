@@ -213,7 +213,7 @@ $(document).ready(function() {
 				</form>
 				
 				<div class="bottom_wrap">
-					<button class="normal_btn middle" type="submit">작성완료</button>
+					<button class="btn normal_btn middle" type="submit">작성완료</button>
 				</div>
 				
 				<div class="file_upload_wrap uploadRow">
@@ -221,7 +221,7 @@ $(document).ready(function() {
 						<input class="input_upload" type="file" name="uploadFile" multiple>
 					</div>
 					
-					<button class="normal_btn middle" type="upload">이미지 첨부</button>
+					<button class="tab_btn middle btn" type="upload">이미지 첨부</button>
 					<div class="uploadResult uploadLev">
 						<ul></ul>
 					</div>

@@ -113,7 +113,7 @@ $(document).ready(function() {
 				</ul>
 			</div>
 			<div class="notice_btn">
-				<button class="normal_btn middle" onclick="location.href='/notice/register'">새 공지 쓰기</button>
+				<button class="btn normal_btn middle" onclick="location.href='/notice/register'">새 공지 쓰기</button>
 			</div>
 		</div>
 	</div>

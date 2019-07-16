@@ -79,6 +79,19 @@
 	background-color: #f5f5f5;
 }
 
+.even_row .gallery_li li {
+    width: calc(25% - 27px);
+    margin: 11px;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.even_row .gallery_li li .thumbnail {
+	background-color : white;
+}
+
 .main_row2 .table {
 	width : 100%;
 	font-size : 19px;
@@ -188,7 +201,7 @@
 }
 
 .book_li li .thumb img{
-	max-height: 40vh;
+	max-height: 25vh;
 }
 
 .book_li li .desc {
@@ -207,7 +220,6 @@
  
 .gallery_li li {
 	/* position: relative; */
-	height: 265px;
     width: calc(25% - 27px);
     margin: 11px;
     border-radius: 20px;
@@ -219,7 +231,7 @@
 
 .gallery_li li .thumbnail {
 	text-align : center;
-	line-height : 196px;
+	line-height : 14vw;
 }
 
 .gallery_li li .thumbnail img {
@@ -229,6 +241,7 @@
 }
 
 .gallery_li .desc {
+	line-height: 1.1vw;
 	padding: 15px 10px;
     background-color: #fff;
     text-align: center;

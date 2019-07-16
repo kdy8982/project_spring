@@ -139,8 +139,16 @@ $(document).ready(function() {
 					</c:if>
 				</ul>
 			</div>
+			<div class="search_box">
+				<select>
+					<option>a</option>
+					<option>b</option>
+				</select>
+				<input class="keyword" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword }'/>">
+				<button class="btn normal_btn">검색</button>
+			</div>
 			<div class="notice_btn">
-				<button class="normal_btn middle" onclick="location.href='/photo/register'">사진 올리기</button>
+				<button class="btn normal_btn middle" onclick="location.href='/photo/register'">사진 올리기</button>
 			</div>
 		</div>
 		<div class="modal">
@@ -154,7 +162,7 @@ $(document).ready(function() {
 				</div>
 				
 				<div class="modal_footer row">
-					<button class="normal_btn close">확인</button>
+					<button class="btn normal_btn close">확인</button>
 				</div>
 		</div>
 	</div>

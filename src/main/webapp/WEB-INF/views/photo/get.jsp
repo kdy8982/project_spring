@@ -111,8 +111,8 @@ $(document).ready(function() {
 					
 					<div class="row bottom_wrap">
 						<div class="notice_btn">
-							<button class="normal_btn" data-oper="list">목록</button>
-							<button class="normal_btn" data-oper="modify">수정</button>
+							<button class="btn normal_btn" data-oper="list">목록</button>
+							<button class="btn normal_btn" data-oper="modify">수정</button>
 						</div>
 					</div>
 					
