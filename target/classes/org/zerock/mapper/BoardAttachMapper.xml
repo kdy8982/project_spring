@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zerock.mapper.BoardAttachMapper">
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like'%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'W'.toString()">
+							writer like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
 	<resultMap type="org.zerock.domain.BoardVO" id="boardMap">
 		<id property="bno" column="bno"/>
 		<result property="title" column="title" />
@@ -59,10 +78,13 @@
 		            where type='photo'
 		            order by board.bno desc
 		         )   
-		        where rum ='1'
+		        where 
+		        <include refid="criteria"></include>
+		        rum ='1'
 		    )
+		    where
 		    <![CDATA[
-		    where rn <= #{pageNum} * #{amount}
+		    rn <= #{pageNum} * #{amount}
 		)
 		where rn > (#{pageNum}-1) * #{amount} 
 		]]> 

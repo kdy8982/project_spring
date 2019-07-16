@@ -122,7 +122,11 @@
 		select count(*) 
 		from tbl_board 
 		where bno > 0 
-		and type = #{boardType}
+		and
+		<if test="keyword!=null">
+			<include refid="criteria"></include>
+		</if>
+		type = #{boardType}
 	</select>
 	
 	<select id="getBoard" resultType="org.zerock.domain.BoardVO">

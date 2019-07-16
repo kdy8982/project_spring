@@ -32,6 +32,15 @@ $(document).ready(function() {
 		
 	})
 	
+	var searchForm = $("#searchForm");
+	$(".search_btn").on("click", function(e) {
+		e.preventDefault();
+		searchForm.submit();
+	})
+	
+	
+	
+	
 	var result='<c:out value="${result}"/>';
 	checkModal(result);
 	
@@ -140,12 +149,18 @@ $(document).ready(function() {
 				</ul>
 			</div>
 			<div class="search_box">
-				<select>
-					<option>a</option>
-					<option>b</option>
-				</select>
-				<input class="keyword" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword }'/>">
-				<button class="btn normal_btn">검색</button>
+				<form id="searchForm" action="/photo/list" method="get">
+					<select class="select" name="type">
+						<option value=""></option>
+						<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+						<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+						<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+					</select>
+					<input class="keyword" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword }'/>">
+					<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/> 
+					<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					<button class="btn normal_btn search_btn">검색</button>
+				</form>
 			</div>
 			<div class="notice_btn">
 				<button class="btn normal_btn middle" onclick="location.href='/photo/register'">사진 올리기</button>

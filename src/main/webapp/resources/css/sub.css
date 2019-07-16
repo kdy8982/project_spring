@@ -350,6 +350,11 @@
 	text-align : center;
 }
 
+.bottom_wrap .search_box .select {
+	height: 1.8rem;
+    vertical-align: middle;
+}
+
 .bottom_wrap .search_box .keyword {
 	vertical-align: middle;
     display: inline-block;
