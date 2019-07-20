@@ -1,8 +1,6 @@
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.zerock.domain.*"%>
 
@@ -28,8 +26,8 @@ $(document).ready(function() {
 		e.preventDefault();
 		console.log($(this).attr('href'));
 		actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr('href') +"'>");
-		actionForm.append("<input type='hidden' name='boardType' value='photo'>");
-		actionForm.attr("action", "/photo/get");
+		actionForm.append("<input type='hidden' name='boardType' value='essay'>");
+		actionForm.attr("action", "/essay/get");
 		actionForm.submit();
 		
 	})
@@ -89,7 +87,7 @@ $(document).ready(function() {
 	
 	<div class="container page_container">
 		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit">사진</h2>
+			<h2 class="wrap-inner main_tit">더사랑 이야기</h2>
 		</div>
 		
 		<div class="sub_title">
@@ -103,21 +101,20 @@ $(document).ready(function() {
 		
 		<div class="content">
 			<ul class="gallery_li">
-				<c:forEach var="photo" items="${photoList}" >
+				<c:forEach var="essay" items="${essayList}">
 						<li class="yesupload bg1">
-							<a class="move" href="<c:out value='${photo.bno}'/>">
+							<a class="move" href="<c:out value='${essay.bno}'/>">
 								<div class="thumbnail">
-									<c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
+									<c:set var="attach" value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
 									<%
 										String url = (String)pageContext.getAttribute("attach");
 										pageContext.setAttribute("filepath", URLEncoder.encode(url));
 									%>
-									<img src="/display?fileName=<c:url value='${filepath}'/>"><br>
+									<img src="/display?fileName=<c:url value='${filepath}'/>">
 								</div> 
 								<div class="desc">
-									<h3>${photo.title}</h3>
-									<p>${photo.writer}</p>
-									<p>${fn:length(photo.attachList)}</p>
+									<h3>${essay.title}</h3>
+									<p>${essay.writer}</p>
 								</div>
 							</a>
 						</li>		
@@ -152,7 +149,7 @@ $(document).ready(function() {
 				</ul>
 			</div>
 			<div class="search_box">
-				<form id="searchForm" action="/photo/list" method="get">
+				<form id="searchForm" action="/essay/list" method="get">
 					<select class="select" name="type">
 						<option value=""> - </option>
 						<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
@@ -166,7 +163,7 @@ $(document).ready(function() {
 				</form>
 			</div>
 			<div class="notice_btn">
-				<button class="btn normal_btn middle" onclick="location.href='/photo/register'">사진 올리기</button>
+				<button class="btn normal_btn middle" onclick="location.href='/essay/register'">사진 올리기</button>
 			</div>
 		</div>
 		<div class="modal">
@@ -190,7 +187,7 @@ $(document).ready(function() {
 	
 	</div>
 		
-	<form id="actionForm" action="/photo/list" method="get">
+	<form id="actionForm" action="/essay/list" method="get">
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
 		<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
 		<input type="hidden" name="type" value="${pageMaker.cri.type }">

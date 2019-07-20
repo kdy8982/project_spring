@@ -430,6 +430,7 @@
 	height: 100%;
 	font-weight: 500;
 	font-size: 20px;
+	white-space: pre-line;
 }
 
 .bottom_wrap {
@@ -447,3 +448,73 @@
 	float : right;
 }
 
+.login_wrap {
+	transform: translateX(-50%);
+    left: 50%;
+    top: 15%;
+    position: absolute;
+    text-align:center;	
+    width: 31vw;
+    
+}
+
+.login_wrap .top_title {
+	font-size : 30px;
+	display : block;
+}
+
+.login_wrap .mid_title {
+	font-size : 30px;
+	display : block;
+	word-spacing: 18px;
+}
+
+.login_wrap .bottom_title {
+	font-size : 26px;
+	display : block;
+}
+
+.login.background_wrap {
+    height: 79vh;
+   /*  background: url(/resources/images/sub/ewall1.jpg)no-repeat top center; */
+    background-size: cover;
+    background-position: center;
+    /* opacity: 0.13; */
+}
+
+.login_content {
+	background-color: white;
+   	padding: 25px 25px 10px 25px;
+    border-radius: 5px;
+    background-color: rgba( 255, 255, 255, 0 );
+    margin-top: 12px;
+}
+
+.login_content .input_area{
+	width:95%;
+	margin-bottom:10px;
+	
+	background: border-box;
+    font-weight: 600;
+    
+    border-right: 0px;
+    border-top: 0px;
+    border-left: 0px;
+    border-bottom: 1px solid #261111;
+}
+
+.login_content .input_area_button{
+	width:97%;
+	margin-bottom:10px;
+	background: border-box;
+    font-weight: 600;
+    border: 1px solid #261111;
+    height: 5vh;
+}
+
+.login_content .input_check{
+	text-align : right;
+	margin-bottom:10px;
+	text-decoration: underline;
+	font-weight: 600;
+}

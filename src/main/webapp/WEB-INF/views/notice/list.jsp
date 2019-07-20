@@ -112,8 +112,22 @@ $(document).ready(function() {
 					</c:if>
 				</ul>
 			</div>
+			<div class="search_box">
+				<form id="searchForm" action="/notice/list" method="get">
+					<select class="select" name="type">
+						<option value=""> - </option>
+						<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+						<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+						<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+					</select>
+					<input class="keyword" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword }'/>">
+					<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/> 
+					<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+					<button class="btn normal_btn search_btn">검색</button>
+				</form>
+			</div>
 			<div class="notice_btn">
-				<button class="btn normal_btn middle" onclick="location.href='/notice/register'">새 공지 쓰기</button>
+				<button class="btn normal_btn middle" onclick="location.href='/notice/register'">새소식 쓰기</button>
 			</div>
 		</div>
 	</div>

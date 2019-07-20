@@ -43,7 +43,7 @@ public class BoardServiceImpl implements BoardService {
 		if(cri.getBoardType() == "notice" || cri.getBoardType() == null) {
 			log.info("getList.. - notice or all");
 			return mapper.getListWithPaging(cri);
-		} else if (cri.getBoardType() == "photo") {
+		} else if (cri.getBoardType() == "photo" || cri.getBoardType() == "essay") {
 			return attachMapper.getPhotoList(cri);
 		}
 		return null;

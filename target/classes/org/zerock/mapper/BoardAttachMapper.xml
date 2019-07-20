@@ -75,7 +75,7 @@
 		            select row_number() over(partition by board.bno order by board.bno) rum, board.bno, board.title, board.content, board.writer, board.regdate, 
 		            board.updatedate, board.type, board.replycnt, attach.uuid, attach.uploadpath, attach.filename, 
 		            attach.previewimg from tbl_board board left outer join tbl_attach attach on board.bno = attach.bno 
-		            where type='photo'
+		            where type= #{boardType}
 		            order by board.bno desc
 		         )   
 		        where 

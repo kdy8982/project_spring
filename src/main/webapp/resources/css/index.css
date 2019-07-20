@@ -56,7 +56,7 @@
     top: 100px;
     right: 0;
     bottom: 0;
-    background: url(/resources/images/index/index.png)no-repeat top center;
+    background: url(/resources/images/index/index2.jpg)no-repeat top center;
     background-size: cover;
     background-position: center;
 }
@@ -82,7 +82,6 @@
 .even_row .gallery_li li {
     width: calc(25% - 27px);
     margin: 11px;
-    border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
     display: inline-block;
@@ -132,7 +131,6 @@
     padding: 40px 25px 30px 25px;
     height: 140px;
     /* background-color: #f5f5f5; */
-    border-radius: 13px;
 }
 
 .notice_box a {
@@ -190,14 +188,20 @@
 	position: relative;
     width: calc(33% - 25px);
     margin: 11px;
-    border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
     display: inline-block;
+    
+    max-height : 325px;
+   	min-height: 52vh;
+    
 }
 
 .book_li li .thumb {
-	text-align : center;
+	min-height: 25vh;
+    background-size: cover;
+    background-position: center;
+	/* text-align : center; */
 }
 
 .book_li li .thumb img{
@@ -205,12 +209,13 @@
 }
 
 .book_li li .desc {
-	text-align : center;
-    margin-top: 10px;
+	padding: 5px;
 }
 
-.book_li li .desc .book_title {
-	font-size : 17px;
+.book_li li .book_title {
+	/* text-align: center; */
+    display: block;
+	font-size: 1.1rem;
 }
 
 .book_li li .desc .book_author {
@@ -222,7 +227,6 @@
 	/* position: relative; */
     width: calc(25% - 27px);
     margin: 11px;
-    border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
     display: inline-block;
@@ -231,13 +235,19 @@
 
 .gallery_li li .thumbnail {
 	text-align : center;
-	line-height : 14vw;
+	line-height : 19.5vh;
+	
+	overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 25vh;
+    min-height: 25vh;
 }
 
 .gallery_li li .thumbnail img {
 	vertical-align: middle;
-	max-height : 194px;
-	border-radius: 8px;
+	max-width:110%;
 }
 
 .gallery_li .desc {
@@ -246,7 +256,6 @@
     background-color: #fff;
     text-align: center;
 	border-top: 1px solid #eee !important;
-    border-radius: 0 0 20px 20px;
     overflow: hidden;
     border-top: 0;
     /* position: absolute; */

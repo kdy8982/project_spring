@@ -153,51 +153,44 @@
 				
 				<section class="main_row3 " id="section03">
 					<div class="container">
+					
 						<div class="title_wrap">
-							<h2 class="main_tit">더사랑모임</h2>
+							<h2 class="main_tit">더사랑 이야기</h2>
 						</div>
 						<ul class="book_li">
+						
+						<c:forEach var="essay" items="${essayList}">
 							<li>
 								<a>
-									<div class="thumb">
-										<img src="/resources/images/index/bookcoversample.png">
+									<c:set var="attach" value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
+											<%
+												String url = (String)pageContext.getAttribute("attach");
+												pageContext.setAttribute("filepath", URLEncoder.encode(url));
+											%>
+									<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
 									</div>
 									
+									<c:set var="subsContent" value="${essay.content}" />
+									<%
+										String subStr = (String)pageContext.getAttribute("subsContent");
+										if(subStr.length() > 150) {
+											subStr = subStr.substring(0, 150) + " ...";
+											
+										}
+										pageContext.setAttribute("subsContent", subStr);
+									%>
 									<div class="desc">
-										<h3><span class="book_title">책제목</span></h3>
-										<p class="book_author">저자</p>
+										<span class="book_title">${essay.title}</span>
+										<p>${subsContent}</p>
 									</div>
 								</a>
 							</li>
-							
-							<li>
-								<a>
-									<div class="thumb">
-										<img src="/resources/images/index/bookcoversample.png">
-									</div>
-									
-									<div class="desc">
-										<h3><span class="book_title">책제목</span></h3>
-										<p class="book_author">저자</p>
-									</div>
-								</a>
-							</li>
-							
-							<li>
-								<a>
-									<div class="thumb">
-										<img src="/resources/images/index/bookcoversample.png">
-									</div>
-									
-									<div class="desc">
-										<h3><span class="book_title">책제목</span></h3>
-										<p class="book_author">저자</p>
-									</div>
-								</a>
-							</li>						
+						
+						</c:forEach>
+												
 						</ul>
 						<div class="viewmore_wrap">
-							<a class="viewmore_btn" href="/notice/list">view more</a>
+							<a class="viewmore_btn" href="/essay/list">view more</a>
 						</div>
 					</div>
 				</section>
