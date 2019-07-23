@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.MemberVO;
+import org.zerock.mapper.MemberMapper;
 
 import lombok.extern.log4j.Log4j;
 
@@ -55,12 +57,14 @@ public class CommonController {
 		log.info("post custom logout!!");
 	}
 	
-	@GetMapping("/customSignup")
-	public void signUp() {
+	@RequestMapping(value="/customSignup", method= {RequestMethod.GET, RequestMethod.POST})
+	public void signUp(MemberVO vo) {
+		
 		log.info("sign up !!");
+		log.info(vo);		
 	}
 	
-	
+	/* 스프링 시큐리티 암호 체크 방식 테스트용 메서드 */
 	@RequestMapping(value="/checkBcrypt", method= {RequestMethod.GET, RequestMethod.POST})
 	public void checkBcrypt(@RequestParam(value="targetStr", required=false) String targetStr) {
 		log.info("check Bcrypt!!!!");
@@ -69,7 +73,8 @@ public class CommonController {
 			String bCrtyptString = passwordEncoder.encode(targetStr);
 			
 			log.info("targetStr : " + targetStr);
-			log.info("bCryptString : " + bCrtyptString);
+			log.info("bCrtyptString : " + bCrtyptString);
+			log.info(passwordEncoder.matches(targetStr, "$2a$10$vqsyLHb7CG.3JUMY9/R6PO4BA0dyfSA.QPDGWqR4nwRKf7iu8jv36"));
 		}
 	}
 	

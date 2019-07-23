@@ -18,11 +18,11 @@ public class CustomUserDetailService implements UserDetailsService {
 	private MemberMapper memberMapper;
 	
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { // input의 name과 파라미터로 선언하는 변수명은 대소문자를 구분하지 않는다.
 		log.info("Call loadUserByUsername..!");
-		log.warn("Load User by UserName : " + userName);
+		log.warn("Load User by UserName : " + username);
 		
-		MemberVO vo = memberMapper.read(userName);
+		MemberVO vo = memberMapper.read(username);
 		log.warn("quried by member mapper : " + vo);
 		
 		// 다양한 인증 방법을 설정하기 위해, org.springframework.security.core.userdetails.User클래스를 상속하여 만든,

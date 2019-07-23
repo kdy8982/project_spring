@@ -10,7 +10,7 @@ import lombok.Data;
 public class MemberVO {
 	private String userid;
 	private String userpw;
-	private String userName;
+	private String username;
 	private String enabled;
 	
 	private Date regDate;
