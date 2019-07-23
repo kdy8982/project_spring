@@ -230,7 +230,7 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
-	
+<div class="page_wrap">
 	<div class="container page_container">
 		<div class="title">
 			<div class="title_wrap">
@@ -287,6 +287,8 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
+	<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
+</div> <!-- page_wrap -->
 		
 	<form id="actionForm" action="/notice/list" method="get">
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
@@ -295,6 +297,6 @@ $(document).ready(function() {
 		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
 	</form>
 
-<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
+
 </body>
 </html>

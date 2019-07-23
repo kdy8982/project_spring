@@ -71,7 +71,7 @@
 	<body>
 		<jsp:include page="inc/top.jsp" flush="true"></jsp:include>
 	
-		<div class="wrap">
+		<div class="page_wrap">
 			<div class="main_visual_wrap">
 	
 				<div class="main_visual">
@@ -230,12 +230,12 @@
 				</section>
 
 			</div>
+		<jsp:include page="./inc/footer.jsp" flush="true"></jsp:include>
 		</div>
 		
 		<form id="actionForm" action="/notice/list" method="get">
 			<input type="hidden" name="pageNum" value="1">
 		</form>
-		
-		<jsp:include page="./inc/footer.jsp" flush="true"></jsp:include>
+
 	</body>
 </html>

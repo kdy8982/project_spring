@@ -35,6 +35,7 @@ $(document).ready(function() {
 <title>Insert title here</title>
 </head>
 <body>
+
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
 <div class="page_wrap">

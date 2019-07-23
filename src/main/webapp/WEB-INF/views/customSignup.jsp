@@ -22,6 +22,10 @@
 		<div class="login_content">
 			<form method="post" action="/login">
 				<div>
+					<input class="input_area" type="text" name="username" value="admin90" placeholder="NAME">
+				</div>
+			
+				<div>
 					<input class="input_area" type="text" name="username" value="admin90" placeholder="ID">
 				</div>
 				
@@ -29,17 +33,19 @@
 					<input class="input_area" type="password" name="password" value="pw90" placeholder="PASSWORD">
 				</div>
 				
-				<div class="input_check">
-					<input  type="checkbox" name="remember-me"><span>Remember Me!</span>
+				<div>
+					<input class="input_area" type="password" name="password" value="pw90" placeholder="PASSWORD">
 				</div>
+
+				
 				
 				<div>
 					<input class="input_area_button" type="submit" value="로그인">
 				</div>
 				
 				<div class="input_check">
-					<a href="/customSignup"><span>회원가입</span></a>
-				</div>
+					<a><span>회원가입</span></a>
+				</div>	
 				
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				

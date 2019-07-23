@@ -65,7 +65,7 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
-	
+<div class="page_wrap">
 	<div class="container page_container">
 		<div class="title_wrap">
 			<h2 class="wrap-inner main_tit">새소식</h2>
@@ -123,7 +123,8 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-		
 <jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
+</div>
+		
 </body>
 </html>

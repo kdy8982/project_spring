@@ -87,6 +87,7 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
+<div class="page_wrap">
 	<div class="container page_container">
 		<div class="title_wrap">
 			<h2 class="wrap-inner main_tit">사진</h2>
@@ -184,7 +185,8 @@ $(document).ready(function() {
 				</div>
 		</div>
 	</div>
-	
+	<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
+</div>
 	
 	<div id="mask">
 	
@@ -198,6 +200,6 @@ $(document).ready(function() {
 	</form>
 	
 
-<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
+
 </body>
 </html>

@@ -9,8 +9,10 @@ import org.springframework.security.core.userdetails.User;
 import org.zerock.domain.MemberVO;
 
 import lombok.Getter;
+import lombok.extern.log4j.Log4j;
 
 @Getter
+@Log4j
 public class CustomUser extends User {
 	
 	private static final long serialVersionUID = 1L;
@@ -23,7 +25,6 @@ public class CustomUser extends User {
 	
 	public CustomUser(MemberVO vo) {
 		super(vo.getUserid(), vo.getUserpw(), vo.getAuthList().stream().map(auth-> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList()));
-		
 		this.member = vo;
 	}
 	

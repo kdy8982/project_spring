@@ -71,7 +71,7 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
-	
+<div class="page_wrap">
 	<div class="container page_container">
 		<div class="title_wrap">
 			<h2 class="wrap-inner main_tit">사진</h2>
@@ -82,7 +82,7 @@ $(document).ready(function() {
 			"그래서 우리는 위로를 받았습니다.<br> 
 			또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
 			 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
-			고린도후서 7장 13절
+			고린도후서 7장 13절.
 		 </h3>
 		</div>
 		
@@ -128,7 +128,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-		
-<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
+	<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
+</div>
 </body>
 </html>
