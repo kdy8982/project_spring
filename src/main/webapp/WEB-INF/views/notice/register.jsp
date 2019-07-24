@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>
 <!DOCTYPE html>
 <html>
@@ -205,7 +207,8 @@ $(document).ready(function() {
 					</div>
 					
 					<div class="form-group uploadRow">
-						<label>작성자</label> <input class="form_writer" name='writer' readonly="readonly" value="test-user">
+						<label>작성자</label>
+						<input class="form_writer" name='writer' readonly="readonly" value="<sec:authentication property="principal.member.username"/>">
 					</div>
 					
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

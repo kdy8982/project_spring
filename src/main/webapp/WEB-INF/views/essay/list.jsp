@@ -85,101 +85,105 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
-	<div class="container page_container">
-		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit">더사랑 이야기</h2>
-		</div>
-		
-		<div class="sub_title">
-		<h3>
-			"그래서 우리는 위로를 받았습니다.<br> 
-			또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
-			 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
-			고린도후서 7장 13절
-		 </h3>
-		</div>
-		
-		<div class="content">
-			<ul class="gallery_li">
-				<c:forEach var="essay" items="${essayList}">
-						<li class="yesupload bg1">
-							<a class="move" href="<c:out value='${essay.bno}'/>">
-								<div class="thumbnail">
-									<c:set var="attach" value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
-									<%
-										String url = (String)pageContext.getAttribute("attach");
-										pageContext.setAttribute("filepath", URLEncoder.encode(url));
-									%>
-									<img src="/display?fileName=<c:url value='${filepath}'/>">
-								</div> 
-								<div class="desc">
-									<h3>${essay.title}</h3>
-									<p>${essay.writer}</p>
-								</div>
-							</a>
-						</li>		
-				</c:forEach>
-			</ul>
-		</div>
-		
-		<div class="bottom_wrap">
-			<div class="page_box">
-				<ul>
-					<c:if test="${pageMaker.prev}">
-						<li class="page-item">
-							<a class="page-link" href="${pageMaker.startPage -1}" aria-label="Previous">
-					        	<span aria-hidden="true">&laquo;</span>
-								<span class="sr-only">Previous</span>
-							</a>
-						</li>
-					</c:if>
-				
-					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-						<li class="page-item ${pageMaker.cri.pageNum == num ? "active":""} "><a class="page_num" href="${num}">${num}</a></li>
+	<div class="page_wrap">
+		<div class="container page_container">
+			<div class="title_wrap">
+				<h2 class="wrap-inner main_tit">더사랑 이야기</h2>
+			</div>
+			
+			<div class="sub_title">
+			<h3>
+				"그래서 우리는 위로를 받았습니다.<br> 
+				또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
+				 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
+				고린도후서 7장 13절
+			 </h3>
+			</div>
+			
+			<div class="content">
+				<ul class="gallery_li">
+					<c:forEach var="essay" items="${essayList}">
+							<li class="yesupload bg1">
+								<a class="move" href="<c:out value='${essay.bno}'/>">
+									<div class="thumbnail">
+										<c:set var="attach" value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
+										<%
+											String url = (String)pageContext.getAttribute("attach");
+											pageContext.setAttribute("filepath", URLEncoder.encode(url));
+										%>
+										<img src="/display?fileName=<c:url value='${filepath}'/>">
+									</div> 
+									<div class="desc">
+										<h3>${essay.title}</h3>
+										<p>${essay.writer}</p>
+									</div>
+								</a>
+							</li>		
 					</c:forEach>
-					
-					<c:if test="${pageMaker.next}">
-						<li class="page-item next">
-							<a class="page-link" href="${pageMaker.endPage + 1}" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-	   							<span class="sr-only">Next</span>
-							</a>
-						</li>
-					</c:if>
 				</ul>
 			</div>
-			<div class="search_box">
-				<form id="searchForm" action="/essay/list" method="get">
-					<select class="select" name="type">
-						<option value=""> - </option>
-						<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
-						<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
-						<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-					</select>
-					<input class="keyword" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword }'/>">
-					<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/> 
-					<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
-					<button class="btn normal_btn search_btn">검색</button>
-				</form>
+			
+			<div class="bottom_wrap">
+				<div class="page_box">
+					<ul>
+						<c:if test="${pageMaker.prev}">
+							<li class="page-item">
+								<a class="page-link" href="${pageMaker.startPage -1}" aria-label="Previous">
+						        	<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+							</li>
+						</c:if>
+					
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="page-item ${pageMaker.cri.pageNum == num ? "active":""} "><a class="page_num" href="${num}">${num}</a></li>
+						</c:forEach>
+						
+						<c:if test="${pageMaker.next}">
+							<li class="page-item next">
+								<a class="page-link" href="${pageMaker.endPage + 1}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+		   							<span class="sr-only">Next</span>
+								</a>
+							</li>
+						</c:if>
+					</ul>
+				</div>
+				<div class="search_box">
+					<form id="searchForm" action="/essay/list" method="get">
+						<select class="select" name="type">
+							<option value=""> - </option>
+							<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+							<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+							<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+						</select>
+						<input class="keyword" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword }'/>">
+						<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/> 
+						<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
+						<button class="btn normal_btn search_btn">검색</button>
+					</form>
+				</div>
+				<div class="notice_btn">
+					<button class="btn normal_btn middle" onclick="location.href='/essay/register'">사진 올리기</button>
+				</div>
 			</div>
-			<div class="notice_btn">
-				<button class="btn normal_btn middle" onclick="location.href='/essay/register'">사진 올리기</button>
+			<div class="modal">
+					<div class="modal_header row">
+						<div class="modal_title">알림</div>
+						<!-- <button class="close_btn"><i class="fa fa-times" aria-hidden="true"></i></button> -->
+					</div>
+					
+					<div class="modal_body row">
+						정상적으로 처리 되었습니다.
+					</div>
+					
+					<div class="modal_footer row">
+						<button class="btn normal_btn close">확인</button>
+					</div>
 			</div>
 		</div>
-		<div class="modal">
-				<div class="modal_header row">
-					<div class="modal_title">알림</div>
-					<!-- <button class="close_btn"><i class="fa fa-times" aria-hidden="true"></i></button> -->
-				</div>
-				
-				<div class="modal_body row">
-					정상적으로 처리 되었습니다.
-				</div>
-				
-				<div class="modal_footer row">
-					<button class="btn normal_btn close">확인</button>
-				</div>
-		</div>
+		
+		<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 	</div>
 	
 	
@@ -195,6 +199,5 @@ $(document).ready(function() {
 	</form>
 	
 
-<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 </body>
 </html>

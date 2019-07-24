@@ -17,15 +17,24 @@
 		
 		$(".input_area_button").on("click", function(e) {
 			e.preventDefault();
+
+			/* input박스 null값 체크 */
+			var inputArea = $(".input_area");
+			for(var i=0; i < inputArea.length; i++) {
+				console.log(inputArea[i].value);
+				if(inputArea[i].value == "") {
+					alert("입력하지 않은 정보가 있습니다.");
+					return;
+				}
+			}
+			
+			/* 비밀번호 확인 체크 */
 			var pw = $(".password").val();
 			var pwConfirm = $(".password_confirm").val();
 			if(pw != pwConfirm) {
-				alert("값이 다르네요");
+				alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
 				return;
-			} else {
-				alert("같은 값이네요");
 			}
-			
 			formObj.submit();
 		})
 	})
@@ -45,7 +54,7 @@
 		
 		<span class="top_title">EVERY WALL</span>
 		<span class="mid_title">IS A DOOR</span>
-		<span class="bottom_title">모든 벽은 문	이다.</span>
+		<span class="bottom_title">모든 벽은 문 이다</span>
 		<div class="login_content">
 			<form role="form" method="post" action="/customSignup">
 				<div>
@@ -65,15 +74,11 @@
 				</div>
 				
 				<div>
-					<input class="input_area_button" type="submit" value="로그인">
+					<input class="input_area_button" type="submit" value="가입하기">
 				</div>
 				
-				<div class="input_check">
-					<a><span>회원가입</span></a>
-				</div>	
-				
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				
+				<!-- <input type="hidden" name="authList[0].auth" value="ROLE_USER" /> -->
 			</form>
 		</div>
 	</div>
