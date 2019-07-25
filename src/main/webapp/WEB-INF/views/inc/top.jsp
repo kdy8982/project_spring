@@ -28,11 +28,13 @@ $(document).ready(function() {
 				<li class="login_area">				
 					<sec:authorize access="isAuthenticated()">
 						<div>
+						<a href="/memberDetail">
 						<sec:authentication property="principal.member.username"/>
 						<img class="img-profile" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+						</a>
 						</div>
 						<ul class="member_dropmenu">
-							<li><i class="fa fa-user user_mark" aria-hidden="true"></i>내 정보 관리</li>
+							<li><i class="fa fa-user user_mark" aria-hidden="true"></i><a href="/memberDetail">내 정보 관리</li>
 							<li><i class="fa fa-sign-out user_mark" aria-hidden="true"></i><a href="/customLogout">로그아웃</a></li>
 						</ul>
 					</sec:authorize>

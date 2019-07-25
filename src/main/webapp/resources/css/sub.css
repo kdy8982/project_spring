@@ -482,6 +482,16 @@
     /* opacity: 0.13; */
 }
 
+.profile_wrap {
+	text-align: center;
+}
+
+.profile_wrap .thumb {
+	display: inline-block;
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+}
 .login_content {
 	background-color: white;
    	padding: 25px 25px 10px 25px;

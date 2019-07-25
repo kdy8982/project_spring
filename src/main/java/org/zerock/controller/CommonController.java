@@ -62,14 +62,24 @@ public class CommonController {
 	
 	@RequestMapping(value="/customSignup", method= {RequestMethod.GET, RequestMethod.POST})
 	public void signUp(MemberVO vo, HttpServletRequest request) {
-		log.info("sign up !!!!");
+		log.info("sign up call .. ");
 		log.info("요청 type : " + request.getMethod());
 		
 		if(request.getMethod().equals("POST")) {
 			memberService.insert(vo);
 		}
-		
 	}
+	
+	@RequestMapping(value="/memberDetail", method= {RequestMethod.GET, RequestMethod.POST})
+	public void memberDetail(MemberVO vo, HttpServletRequest request) {
+		log.info("member detail call ..");
+		log.info("요청 type : " + request.getMethod());
+		
+		if(request.getMethod().equals("POST")) {
+			memberService.insert(vo);
+		}
+	}
+	
 	
 	/* 스프링 시큐리티 암호 체크 방식 테스트용 메서드 */
 	/*

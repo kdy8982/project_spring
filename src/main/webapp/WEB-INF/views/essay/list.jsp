@@ -164,7 +164,7 @@ $(document).ready(function() {
 					</form>
 				</div>
 				<div class="notice_btn">
-					<button class="btn normal_btn middle" onclick="location.href='/essay/register'">사진 올리기</button>
+					<button class="btn normal_btn middle" onclick="location.href='/essay/register'">글쓰기</button>
 				</div>
 			</div>
 			<div class="modal">
