@@ -224,7 +224,8 @@
 }
  
 .gallery_li li {
-	/* position: relative; */
+	position: relative;
+	height: 30vh; 
     width: calc(25% - 27px);
     margin: 11px;
     overflow: hidden;
@@ -234,7 +235,10 @@
 }
 
 .gallery_li li .thumbnail {
-	text-align : center;
+	position: absolute;
+    height: 75%;
+    width: 100%;
+/* 	text-align : center;
 	line-height : 19.5vh;
 	
 	overflow: hidden;
@@ -242,18 +246,22 @@
     align-items: center;
     justify-content: center;
     max-height: 25vh;
-    min-height: 25vh;
+    min-height: 25vh; */
 }
 
 .gallery_li li .thumbnail img {
-	vertical-align: middle;
-	max-width:110%;
+/*     vertical-align: middle;
+    height: 100%;
+    width: 100%; */
 }
 
 .gallery_li .desc {
-	line-height: 1.1vw;
+/* 	line-height: 1.1vw;
 	padding: 15px 10px;
-    background-color: #fff;
+ */ 
+	position: absolute;
+    height: 25%;   
+ 	background-color: #fff;
     text-align: center;
 	border-top: 1px solid #eee !important;
     overflow: hidden;

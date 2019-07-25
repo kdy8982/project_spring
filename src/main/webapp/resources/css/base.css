@@ -44,7 +44,7 @@ blockquote,q { quotes:"" ""; }
 hr { display:none; }
 
 /* 이미지 */
-img {border: 0 none; max-width: 85%;}
+img {border: 0 none;}
 
 /* 숨김 */
 .blind, .hidden, legend { display: block; left: 0; overflow: hidden; position: absolute; top: -1000em;}

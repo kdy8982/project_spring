@@ -37,6 +37,9 @@ public class PhotoController {
 		int total = boardService.getTotalNotice(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		model.addAttribute("photoList", boardService.getList(cri));
+		model.addAttribute("photoCount", boardService.getPhotoCount(cri));
+		
+		// log.info(boardService.getPhotoCount(cri));
 	}
 	
 	@GetMapping("/register")

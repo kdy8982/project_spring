@@ -21,4 +21,6 @@ public interface BoardService {
 	public int getTotalNotice(Criteria cri);
 	public BoardVO getBoard(BoardVO board);
 	
+	public List<Integer> getPhotoCount(Criteria cri);
+	
 }

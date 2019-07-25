@@ -77,7 +77,29 @@ $(document).ready(function() {
     	$("#mask").css("display", "none");
     })
     
+    
+    var div = $(".thumbnail") // 이미지를 감싸는 div
+	var img = $(".thumbnail > img") // 이미지
+	var divAspect = 90 / 120; // div의 가로세로비는 알고 있는 값이다
+	var imgAspect = img.height() / img.width();
+	 
+	if (imgAspect <= divAspect) {
+	    // 이미지가 div보다 납작한 경우 세로를 div에 맞추고 가로는 잘라낸다
+	    var imgWidthActual = div.height() / imgAspect;
+	    var imgWidthToBe = div.height() / divAspect;
+	    var marginLeft = -Math.round((imgWidthActual - imgWidthToBe) / 2);
+	    // img.style.cssText = 'width: auto; height: 100%; margin-left: ' + marginLeft + 'px;'
+	    img.css({"width": "auto", "height": "100%", "margin-left": marginLeft})              
+	                      
+	} else {
+	    // 이미지가 div보다 길쭉한 경우 가로를 div에 맞추고 세로를 잘라낸다
+	    // img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
+	    img.css({"width": "100%", "height": "auto", "margin-left": "0"})              
+	}
+    
 })
+
+
 
 	
 </script>
@@ -104,7 +126,7 @@ $(document).ready(function() {
 		
 		<div class="content">
 			<ul class="gallery_li">
-				<c:forEach var="photo" items="${photoList}" >
+				<c:forEach var="photo" items="${photoList}" varStatus="status">
 						<li class="yesupload bg1">
 							<a class="move" href="<c:out value='${photo.bno}'/>">
 								<div class="thumbnail">
@@ -118,7 +140,7 @@ $(document).ready(function() {
 								<div class="desc">
 									<h3>${photo.title}</h3>
 									<p>${photo.writer}</p>
-									<p>${fn:length(photo.attachList)}</p>
+									<p>${photoCount[status.index]}</p>
 								</div>
 							</a>
 						</li>		

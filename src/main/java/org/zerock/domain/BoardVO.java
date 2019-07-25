@@ -18,6 +18,7 @@ public class BoardVO {
 	private String boardType;
 	
 	private int replyCnt;
+	private int photoCnt;
 	
 	private List<BoardAttachVO> attachList;
 	

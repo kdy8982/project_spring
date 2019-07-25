@@ -132,5 +132,10 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.getBoard(board);
 	}
 
+	@Override
+	public List<Integer> getPhotoCount(Criteria cri) {
+		return attachMapper.getPhotoCount(cri);
+	}
+
 
 }

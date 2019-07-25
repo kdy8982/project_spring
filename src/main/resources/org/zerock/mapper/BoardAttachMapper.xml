@@ -30,7 +30,6 @@
 		<result property="updatedate" column="updatedate"/>
 		<result property="boardType" column="type"/>
 		<result property="replyCnt" column="replycnt"/>
-		
 		<collection property="attachList" resultMap="boardAttachMap" />
 	</resultMap>
 	
@@ -88,5 +87,27 @@
 		)
 		where rn > (#{pageNum}-1) * #{amount} 
 		]]> 
+	</select>
+	
+	<select id="getPhotoCount" resultType="Integer">
+		select photoCnt 
+		from
+		(
+		    select rownum rn, bno, title, type, photoCnt 
+		    from 
+		    (
+		        select board.bno, title, type, count(*) photoCnt
+		        from tbl_board board inner join tbl_attach attach
+		        on board.bno = attach.bno
+		        where type='photo' 
+		        group by title, type, board.bno
+		        order by bno desc
+		    )
+		    where 
+			<![CDATA[
+		    rownum <= #{pageNum} * #{amount}
+		)
+		where rn > (#{pageNum}-1) * #{amount} 
+		]]>
 	</select>
 </mapper>

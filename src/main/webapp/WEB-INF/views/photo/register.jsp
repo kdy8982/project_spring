@@ -176,57 +176,59 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
+	<div class="page_wrap">
+		<div class="container page_container">
+			<div class="title_wrap">
+				<h2 class="wrap-inner main_tit">사진</h2>
+			</div>
+			
+			<div class="sub_title">
+			<h3>
+				"그래서 우리는 위로를 받았습니다.<br> 
+				또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
+				 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
+				고린도후서 7장 13절
+			 </h3>
+			</div>
+			
+			<div class="content">
+				<div class="list_wrap notice_wrap">
+					<form role="form" action="/photo/register" method="post">
+						
+						<div class="form-group uploadRow">
+							<label>제목</label> <input class="form_title" name='title'>
+						</div>
 	
-	<div class="container page_container">
-		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit">사진</h2>
-		</div>
-		
-		<div class="sub_title">
-		<h3>
-			"그래서 우리는 위로를 받았습니다.<br> 
-			또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
-			 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
-			고린도후서 7장 13절
-		 </h3>
-		</div>
-		
-		<div class="content">
-			<div class="list_wrap notice_wrap">
-				<form role="form" action="/photo/register" method="post">
-					
-					<div class="form-group uploadRow">
-						<label>제목</label> <input class="form_title" name='title'>
-					</div>
-
-					<div class="form-group uploadRow">
-						<label>글 내용</label>
-						<textarea class="" rows="3" name='content'></textarea>
+						<div class="form-group uploadRow">
+							<label>글 내용</label>
+							<textarea class="" rows="3" name='content'></textarea>
+						</div>
+						
+						<div class="form-group uploadRow">
+							<label>작성자</label>
+							<input class="form_writer" name='writer' readonly="readonly" value="<sec:authentication property="principal.member.username"/>">
+						</div>
+						
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<input type="hidden" name="boardType" value="photo" />
+					</form>
+					<div class="bottom_wrap">
+						<button class="btn normal_btn middle" type="submit">작성완료</button>
 					</div>
 					
-					<div class="form-group uploadRow">
-						<label>작성자</label>
-						<input class="form_writer" name='writer' readonly="readonly" value="<sec:authentication property="principal.member.username"/>">
+					<div class="file_upload_wrap uploadRow">
+						<div class="uploadDiv">
+							<input class="input_upload" type="file" name="uploadFile" multiple>
+						</div>
 					</div>
-					
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<input type="hidden" name="boardType" value="photo" />
-				</form>
-				<div class="bottom_wrap">
-					<button class="btn normal_btn middle" type="submit">작성완료</button>
-				</div>
-				
-				<div class="file_upload_wrap uploadRow">
-					<div class="uploadDiv">
-						<input class="input_upload" type="file" name="uploadFile" multiple>
+					<button class="btn tab_btn middle" type="upload">이미지 첨부</button>
+					<div class="uploadResult uploadLev">
+						<ul></ul>
 					</div>
-				</div>
-				<button class="btn tab_btn middle" type="upload">이미지 첨부</button>
-				<div class="uploadResult uploadLev">
-					<ul></ul>
 				</div>
 			</div>
 		</div>
+		<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 	</div>
 		
 	<form id="actionForm" action="/notice/list" method="get">
@@ -236,6 +238,5 @@ $(document).ready(function() {
 		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
 	</form>
 
-<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 </body>
 </html>
