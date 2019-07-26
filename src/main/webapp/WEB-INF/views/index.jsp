@@ -187,8 +187,8 @@
 				<ul class="book_li">
 
 					<c:forEach var="essay" items="${essayList}">
-						<li><a> <c:set var="attach"
-									value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
+						<li><a class="move" href="<c:out value='${essay.bno}'/>" data-amount="12" data-type="essay" data-url="/essay/get"> 
+						<c:set var="attach"	value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
 								<%
 									String url = (String) pageContext.getAttribute("attach");
 										pageContext.setAttribute("filepath", URLEncoder.encode(url));
