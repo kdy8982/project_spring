@@ -41,8 +41,6 @@ $(document).ready(function() {
 	})
 	
 	
-	
-	
 	var result='<c:out value="${result}"/>';
 	checkModal(result);
 	
@@ -77,26 +75,6 @@ $(document).ready(function() {
     	$("#mask").css("display", "none");
     })
     
-    
-    var div = $(".thumbnail") // 이미지를 감싸는 div
-	var img = $(".thumbnail > img") // 이미지
-	var divAspect = 90 / 120; // div의 가로세로비는 알고 있는 값이다
-	var imgAspect = img.height() / img.width();
-	 
-	if (imgAspect <= divAspect) {
-	    // 이미지가 div보다 납작한 경우 세로를 div에 맞추고 가로는 잘라낸다
-	    var imgWidthActual = div.height() / imgAspect;
-	    var imgWidthToBe = div.height() / divAspect;
-	    var marginLeft = -Math.round((imgWidthActual - imgWidthToBe) / 2);
-	    // img.style.cssText = 'width: auto; height: 100%; margin-left: ' + marginLeft + 'px;'
-	    img.css({"width": "auto", "height": "100%", "margin-left": marginLeft})              
-	                      
-	} else {
-	    // 이미지가 div보다 길쭉한 경우 가로를 div에 맞추고 세로를 잘라낸다
-	    // img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
-	    img.css({"width": "100%", "height": "auto", "margin-left": "0"})              
-	}
-    
 })
 
 
@@ -129,18 +107,17 @@ $(document).ready(function() {
 				<c:forEach var="photo" items="${photoList}" varStatus="status">
 						<li class="yesupload bg1">
 							<a class="move" href="<c:out value='${photo.bno}'/>">
-								<div class="thumbnail">
-									<c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
-									<%
-										String url = (String)pageContext.getAttribute("attach");
-										pageContext.setAttribute("filepath", URLEncoder.encode(url));
-									%>
-									<img src="/display?fileName=<c:url value='${filepath}'/>"><br>
+								<c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
+								<%
+									String url = (String)pageContext.getAttribute("attach");
+									pageContext.setAttribute("filepath", URLEncoder.encode(url));
+								%>
+								<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
+									<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${photoCount[status.index]}</p>
 								</div> 
 								<div class="desc">
 									<h3>${photo.title}</h3>
 									<p>${photo.writer}</p>
-									<p>${photoCount[status.index]}</p>
 								</div>
 							</a>
 						</li>		
@@ -210,9 +187,7 @@ $(document).ready(function() {
 	<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 </div>
 	
-	<div id="mask">
-	
-	</div>
+	<div id="mask"></div>
 		
 	<form id="actionForm" action="/photo/list" method="get">
 		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">

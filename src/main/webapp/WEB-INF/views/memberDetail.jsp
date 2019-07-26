@@ -31,13 +31,62 @@
 			/* 비밀번호 확인 체크 */
 			var pw = $(".password").val();
 			var pwConfirm = $(".password_confirm").val();
+			console.log("pw : " + pw);
+			console.log("pw confirm : " + pwConfirm);
 			if(pw != pwConfirm) {
 				alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
 				return;
 			}
+			
 			formObj.submit();
 		})
+		
+		var result = '<c:out value="${result}"/>';
+		checkModal(result);
+
+		function checkModal(result) {
+			if (result === "") {
+				return;
+			}
+			if (parseInt(result) > 0) {
+
+			} else {
+				wrapWindowByMask();
+			}
+		}
+
+		function wrapWindowByMask() {
+			//화면의 높이와 너비를 구한다.
+			var maskHeight = $(document).height();
+			var maskWidth = $(window).width();
+
+			//마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+			$('#mask').css({
+				'width' : maskWidth,
+				'height' : maskHeight
+			});
+
+			$('#mask').fadeTo("slow", 0.8);
+			
+			
+			$('.modal_body').html(result);
+			//모달 같은 거 띄운다.
+			$('.modal').css("display", "block");
+			//$(".modal").show();
+		}
+
+		$(".normal_btn.close").on("click", function() {
+			$(".modal").css("display", "none");
+			$("#mask").css("display", "none");
+		})
+		
 	})
+	
+	function showPasswordChange() {
+		$(".hidden_div").css("display", "block");
+		$(".show_div").css("display", "none");
+	} 
+
 
 </script>
 
@@ -57,15 +106,34 @@
 			</div>
 		</div>
 		<div class="login_content">
-			<form role="form" method="post" action="/memberDetail">
-				<div>
+			<form role="form" method="post" action="/memberModify">
+				<div class="login_div">
 					<span>이름</span>
 					<input class="input_area" type="text" name="username" value="<sec:authentication property="principal.member.username"/>" readonly="readonly">
 				</div>
 			
-				<div>
+				<div class="login_div">
 					<span>아이디</span>
 					<input class="input_area" type="text" name="userid" value="<sec:authentication property="principal.member.userid"/>" readonly="readonly">
+				</div>
+				
+				<div class="login_div hidden_div" style="display: none">
+					<span>현재 비밀번호</span>
+					<input class="input_area" type="password" name="userpw" value="">
+				</div>
+				
+				<div class="login_div hidden_div" style="display: none">
+					<span>새로운 비밀번호</span>
+					<input class="input_area password" type="password" name="newpw" value="">
+				</div>
+				
+				<div class="login_div hidden_div" style="display: none">
+					<span>새로운 비밀번호 확인</span>
+					<input class="input_area password_confirm" type="password" value="">
+				</div>
+				
+				<div class="login_div input_check show_div">
+					<span onclick="showPasswordChange()">비밀번호 변경</span>
 				</div>
 				
 				<div>
@@ -79,5 +147,19 @@
 	
 	<jsp:include page="inc/footer.jsp" flush="true"></jsp:include>
 	</div>
+	
+	<div class="modal">
+			<div class="modal_header row">
+				<div class="modal_title">알림</div>
+				<!-- <button class="close_btn"><i class="fa fa-times" aria-hidden="true"></i></button> -->
+			</div>
+
+			<div class="modal_body row">정상적으로 처리 되었습니다.</div>
+
+			<div class="modal_footer row">
+				<button class="btn normal_btn close">확인</button>
+			</div>
+		</div>
+	<div id="mask"></div>
 </body>
 </html>

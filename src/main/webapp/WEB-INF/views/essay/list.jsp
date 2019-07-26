@@ -101,17 +101,17 @@ $(document).ready(function() {
 			</div>
 			
 			<div class="content">
-				<ul class="gallery_li">
-					<c:forEach var="essay" items="${essayList}">
+				<ul class="book_li">
+					<c:forEach var="essay" items="${essayList}" varStatus="status">
 							<li class="yesupload bg1">
 								<a class="move" href="<c:out value='${essay.bno}'/>">
-									<div class="thumbnail">
-										<c:set var="attach" value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
-										<%
-											String url = (String)pageContext.getAttribute("attach");
-											pageContext.setAttribute("filepath", URLEncoder.encode(url));
-										%>
-										<img src="/display?fileName=<c:url value='${filepath}'/>">
+									<c:set var="attach" value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
+									<%
+										String url = (String)pageContext.getAttribute("attach");
+										pageContext.setAttribute("filepath", URLEncoder.encode(url));
+									%>
+									<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
+										<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${photoCount[status.index]}</p>
 									</div> 
 									<div class="desc">
 										<h3>${essay.title}</h3>

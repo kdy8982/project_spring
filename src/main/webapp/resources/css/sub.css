@@ -424,6 +424,10 @@
 	margin-bottom : 15px;
 }
 
+.uploadResult li img{
+	width: 100%;
+}
+
 
 .notice_get_wrap #table .notice_content {
 	/* background-color: white; */
@@ -449,12 +453,13 @@
 }
 
 .login_wrap {
-	transform: translateX(-50%);
+ 	transform: translateX(-50%);
     left: 50%;
     top: 15%;
     position: absolute;
-    text-align:center;	
+    text-align:center;
     width: 31vw;
+    margin: 0 auto;
     
 }
 
@@ -500,9 +505,12 @@
     margin-top: 12px;
 }
 
+.login_content .login_div  {
+	margin-bottom: 25px;
+}
+
 .login_content .input_area{
 	width:95%;
-	margin-bottom:20px;
 	
 	background: border-box;
     font-weight: 600;

@@ -37,6 +37,7 @@ public class EssayController {
 		int total = boardService.getTotalNotice(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		model.addAttribute("essayList", boardService.getList(cri));
+		model.addAttribute("photoCount", boardService.getPhotoCount(cri));
 	}
 	
 	@GetMapping("/register")

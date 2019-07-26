@@ -58,19 +58,19 @@
 		<div class="login_content">
 			<form role="form" method="post" action="/customSignup">
 				<div>
-					<input class="input_area" type="text" name="username" placeholder="NAME">
+					<input class="login_div input_area" type="text" name="username" placeholder="NAME">
 				</div>
 			
 				<div>
-					<input class="input_area" type="text" name="userid" placeholder="ID">
+					<input class="login_div input_area" type="text" name="userid" placeholder="ID">
 				</div>
 				
 				<div>
-					<input class="input_area password" type="password" name="userpw" placeholder="PASSWORD">
+					<input class="login_div input_area password" type="password" name="userpw" placeholder="PASSWORD">
 				</div>
 				
 				<div>
-					<input class="input_area password_confirm" type="password" placeholder="PASSWORD CONFIRM">
+					<input class="login_div input_area password_confirm" type="password" placeholder="PASSWORD CONFIRM">
 				</div>
 				
 				<div>

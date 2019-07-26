@@ -194,7 +194,7 @@
 }
 
 .modal {
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 37%;
     transform:translateX(-50%);

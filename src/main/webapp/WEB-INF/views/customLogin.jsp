@@ -23,11 +23,11 @@
 			<div class="login_content">
 				<form method="post" action="/login">
 					<div>
-						<input class="input_area" type="text" name="username" value="admin90" placeholder="ID">
+						<input class="login_div input_area" type="text" name="username" value="admin90" placeholder="ID">
 					</div>
 					
 					<div>
-						<input class="input_area" type="password" name="password" value="pw90" placeholder="PASSWORD">
+						<input class="login_div input_area" type="password" name="password" value="pw90" placeholder="PASSWORD">
 					</div>
 					
 					<div class="input_check">

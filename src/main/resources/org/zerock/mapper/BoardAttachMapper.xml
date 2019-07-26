@@ -96,12 +96,10 @@
 		    select rownum rn, bno, title, type, photoCnt 
 		    from 
 		    (
-		        select board.bno, title, type, count(*) photoCnt
-		        from tbl_board board inner join tbl_attach attach
-		        on board.bno = attach.bno
-		        where type='photo' 
-		        group by title, type, board.bno
-		        order by bno desc
+		        select board.bno, title, type, count(attach.bno) photoCnt 
+		        from tbl_board board left outer join tbl_attach attach 
+		        on board.bno = attach.bno 
+		        where type=#{boardType} group by title, type, board.bno order by bno desc 
 		    )
 		    where 
 			<![CDATA[

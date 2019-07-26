@@ -37,4 +37,7 @@
 		values (#{userid}, #{auth})
 	</insert>
 
+	<update id="changePassword">
+		update tbl_member set userpw = #{userpw} where userid=#{userid}
+	</update>
 </mapper>

@@ -80,6 +80,19 @@ public class CommonController {
 		}
 	}
 	
+	@RequestMapping(value="/memberModify", method= {RequestMethod.POST})
+	public String memberModify(MemberVO vo, String newpw, RedirectAttributes rttr) {
+		log.info("member modify call ..");
+		
+		if(memberService.changePassword(vo, newpw)) {
+			rttr.addFlashAttribute("result", "성공적으로 처리되었습니다.");
+		} else {
+			rttr.addFlashAttribute("result", "비밀번호를 확인해주세요.");
+		}
+		return "redirect:/memberDetail";
+	}
+	
+	
 	
 	/* 스프링 시큐리티 암호 체크 방식 테스트용 메서드 */
 	/*
