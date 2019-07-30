@@ -71,7 +71,7 @@ public class UploadController {
 	}
 	
 	
-	/* 파일 업로드 ajax요청(결과로 디비와 상관없이 정해진 로컬 경로에 파일을 생성한다) */
+	/* 파일 업로드 ajax요청(정해진 로컬 경로에 파일을 생성한다. DB와 상관없음.) */
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/uploadAjaxAction", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody

@@ -69,4 +69,11 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public void changeProfilePhoto(MemberVO vo) {
+		// TODO Auto-generated method stub
+		memberMapper.changeProfilePhoto(vo);
+		
+	}
+
 }

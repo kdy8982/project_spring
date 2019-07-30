@@ -9,6 +9,7 @@
 		<result property="username" column="username" />
 		<result property="regDate" column="regdate" />
 		<result property="updateDate" column="updatedate" />
+		<result property="photo" column="photo"/>
 		<collection property="authList" resultMap="authMap" />
 	</resultMap>
 
@@ -39,5 +40,9 @@
 
 	<update id="changePassword">
 		update tbl_member set userpw = #{userpw} where userid=#{userid}
+	</update>
+	
+	<update id="changeProfilePhoto">
+		update tbl_member set photo = #{photo} where userid=#{userid}
 	</update>
 </mapper>

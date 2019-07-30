@@ -75,21 +75,51 @@ public class CommonController {
 		log.info("member detail call ..");
 		log.info("요청 type : " + request.getMethod());
 		
+		
 		if(request.getMethod().equals("POST")) {
 			memberService.insert(vo);
 		}
 	}
 	
-	@RequestMapping(value="/memberModify", method= {RequestMethod.POST})
-	public String memberModify(MemberVO vo, String newpw, RedirectAttributes rttr) {
-		log.info("member modify call ..");
+	
+	@RequestMapping(value="/memberPhotoModify", method= {RequestMethod.POST})
+	public String memberPhotoModify(MemberVO vo, RedirectAttributes rttr) {
+		log.info("memberPhotoModify call ..");
+		
+		memberService.changeProfilePhoto(vo);
+		
+		return "redirect:/memberDetail";
+		
+	}
+	
+	@RequestMapping(value="/memberPasswordModify", method= {RequestMethod.POST})
+	public String memberPasswordModify(MemberVO vo, String newpw, RedirectAttributes rttr) {
+		log.info("memberPasswordModify call ..");
 		
 		if(memberService.changePassword(vo, newpw)) {
 			rttr.addFlashAttribute("result", "성공적으로 처리되었습니다.");
 		} else {
-			rttr.addFlashAttribute("result", "비밀번호를 확인해주세요.");
+			rttr.addFlashAttribute("result", "비밀번호가 틀렸습니다.");
 		}
+		
 		return "redirect:/memberDetail";
+		
+	}
+	
+	@RequestMapping(value="/memberPhotoPasswordModify", method= {RequestMethod.POST})
+	public String memberPhotoPasswordModify(MemberVO vo, String newpw, RedirectAttributes rttr) {
+		log.info("memberPhotoPasswordModify call ..");
+		
+		memberService.changeProfilePhoto(vo);
+		
+		if(memberService.changePassword(vo, newpw)) {
+			rttr.addFlashAttribute("result", "성공적으로 처리되었습니다.");
+		} else {
+			rttr.addFlashAttribute("result", "비밀번호가 틀렸습니다.");
+		}
+		
+		return "redirect:/memberDetail";
+		
 	}
 	
 	

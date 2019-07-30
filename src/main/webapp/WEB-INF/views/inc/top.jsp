@@ -16,7 +16,7 @@ $(document).ready(function() {
 </script>
 
 <header id="header">
-	<div class="header_inner">
+	<div class="header_inner title_font">
 		<!-- <h1><a href="/"><img alt="the Love Comunity"></a></h1> -->
 		<a class="top_title" href="/">The Love Comunity</a>
 		<nav>

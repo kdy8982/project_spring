@@ -205,6 +205,8 @@
 	min-height: 25vh;
     background-size: cover;
     background-position: center;
+    border-bottom: 1px solid #efefef;
+    
 	/* text-align : center; */
 }
 

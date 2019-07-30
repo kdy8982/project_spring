@@ -33,7 +33,7 @@ public class EssayController {
 	public void list (Criteria cri, Model model) {
 		log.info("essay list ...");
 		cri.setBoardType("essay");
-		cri.setAmount(10);
+		cri.setAmount(6);
 		int total = boardService.getTotalNotice(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		model.addAttribute("essayList", boardService.getList(cri));

@@ -11,79 +11,76 @@
 <html>
 <head>
 <script type="text/javascript">
-	$(window).scroll(
-			function() {
-				var s_top = jQuery(".main_visual").innerHeight();
-				//alert(s_top);
-				var con_top = jQuery("#section01").innerHeight();
-				if ($(this).scrollTop() < s_top
-						&& !$('.slider').hasClass("fixed")) {
-					$('.slider').addClass("fixed");
-					//alert(con_top);
-				} else if ($(this).scrollTop() > s_top
-						&& $('.slider').hasClass("fixed")) {
-					$('.slider').removeClass("fixed");
-				}
-			});
+$(window).scroll(
+		function() {
+			var s_top = jQuery(".main_visual").innerHeight();
+			//alert(s_top);
+			var con_top = jQuery("#section01").innerHeight();
+			if ($(this).scrollTop() < s_top
+					&& !$('.slider').hasClass("fixed")) {
+				$('.slider').addClass("fixed");
+				//alert(con_top);
+			} else if ($(this).scrollTop() > s_top
+					&& $('.slider').hasClass("fixed")) {
+				$('.slider').removeClass("fixed");
+			}
+		});
 
-	$(window).scroll(function() {
-		if ($(this).scrollTop() > 1) {
-			$('.scroll_btn').fadeOut();
-		} else {
-			$('.scroll_btn').fadeIn();
-		}
+$(window).scroll(
+		function() {
+	if ($(this).scrollTop() > 1) {
+		$('.scroll_btn').fadeOut();
+	} else {
+		$('.scroll_btn').fadeIn();
+	}
+});
+
+$(document).ready(function() {
+	var slider = $('.swipe_wrap').bxSlider({
+		mode : 'horizontal',// 가로 방향 수평 슬라이드
+		speed : 500, // 이동 속도를 설정
+		pause : 2000, // 페이지 넘김 속도를 조절
+		pager : true, // 현재 위치 페이징 표시 여부 설정
+		moveSlides : 1, // 슬라이드 이동시 개수
+		slideWidth : 300, // 슬라이드 너비
+		minSlides : 4, // 최소 노출 개수
+		maxSlides : 4, // 최대 노출 개수
+		slideMargin : 10, // 슬라이드간의 간격
+		auto : false, // 자동 실행 여부
+		autoHover : true, // 마우스 호버시 정지 여부
+		controls : true, // 이전 다음 버튼 노출 여부
+		responsive : false,
+		touchEnabled : (navigator.maxTouchPoints > 0)
 	});
+	
+	$(window).resize(function() {
+		slider.reloadSlider();
+	}) // bxSlider : 창크기가 조절될때마다 slider 사이즈 자동 조절. 
+	
+	var actionForm = $("#actionForm");
+	$(".move").on("click", function(e) {
+						e.preventDefault();
+						console.log($(this).attr('href'));
+						actionForm.append("<input type='hidden' name='amount' value='"
+										+ $(this).data('amount')
+										+ "'>");
+						actionForm.append("<input type='hidden' name='bno' value='"
+										+ $(this).attr('href')
+										+ "'>");
+						actionForm.append("<input type='hidden' name='boardType' value='"
+										+ $(this).data('type')
+										+ "'>");
+						actionForm.attr("action", $(this).data("url"));
+						actionForm.submit();
 
-	$(document)
-			.ready(
-					function() {
-						$('.swipe_wrap').bxSlider({
-							mode : 'horizontal',// 가로 방향 수평 슬라이드
-							speed : 500, // 이동 속도를 설정
-							pause : 2000, // 페이지 넘김 속도를 조절
-							pager : true, // 현재 위치 페이징 표시 여부 설정
-							moveSlides : 1, // 슬라이드 이동시 개수
-							slideWidth : 300, // 슬라이드 너비
-							minSlides : 4, // 최소 노출 개수
-							maxSlides : 4, // 최대 노출 개수
-							slideMargin : 10, // 슬라이드간의 간격
-							auto : false, // 자동 실행 여부
-							autoHover : true, // 마우스 호버시 정지 여부
-							controls : true, // 이전 다음 버튼 노출 여부
-							responsive : false,
-							touchEnabled : (navigator.maxTouchPoints > 0)
-						});
+	})
 
-						var actionForm = $("#actionForm");
-						$(".move")
-								.on(
-										"click",
-										function(e) {
-											e.preventDefault();
-											console.log($(this).attr('href'));
-											actionForm
-													.append("<input type='hidden' name='amount' value='"
-															+ $(this).data(
-																	'amount')
-															+ "'>");
-											actionForm
-													.append("<input type='hidden' name='bno' value='"
-															+ $(this).attr(
-																	'href')
-															+ "'>");
-											actionForm
-													.append("<input type='hidden' name='boardType' value='"
-															+ $(this).data(
-																	'type')
-															+ "'>");
-											actionForm.attr("action", $(this)
-													.data("url"));
-											actionForm.submit();
-
-										})
+})
 
 
-					})
+					
+					
+					
 </script>
 
 </head>
@@ -121,8 +118,7 @@
 						<c:forEach items="${noticeList}" var="notice">
 							<li>
 								<div class="notice_box">
-									<a class="move" href='<c:out value="${notice.bno}"/>'
-										data-type="notice" data-url="/notice/get" data-amount="10">
+									<a class="move" href='<c:out value="${notice.bno}"/>' data-type="notice" data-url="/notice/get" data-amount="10">
 										<p class="main_notice">
 											<c:out value="${notice.title}"></c:out>
 										</p>
@@ -162,7 +158,7 @@
 									style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
 									<p class="photo-cntbox">
 										<i class="fa fa-camera-retro" aria-hidden="true"></i>
-										+${photoCount[status.index]}
+										+${photo_photoCount[status.index]}
 									</p>
 								</div>
 								<div class="desc">
@@ -186,8 +182,8 @@
 				</div>
 				<ul class="book_li">
 
-					<c:forEach var="essay" items="${essayList}">
-						<li><a class="move" href="<c:out value='${essay.bno}'/>" data-amount="12" data-type="essay" data-url="/essay/get"> 
+					<c:forEach var="essay" items="${essayList}" varStatus="status">
+						<li><a class="move" href="<c:out value='${essay.bno}'/>" data-amount="6" data-type="essay" data-url="/essay/get"> 
 						<c:set var="attach"	value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
 								<%
 									String url = (String) pageContext.getAttribute("attach");
@@ -195,7 +191,9 @@
 								%>
 								<div class="thumb"
 									style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
-								</div> <c:set var="subsContent" value="${essay.content}" /> <%
+									<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${essay_photoCount[status.index]}</p>
+								</div>
+								 <c:set var="subsContent" value="${essay.content}" /> <%
  	String subStr = (String) pageContext.getAttribute("subsContent");
  		if (subStr.length() > 150) {
  			subStr = subStr.substring(0, 150) + " ...";

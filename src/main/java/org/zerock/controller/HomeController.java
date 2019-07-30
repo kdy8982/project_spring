@@ -37,7 +37,9 @@ public class HomeController {
 		model.addAttribute("photoList", boardService.getList(new Criteria(1, 8, "photo")));
 		model.addAttribute("noticeList", boardService.getList(new Criteria(1, 6, "notice")));
 		model.addAttribute("essayList", boardService.getList(new Criteria (1, 3, "essay")));
-		model.addAttribute("photoCount", boardService.getPhotoCount(new Criteria(1,8,"photo")));
+		model.addAttribute("photo_photoCount", boardService.getPhotoCount(new Criteria(1,8,"photo")));
+		model.addAttribute("essay_photoCount", boardService.getPhotoCount(new Criteria(1,3,"essay")));
+
 		
 		//int total = boardService.getTotalNotice(cri);
 		//model.addAttribute("pageMaker", new PageDTO(cri, total));
