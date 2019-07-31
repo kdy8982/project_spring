@@ -1,5 +1,7 @@
 package org.zerock.controller;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,15 +72,13 @@ public class CommonController {
 		}
 	}
 	
-	@RequestMapping(value="/memberDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public void memberDetail(MemberVO vo, HttpServletRequest request) {
+	@RequestMapping(value="/memberDetail", method= {RequestMethod.GET})
+	public void memberDetail(MemberVO vo, Model model) throws UnsupportedEncodingException {
 		log.info("member detail call ..");
-		log.info("요청 type : " + request.getMethod());
+		//MemberVO getVo = memberService.get(vo);
+		//getVo.setThumbPhoto();
+		//model.addAttribute("member", getVo);
 		
-		
-		if(request.getMethod().equals("POST")) {
-			memberService.insert(vo);
-		}
 	}
 	
 	
@@ -86,9 +86,10 @@ public class CommonController {
 	public String memberPhotoModify(MemberVO vo, RedirectAttributes rttr) {
 		log.info("memberPhotoModify call ..");
 		
+		log.info(vo.getPhoto());
 		memberService.changeProfilePhoto(vo);
 		
-		return "redirect:/memberDetail";
+		return "redirect:/memberDetail?userid=" + vo.getUserid();
 		
 	}
 	
@@ -102,7 +103,7 @@ public class CommonController {
 			rttr.addFlashAttribute("result", "비밀번호가 틀렸습니다.");
 		}
 		
-		return "redirect:/memberDetail";
+		return "redirect:/memberDetail?userid=" + vo.getUserid();
 		
 	}
 	
@@ -118,7 +119,7 @@ public class CommonController {
 			rttr.addFlashAttribute("result", "비밀번호가 틀렸습니다.");
 		}
 		
-		return "redirect:/memberDetail";
+		return "redirect:/memberDetail?userid=" + vo.getUserid();
 		
 	}
 	

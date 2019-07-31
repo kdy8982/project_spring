@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.zerock.domain.MemberVO;
+import org.zerock.domain.MemberVOTests;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.Setter;
@@ -22,7 +22,7 @@ public class MemberMapperTests {
 	
 	@Test
 	public void testMemberSelect() {
-		MemberVO vo = memberMapper.read("admin90");
+		MemberVOTests vo = memberMapper.read("admin90");
 		log.info(vo);
 		
 		vo.getAuthList().forEach(authVO -> {

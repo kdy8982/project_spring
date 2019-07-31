@@ -6,11 +6,16 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.AuthVO;
 import org.zerock.domain.MemberVO;
 import org.zerock.mapper.MemberMapper;
+import org.zerock.security.CustomUserDetailService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -71,9 +76,27 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void changeProfilePhoto(MemberVO vo) {
-		// TODO Auto-generated method stub
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = vo.getUserid();
 		memberMapper.changeProfilePhoto(vo);
+		SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication, username));
 		
 	}
 
+	@Override
+	public MemberVO get(MemberVO vo) {
+		return memberMapper.read(vo.getUserid());
+	}
+	
+    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
+    	CustomUserDetailService cuds = new CustomUserDetailService();
+        UserDetails newPrincipal = cuds.loadUserByUsername(username);
+
+        UsernamePasswordAuthenticationToken newAuth =  new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+
+        newAuth.setDetails(currentAuth.getDetails());
+
+        return newAuth;
+
+    }
 }

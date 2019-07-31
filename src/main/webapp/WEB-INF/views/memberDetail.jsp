@@ -261,7 +261,7 @@
 		<h2><c:out value="${logout}"/></h2>	
 		
 		<div class="profile_wrap">
-			<div class="thumb">
+			<div class="thumb" style="background: url(/display?fileName=<sec:authentication property="principal.member.thumbPhoto"/>)no-repeat top center; background-size:cover; background-position: center">
 				<i class="fa fa-camera-retro profile_change" aria-hidden="true" onclick="changeProfilePhoto()"></i>
 				<input class="input_upload" type="file" name="uploadFile" style="display:none">
 			</div>

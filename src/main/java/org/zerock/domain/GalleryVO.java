@@ -12,6 +12,6 @@ public class GalleryVO {
 	private String engName;
 	private Date regdate;
 	private Date updatedate;
-	
+		
 	private List<GalleryAttachVO> attachList;
 }

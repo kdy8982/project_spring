@@ -39,7 +39,7 @@ public class PhotoController {
 		model.addAttribute("photoList", boardService.getList(cri));
 		model.addAttribute("photoCount", boardService.getPhotoCount(cri));
 		
-		// log.info(boardService.getPhotoCount(cri));
+		log.info(boardService.getPhotoCount(cri));
 	}
 	
 	@GetMapping("/register")

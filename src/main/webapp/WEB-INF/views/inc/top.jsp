@@ -27,12 +27,11 @@ $(document).ready(function() {
 				<li><a href="/essay/list">더사랑 이야기</a></li>
 				<li class="login_area">				
 					<sec:authorize access="isAuthenticated()">
-						<div>
-						<a href="/memberDetail">
-						<sec:authentication property="principal.member.username"/>
-						<img class="img-profile" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+						<a href="/memberDetail?userid=<sec:authentication property="principal.member.userid"/>">
+							<sec:authentication property="principal.member.username"/>
+							<div class="thumb" style="background: url(/display?fileName=<sec:authentication property="principal.member.thumbPhoto"/>)no-repeat top center; background-size:cover; background-position: center">
+							</div>
 						</a>
-						</div>
 						<ul class="member_dropmenu">
 							<li><i class="fa fa-user user_mark" aria-hidden="true"></i><a href="/memberDetail">내 정보 관리</li>
 							<li><i class="fa fa-sign-out user_mark" aria-hidden="true"></i><a href="/customLogout">로그아웃</a></li>

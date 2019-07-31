@@ -10,6 +10,5 @@ public interface MemberMapper {
 	public int authorize(AuthVO authVo); // 회원가입(권한부여)
 
 	public void changePassword(MemberVO vo);
-
 	public void changeProfilePhoto(MemberVO vo);
 }

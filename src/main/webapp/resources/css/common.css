@@ -50,9 +50,18 @@
 	margin-right:0px;
 	position: relative;
 }
+#header .header_inner nav li.login_area a{
+	display: inline-block;
+}
 
 #header .header_inner nav li.login_area div{
 	height: 100%;
+	
+	vertical-align: middle;
+	width: 2.5vw;
+	height: 2.5vw;
+	display:inline-block;
+	border-radius: 10px;
 }
 #header .header_inner .f_icon{
 	display:inline-block;

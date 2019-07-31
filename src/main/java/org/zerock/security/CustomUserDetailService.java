@@ -1,12 +1,14 @@
 package org.zerock.security;
 
+import java.io.UnsupportedEncodingException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.zerock.domain.MemberVO;
 import org.zerock.mapper.MemberMapper;
 import org.zerock.security.domain.CustomUser;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -23,6 +25,11 @@ public class CustomUserDetailService implements UserDetailsService {
 		log.warn("Load User by UserName : " + userid);
 		
 		MemberVO vo = memberMapper.read(userid);
+		try {
+			vo.setThumbPhoto();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		log.warn("quried by member mapper : " + vo);
 		
 		// 다양한 인증 방법을 설정하기 위해, org.springframework.security.core.userdetails.User클래스를 상속하여 만든,
