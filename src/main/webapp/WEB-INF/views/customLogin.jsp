@@ -12,7 +12,7 @@
 <body>
 	<!-- <div class="login background_wrap"></div> -->
 	<jsp:include page="inc/top.jsp" flush="true"></jsp:include>
-	<div class="page_wrap">
+	<div class="page_wrap title-font">
 		<div class="login_wrap">
 			<h2><c:out value="${error}" /></h2>
 			<h2><c:out value="${logout}"/></h2>	
@@ -31,7 +31,7 @@
 					</div>
 					
 					<div class="input_check">
-						<input  type="checkbox" name="remember-me"><span>Remember Me!</span>
+						<input  type="checkbox" name="remember-me"><span>Remember Me</span>
 					</div>
 					
 					<div>

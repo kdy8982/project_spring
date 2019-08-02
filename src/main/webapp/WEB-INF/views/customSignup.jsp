@@ -48,7 +48,7 @@
 	<div class="page_wrap">
 	<div class="login background_wrap">
 	</div>
-	<div class="login_wrap">
+	<div class="login_wrap title-font">
 		<h2><c:out value="${error}" /></h2>
 		<h2><c:out value="${logout}"/></h2>	
 		

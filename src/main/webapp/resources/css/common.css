@@ -7,6 +7,7 @@
     display: inline-block;
     font-size: 1.3rem;
     min-width: 201px;
+	margin-left: 15px;
 }
 
 #header .header_inner{
@@ -18,10 +19,6 @@
     position: fixed;
     width: 100%;
     z-index: 9999;
-    
-    padding-left: 20px;
-    padding-right: 20px;
-
 }
 #header .header_inner h1{
 	width:10%;
@@ -49,9 +46,8 @@
 	font-size:14px;
 	margin-right:0px;
 	position: relative;
-}
-#header .header_inner nav li.login_area a{
-	display: inline-block;
+	padding-right: 15px;
+	min-width: 75px;
 }
 
 #header .header_inner nav li.login_area div{
@@ -84,16 +80,20 @@
 	position:absolute;
 	right:0;
 	width:100%;
+	min-width: 120px;
 	height:auto;
 	border:0px;
 	line-height:2rem;
-	background-color: white;
+	background-color: #ffffff;
+	background-color: rgba( 255, 255, 255, 0.5 );
 	
 	border-radius: 6px;
     text-align: left;
-    padding: 14px;
     
-    display:none;
+	cursor: pointer;
+    
+  	 display:none; 
+    
 }
 
 
@@ -103,6 +103,15 @@
     font-size: 13px;
     font-weight: 500;
     line-height: 25px;
+    
+    padding-left:14px;
+    padding-right:14px;
+    
+	line-height: 2.5rem;
+}
+
+#header .header_inner li li:hover{
+	text-decoration: underline;	
 }
 
 #header .user_mark{
@@ -184,6 +193,7 @@
     font-size: 2.5rem;
     text-transform: uppercase;
     display : inline-block;
+    font-weight:500;
 }
 
 #mask {

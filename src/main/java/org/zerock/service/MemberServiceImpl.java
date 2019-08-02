@@ -6,16 +6,20 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.AuthVO;
 import org.zerock.domain.MemberVO;
+import org.zerock.event.UserAccountChangedEvent;
 import org.zerock.mapper.MemberMapper;
 import org.zerock.security.CustomUserDetailService;
+import org.zerock.security.domain.CustomUser;
 
 import lombok.extern.log4j.Log4j;
 
@@ -28,6 +32,9 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private ApplicationEventPublisher eventPublisher; // 스프링 이벤트 publish를 위한 객체 주입(별도로 등록하지 않아도 스프링에서 자동으로 주입해줌).
 
 	@Override
 	public boolean insert(MemberVO member) {
@@ -76,11 +83,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void changeProfilePhoto(MemberVO vo) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = vo.getUserid();
-		memberMapper.changeProfilePhoto(vo);
-		SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication, username));
-		
+		int result = memberMapper.changeProfilePhoto(vo);
+		if(result > 0) {
+			UserAccountChangedEvent event = new UserAccountChangedEvent(this, vo.getUserid()); // 스프링 이벤트 처리
+			eventPublisher.publishEvent(event);
+		}
 	}
 
 	@Override
@@ -88,15 +95,15 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.read(vo.getUserid());
 	}
 	
-    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
-    	CustomUserDetailService cuds = new CustomUserDetailService();
-        UserDetails newPrincipal = cuds.loadUserByUsername(username);
-
-        UsernamePasswordAuthenticationToken newAuth =  new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
-
-        newAuth.setDetails(currentAuth.getDetails());
-
-        return newAuth;
-
-    }
+//    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
+//    	CustomUserDetailService cuds = new CustomUserDetailService();
+//        UserDetails newPrincipal = cuds.loadUserByUsername(username);
+//
+//        UsernamePasswordAuthenticationToken newAuth =  new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+//
+//        newAuth.setDetails(currentAuth.getDetails());
+//
+//        return newAuth;
+//
+//    }
 }

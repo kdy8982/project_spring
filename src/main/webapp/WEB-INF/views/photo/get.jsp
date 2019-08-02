@@ -74,10 +74,10 @@ $(document).ready(function() {
 <div class="page_wrap">
 	<div class="container page_container">
 		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit">사진</h2>
+			<h2 class="wrap-inner main_tit title-font">사진</h2>
 		</div>
 		
-		<div class="sub_title">
+		<div class="sub_title title-font">
 		<h3>
 			"그래서 우리는 위로를 받았습니다.<br> 
 			또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
@@ -94,8 +94,14 @@ $(document).ready(function() {
 						${photo.title }
 					</div>
 					
-					<div class="row notice_date">
-						<fmt:formatDate pattern="yyyy-MM-dd" value="${photo.regdate}"/>
+					<div class="row notice_info">
+						<div class="row notice_writer">
+							${photo.writer }
+						</div>
+						
+						<div class="row notice_date">
+							<fmt:formatDate pattern="yyyy-MM-dd" value="${photo.regdate}"/>
+						</div>
 					</div>
 					
 					<div class="row notice_content_box">

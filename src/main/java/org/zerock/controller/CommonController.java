@@ -5,20 +5,17 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.MemberVO;
-import org.zerock.mapper.MemberMapper;
+import org.zerock.event.UserAccountChangedEvent;
+import org.zerock.security.CustomUserDetailService;
 import org.zerock.service.MemberService;
 
 import lombok.extern.log4j.Log4j;
@@ -29,6 +26,9 @@ public class CommonController {
 
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	CustomUserDetailService customUserDetailService;
 	
 	@RequestMapping("/accessError")
 	public void accessDenied (Authentication auth, Model model) {
@@ -85,9 +85,9 @@ public class CommonController {
 	@RequestMapping(value="/memberPhotoModify", method= {RequestMethod.POST})
 	public String memberPhotoModify(MemberVO vo, RedirectAttributes rttr) {
 		log.info("memberPhotoModify call ..");
-		
-		log.info(vo.getPhoto());
 		memberService.changeProfilePhoto(vo);
+		
+		rttr.addFlashAttribute("result", "성공적으로 처리되었습니다.");
 		
 		return "redirect:/memberDetail?userid=" + vo.getUserid();
 		

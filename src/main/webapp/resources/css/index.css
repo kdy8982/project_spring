@@ -140,7 +140,7 @@
 
 .notice_box a .main_notice {
 	font-size: 22px;
-    font-weight: 700;
+    font-weight: 500;
     color: #222;
     letter-spacing: -1px;
     line-height: 1.2;
@@ -215,13 +215,16 @@
 }
 
 .book_li li .desc {
-	padding: 5px;
+	padding: 10px;
+	line-height:19px;
+	min-height: 180px;
 }
 
 .book_li li .book_title {
 	/* text-align: center; */
     display: block;
 	font-size: 1.1rem;
+	margin-bottom: 10px;
 }
 
 .book_li li .desc .book_author {
@@ -255,6 +258,12 @@
     bottom: 0;
     left: 0;
     right: 0;	
+}
+
+.gallery_li .desc .desc_content{    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .gallery_li .thumb {

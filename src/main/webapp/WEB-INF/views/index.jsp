@@ -110,7 +110,7 @@ $(document).ready(function() {
 			<section class="main_row1" id="section01">
 			<div class="container">
 				<div class="title_wrap">
-					<h2 class="main_tit">새소식</h2>
+					<h2 class="main_tit title-font">새소식</h2>
 				</div>
 
 				<div class="notice_wrap">
@@ -141,7 +141,7 @@ $(document).ready(function() {
 
 			<section class="main_row2 even_row" id="section03">
 			<div class="container">
-				<div class="title_wrap">
+				<div class="title_wrap title-font">
 					<h2 class="main_tit">사진</h2>
 				</div>
 				<ul class="gallery_li">
@@ -162,8 +162,10 @@ $(document).ready(function() {
 									</p>
 								</div>
 								<div class="desc">
-									<h3>${photo.title}</h3>
-									<p>${photo.writer}</p>
+									<div class="desc_content">
+										<h3>${photo.title}</h3>
+										<p>${photo.writer}</p>
+									</div>
 								</div></li>
 						</a>
 					</c:forEach>
@@ -177,7 +179,7 @@ $(document).ready(function() {
 			<section class="main_row3 " id="section03">
 			<div class="container">
 
-				<div class="title_wrap">
+				<div class="title_wrap title-font">
 					<h2 class="main_tit">더사랑 이야기</h2>
 				</div>
 				<ul class="book_li">
@@ -220,27 +222,27 @@ $(document).ready(function() {
 			<section class="main_row4 even_row" id="section04">
 			<div class="container">
 
-				<div class="title_wrap">
-					<h2 class="main_tit">ABOUT US</h2>
+				<div class="title_wrap title-font">
+					<h2 class="main_tit">교회 소개</h2>
 				</div>
-				<ul>
+				<ul class="book_li">
 					<li>
 						<div class="icon">
-							<img src="#" alt="단체소개">
+							<img src="#" alt="교회소개">
 						</div>
-						<h3>단체소개</h3> <a class="more_btn" href="#">more</a>
+						<h3>교회소개</h3> <a class="more_btn" href="#">more</a>
 					</li>
 					<li>
 						<div class="icon">
-							<img src="#" alt="연혁">
+							<img src="#" alt="사역">
 						</div>
-						<h3>연혁</h3> <a class="more_btn" href="#">more</a>
+						<h3>사역</h3> <a class="more_btn" href="#">more</a>
 					</li>
 					<li>
 						<div class="icon">
-							<img src="#" alt="함께하는이들">
+							<img src="#" alt="오시는 길">
 						</div>
-						<h3>함께하는이들</h3> <a class="more_btn" href="#">more</a>
+						<h3>오시는 길</h3> <a class="more_btn" href="#">more</a>
 					</li>
 				</ul>
 			</div>
