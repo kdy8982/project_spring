@@ -17,8 +17,25 @@
 		
 		$(".input_area_button").on("click", function(e) {
 			e.preventDefault();
-
-			/* input박스 null값 체크 */
+			validate();
+			return;
+			formObj.submit();
+		})
+		
+		function validate() {
+			var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+			var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		     // 이메일이 적합한지 검사할 정규식
+			
+		    var name = $("input[name='username']").val();
+			var id = $("input[name='userid']").val();
+			var pw = $("input[name='userpw']").val();
+			//var email = document.getElementById("email");
+		     // ------------ 이메일 까지 -----------
+		    
+		     console.log(name + id + pw);
+		     
+		    /* input박스 null값 체크 */
 			var inputArea = $(".input_area");
 			for(var i=0; i < inputArea.length; i++) {
 				console.log(inputArea[i].value);
@@ -27,16 +44,52 @@
 					return;
 				}
 			}
-			
+		     
 			/* 비밀번호 확인 체크 */
 			var pw = $(".password").val();
 			var pwConfirm = $(".password_confirm").val();
 			if(pw != pwConfirm) {
 				alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
+				$(".password_confirm").val() = "";
+				$(".password_confirm").focus();
 				return;
 			}
-			formObj.submit();
-		})
+			
+		     if(!check(re,id,"아이디는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+		         return false;
+		     }
+		
+		     if(!check(re,pw,"패스워드는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+		         return false;
+		     }
+			
+			return ;
+			
+		     if(!check(re2, email, "적합하지 않은 이메일 형식입니다.")) {
+		         return false;
+		     }
+		
+		
+		     // 관심분야, 자기소개 미입력시 하라는 메시지 출력
+		     if(join.self.value=="") {
+		         alert("자기소개를 적어주세요");
+		         join.self.focus();
+		         return false;
+		     }
+		     
+		     alert("회원가입이 완료되었습니다.");
+		 }
+		
+		 function check(re, what, message) {
+		     if(re.test(what)) {
+		         return true;
+		     }
+		     alert(message);
+		     what.value = "";
+		     //return false;
+		 }
+		
+		
 	})
 
 </script>
