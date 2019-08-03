@@ -161,17 +161,13 @@ $(document).ready(function() {
 										+${photo_photoCount[status.index]}
 									</p>
 								</div>
-								<div class="desc">
-									<div class="desc_content">
-										<h3>${photo.title}</h3>
-										<p>${photo.writer}</p>
-									</div>
-								</div></li>
+							</li>
 						</a>
 					</c:forEach>
 				</ul>
-
-				<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
+				<div class="viewmore_wrap">
+					<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
+				</div>
 			</div>
 			</section>
 
@@ -220,31 +216,47 @@ $(document).ready(function() {
 
 
 			<section class="main_row4 even_row" id="section04">
-			<div class="container">
-
-				<div class="title_wrap title-font">
-					<h2 class="main_tit">교회 소개</h2>
+			<div class="layer">
+				<div class="container">
+					<div class="title_wrap title-font">
+						<h2 class="main_tit">About us</h2>
+					</div>
+					<ul class="book_li">
+						<li>
+							<div class="center_wrap">
+								<a class="move" href="<c:out value='${essay.bno}'/>" data-amount="6" data-type="essay" data-url="/essay/get"> 
+									<div class="thumb" style="background: url(/resources/images/index/index2.jpg)no-repeat top center; background-size: cover; background-position: center;">
+									</div>
+									<div class="desc">
+										<h3 class="desc_title normal-font">교회 소개</h3>
+									</div>
+								</a>
+							</div>
+						</li>
+						<li>
+							<div class="center_wrap">
+								<a class="move" href="<c:out value='${essay.bno}'/>" data-amount="6" data-type="essay" data-url="/essay/get"> 
+									<div class="thumb" style="background: url(/resources/images/index/sayuk.jpg)no-repeat top center; background-size: cover; background-position: center;">
+									</div>
+									<div class="desc">
+										<h3 class="desc_title normal-font">사역</h3>
+									</div>
+								</a>
+							</div>
+						</li>
+						<li>
+							<div class="center_wrap">
+								<a class="move" href="<c:out value='${essay.bno}'/>" data-amount="6" data-type="essay" data-url="/essay/get"> 
+									<div class="thumb" style="background: url(/resources/images/index/sayuk.jpg)no-repeat top center; background-size: cover; background-position: center;">
+									</div>
+									<div class="desc">
+										<h3 class="desc_title normal-font">오시는 길</h3>
+									</div>
+								</a>
+							</div>
+						</li>
+					</ul>
 				</div>
-				<ul class="book_li">
-					<li>
-						<div class="icon">
-							<img src="#" alt="교회소개">
-						</div>
-						<h3>교회소개</h3> <a class="more_btn" href="#">more</a>
-					</li>
-					<li>
-						<div class="icon">
-							<img src="#" alt="사역">
-						</div>
-						<h3>사역</h3> <a class="more_btn" href="#">more</a>
-					</li>
-					<li>
-						<div class="icon">
-							<img src="#" alt="오시는 길">
-						</div>
-						<h3>오시는 길</h3> <a class="more_btn" href="#">more</a>
-					</li>
-				</ul>
 			</div>
 			</section>
 		</div>

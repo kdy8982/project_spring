@@ -37,13 +37,13 @@
 #header .header_inner nav li{
 	display:inline-block;
 	margin-right:5vw;
-	font-size:18px;
+	font-size:1.2rem;
 	font-weight:600;
 	line-height: 4.25rem;
 }
 
 #header .header_inner nav li.login_area{
-	font-size:14px;
+	font-size:1rem;
 	margin-right:0px;
 	position: relative;
 	padding-right: 15px;
@@ -168,8 +168,26 @@
 .page_wrap {
 	position: relative;
     min-height: 100%;
-    padding-bottom: 106px;
+    padding-bottom: 100px;
     padding-top:75px;
+}
+
+.page_wrap.login{
+    background: url(/resources/images/index/psalm.jpg)no-repeat top center;
+    background-size: cover;
+    background-position: center;
+}
+
+.page_wrap.list .content ul li {
+    position: relative;
+    width: calc(33% - 25px);
+    margin: 11px;
+    overflow: hidden;
+    cursor: pointer;
+    display: inline-block;
+    max-height: 325px;
+    min-height: 52vh;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
 .container {
@@ -185,15 +203,16 @@
 }
 
 .title_wrap {
-	text-align : center;
-	margin-bottom: 10px;
+	text-align: center;
+    margin-bottom: 15px;
+    padding-top: 15px;
 }
 
 .main_tit {
     font-size: 2.5rem;
     text-transform: uppercase;
     display : inline-block;
-    font-weight:500;
+    font-weight:600;
 }
 
 #mask {
@@ -300,4 +319,11 @@
 
 .modal .modal_footer {
 	text-align: right;
+}
+
+.center_wrap {
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
 }

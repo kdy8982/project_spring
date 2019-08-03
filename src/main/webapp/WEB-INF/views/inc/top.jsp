@@ -24,7 +24,7 @@ $(document).ready(function() {
 				<li><a href="/notice/list">새소식</a></li>
 				<li><a href="/photo/list">사진</a></li>
 				<li><a href="/essay/list">더사랑 이야기</a></li>
-				<li><a href="/essay/list">교회 소개</a></li>
+				<li><a href="/essay/list">About us</a></li>
 				<li class="login_area normal-font	">				
 					<sec:authorize access="isAuthenticated()">
 						<a href="/memberDetail?userid=<sec:authentication property="principal.member.userid"/>">

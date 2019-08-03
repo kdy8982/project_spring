@@ -56,7 +56,7 @@
     top: 0;
     right: 0;
     bottom: 0;
-    background: url(/resources/images/index/index2.jpg)no-repeat top center;
+    background: url(/resources/images/index/church.jpg)no-repeat top center;
     background-size: cover;
     background-position: center;
 }
@@ -70,13 +70,8 @@
 	background-color: #fff;
 }
 
-.section_wrap section {
-	padding: 20px 0px 20px 0px;
-	
-}
-
 .even_row {
-	background-color: #f5f5f5;
+	background-color: #F4F1EC;
 }
 
 .even_row .gallery_li li {
@@ -96,6 +91,57 @@
 .main_row2 .table {
 	width : 100%;
 	font-size : 19px;
+}
+
+.main_row2 {
+}
+
+.main_row4 {
+	position : relative;
+	background: url(/resources/images/index/psalm.jpg)no-repeat top center;
+    background-size: cover;
+    background-position: center;
+}
+
+.layer {
+	
+    background-color: rgba( 244, 241, 225, 0.8 )
+}
+
+.main_row4 ul li {
+    padding-right: 14px;
+    padding-left: 14px;
+    border-right: 1px solid #fefefe;
+    position: relative;
+    width: calc(33% - 30px);
+    overflow: hidden;
+    cursor: pointer;
+    display: inline-block;
+    max-height: 325px;
+    min-height: 35vh;
+}
+
+.main_row4 ul li div{
+	width:85%;
+	margin:0 auto;
+}
+
+
+.main_row4 .thumb {
+	border-radius : 40px
+}
+
+.main_row4 .desc .desc_title{
+	line-height: 76px;
+    text-align: center;
+    border: 20px, 0px, 20px, 0px;
+    font-size: 33px;
+    font-weight: 400;
+}
+
+.main_row4 .desc .desc_content{
+	font-size: 20px;
+    line-height: 60px;
 }
 
 .notice_wrap {
@@ -156,7 +202,9 @@
     text-align: right;
 }
 
-
+.viewmore_wrap {
+	padding-bottom: 20px;
+}
 .view_btn {
     display: block;
     width: 100%;
@@ -186,7 +234,7 @@
 	text-align : center;
 }
 
-.book_li li {
+.main_row3 li {
 	position: relative;
     width: calc(33% - 25px);
     margin: 11px;
@@ -217,7 +265,6 @@
 .book_li li .desc {
 	padding: 10px;
 	line-height:19px;
-	min-height: 180px;
 }
 
 .book_li li .book_title {
@@ -249,7 +296,6 @@
  */ 
 	position: absolute;
     height: 25%;   
- 	background-color: #fff;
     text-align: center;
 	border-top: 1px solid #eee !important;
     overflow: hidden;
@@ -267,7 +313,6 @@
 }
 
 .gallery_li .thumb {
-    /* border-radius: 20px; */
     overflow: hidden;
     transition: .3s ease;
     -webkit-transition: .3s ease;
@@ -277,6 +322,10 @@
     bottom: 0;
     position: absolute;
     height:75%;
+}
+
+section .gallery_li .thumb {
+    height:100%;
 }
 
 
@@ -294,7 +343,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    padding: 4px;
+    padding: 0.7rem;
     opacity: 0.7;
 }
 

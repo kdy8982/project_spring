@@ -85,7 +85,7 @@ $(document).ready(function() {
 <body>
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
-	<div class="page_wrap">
+	<div class="page_wrap list">
 		<div class="container page_container">
 			<div class="title_wrap">
 				<h2 class="wrap-inner main_tit title-font">더사랑 이야기</h2>
