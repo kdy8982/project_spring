@@ -216,7 +216,6 @@ $(document).ready(function() {
 
 
 			<section class="main_row4 even_row" id="section04">
-			<div class="layer">
 				<div class="container">
 					<div class="title_wrap title-font">
 						<h2 class="main_tit">About us</h2>
@@ -257,7 +256,6 @@ $(document).ready(function() {
 						</li>
 					</ul>
 				</div>
-			</div>
 			</section>
 		</div>
 	<jsp:include page="./inc/footer.jsp" flush="true"></jsp:include>

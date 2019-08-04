@@ -28,6 +28,7 @@
 		     // 이메일이 적합한지 검사할 정규식
 			
 		    var name = $("input[name='username']").val();
+		    var email = $("input[name='useremail']").val();
 			var id = $("input[name='userid']").val();
 			var pw = $("input[name='userpw']").val();
 			//var email = document.getElementById("email");
@@ -50,11 +51,19 @@
 			var pwConfirm = $(".password_confirm").val();
 			if(pw != pwConfirm) {
 				alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
-				$(".password_confirm").val() = "";
+				$(".password_confirm").val("");
 				$(".password_confirm").focus();
 				return;
 			}
 			
+		     if(!check(re2,email,"적합하지 않은 이메일 형식입니다.")) {
+		         return false;
+		     }
+		     
+		     if(!check(re,name,"아이디는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+		         return false;
+		     }
+		     
 		     if(!check(re,id,"아이디는 4~12자의 영문 대소문자와 숫자로만 입력")) {
 		         return false;
 		     }
@@ -62,21 +71,14 @@
 		     if(!check(re,pw,"패스워드는 4~12자의 영문 대소문자와 숫자로만 입력")) {
 		         return false;
 		     }
-			
-			return ;
-			
-		     if(!check(re2, email, "적합하지 않은 이메일 형식입니다.")) {
-		         return false;
-		     }
-		
-		
 		     // 관심분야, 자기소개 미입력시 하라는 메시지 출력
+		     /* 
 		     if(join.self.value=="") {
 		         alert("자기소개를 적어주세요");
 		         join.self.focus();
 		         return false;
 		     }
-		     
+		      */
 		     alert("회원가입이 완료되었습니다.");
 		 }
 		
@@ -89,7 +91,6 @@
 		     //return false;
 		 }
 		
-		
 	})
 
 </script>
@@ -98,41 +99,45 @@
 <body>
 
 	<jsp:include page="inc/top.jsp" flush="true"></jsp:include>
-	<div class="page_wrap">
-	<div class="login background_wrap">
-	</div>
-	<div class="login_wrap title-font">
-		<h2><c:out value="${error}" /></h2>
-		<h2><c:out value="${logout}"/></h2>	
-		
-		<span class="top_title">EVERY WALL</span>
-		<span class="mid_title">IS A DOOR</span>
-		<span class="bottom_title">모든 벽은 문 이다</span>
-		<div class="login_content">
-			<form role="form" method="post" action="/customSignup">
-				<div>
-					<input class="login_div input_area" type="text" name="username" placeholder="NAME">
-				</div>
+	<div class="page_wrap login">
+	<div class="layer">
+		<div class="login_wrap title-font">
+			<h2><c:out value="${error}" /></h2>
+			<h2><c:out value="${logout}"/></h2>	
 			
-				<div>
-					<input class="login_div input_area" type="text" name="userid" placeholder="ID">
-				</div>
+			<span class="top_title">EVERY WALL</span>
+			<span class="mid_title">IS A DOOR</span>
+			<span class="bottom_title">모든 벽은 문 이다</span>
+			<div class="login_content">
+				<form role="form" method="post" action="/customSignup">
+					<div>
+						<input class="login_div input_area" type="text" name="username" placeholder="NAME">
+					</div>
 				
-				<div>
-					<input class="login_div input_area password" type="password" name="userpw" placeholder="PASSWORD">
-				</div>
-				
-				<div>
-					<input class="login_div input_area password_confirm" type="password" placeholder="PASSWORD CONFIRM">
-				</div>
-				
-				<div>
-					<input class="input_area_button" type="submit" value="가입하기">
-				</div>
-				
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<!-- <input type="hidden" name="authList[0].auth" value="ROLE_USER" /> -->
-			</form>
+					<div>
+						<input class="login_div input_area" type="text" name="userid" placeholder="ID">
+					</div>
+					
+					<div>
+						<input class="login_div input_area" type="text" name="useremail" placeholder="EMAIL">
+					</div>
+					
+					<div>
+						<input class="login_div input_area password" type="password" name="userpw" placeholder="PASSWORD">
+					</div>
+					
+					<div>
+						<input class="login_div input_area password_confirm" type="password" placeholder="PASSWORD CONFIRM">
+					</div>
+					
+					<div>
+						<input class="input_area_button" type="submit" value="가입하기">
+					</div>
+					
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<!-- <input type="hidden" name="authList[0].auth" value="ROLE_USER" /> -->
+				</form>
+			</div>
 		</div>
 	</div>
 	

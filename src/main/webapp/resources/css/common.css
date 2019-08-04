@@ -169,7 +169,7 @@
 	position: relative;
     min-height: 100%;
     padding-bottom: 100px;
-    padding-top:75px;
+    padding-top:69px;
 }
 
 .page_wrap.login{
@@ -209,7 +209,7 @@
 }
 
 .main_tit {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     text-transform: uppercase;
     display : inline-block;
     font-weight:600;

@@ -97,15 +97,12 @@
 }
 
 .main_row4 {
-	position : relative;
-	background: url(/resources/images/index/psalm.jpg)no-repeat top center;
-    background-size: cover;
-    background-position: center;
 }
 
 .layer {
-	
-    background-color: rgba( 244, 241, 225, 0.8 )
+    /* background-color: rgba( 244, 241, 225, 0.8 ) */
+    background-color: rgba( 255, 255, 255, 0.6);
+    min-height:100vh;
 }
 
 .main_row4 ul li {
@@ -118,7 +115,7 @@
     cursor: pointer;
     display: inline-block;
     max-height: 325px;
-    min-height: 35vh;
+    min-height: 45vh;
 }
 
 .main_row4 ul li div{
@@ -343,7 +340,7 @@ section .gallery_li .thumb {
     position: absolute;
     bottom: 0;
     right: 0;
-    padding: 0.7rem;
+    padding: 0.5rem;
     opacity: 0.7;
 }
 
