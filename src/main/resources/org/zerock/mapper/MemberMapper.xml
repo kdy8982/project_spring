@@ -10,6 +10,7 @@
 		<result property="regDate" column="regdate" />
 		<result property="updateDate" column="updatedate" />
 		<result property="photo" column="photo"/>
+		<result property="useremail" column="useremail"></result>
 		<collection property="authList" resultMap="authMap" />
 	</resultMap>
 
@@ -21,7 +22,7 @@
 
 	<select id="read" resultMap="memberMap">
 		SELECT
-			mem.userid, userpw, username, enabled, regdate, updatedate, auth, photo
+			mem.userid, userpw, username, enabled, regdate, updatedate, auth, photo, useremail
 		FROM 
 			tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.userid =	auth.userid
 		WHERE
@@ -29,8 +30,8 @@
 	</select>
 	
  	<insert id="insert">
-		insert into tbl_member (userid, userpw, username)
-		values (#{userid}, #{userpw}, #{username})
+		insert into tbl_member (userid, userpw, username, useremail)
+		values (#{userid}, #{userpw}, #{username} , #{useremail})
 	</insert> 
 	
 	<insert id="authorize">

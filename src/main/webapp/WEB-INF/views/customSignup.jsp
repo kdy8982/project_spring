@@ -17,20 +17,22 @@
 		
 		$(".input_area_button").on("click", function(e) {
 			e.preventDefault();
-			validate();
-			return;
-			formObj.submit();
+			if(validate()) {
+				formObj.submit();
+			};
 		})
 		
 		function validate() {
-			var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
-			var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-		     // 이메일이 적합한지 검사할 정규식
+			var reId = /^[가-힣a-zA-Z0-9]{4,12}$/ // 아이디가 적합한지 검사할 정규식
+			var rePw = /^[a-zA-Z0-9]{8,12}$/ // 패스워드가 적합한지 검사할 정규식
+			var reEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일이 적합한지 검사할 정규식
+			var reName =  /^[가-힣]{2,5}$/ // 이름이 적합한지 검사할 정규식
 			
-		    var name = $("input[name='username']").val();
-		    var email = $("input[name='useremail']").val();
-			var id = $("input[name='userid']").val();
-			var pw = $("input[name='userpw']").val();
+		    var name = $("input[name='username']")
+		    var email = $("input[name='useremail']")
+			var id = $("input[name='userid']")
+			var pw = $("input[name='userpw']")
+			var pwConfirm = $("input[name='userpw_confirm']")
 			//var email = document.getElementById("email");
 		     // ------------ 이메일 까지 -----------
 		    
@@ -39,36 +41,37 @@
 		    /* input박스 null값 체크 */
 			var inputArea = $(".input_area");
 			for(var i=0; i < inputArea.length; i++) {
-				console.log(inputArea[i].value);
 				if(inputArea[i].value == "") {
 					alert("입력하지 않은 정보가 있습니다.");
-					return;
+					return false;
 				}
 			}
 		     
 			/* 비밀번호 확인 체크 */
-			var pw = $(".password").val();
-			var pwConfirm = $(".password_confirm").val();
-			if(pw != pwConfirm) {
+			if(pw.val() != pwConfirm.val()) {	
 				alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
-				$(".password_confirm").val("");
-				$(".password_confirm").focus();
-				return;
+				pwConfirm.val("");
+				pwConfirm.focus();
+				return false;
 			}
 			
-		     if(!check(re2,email,"적합하지 않은 이메일 형식입니다.")) {
+		     if(!check(reEmail,email.val(),"적합하지 않은 이메일 형식입니다.")) {
+		    	 email.val("");
 		         return false;
 		     }
 		     
-		     if(!check(re,name,"아이디는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+		     if(!check(reName,name.val(),"이름을 확인해주세요.")) {
+		    	 name.val("");
 		         return false;
 		     }
 		     
-		     if(!check(re,id,"아이디는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+		     if(!check(reId,id.val(),"아이디는 4~8자의 영문 대소문자와 숫자로만 입력해야합니다.")) {
+		    	 id.val("");
 		         return false;
 		     }
 		
-		     if(!check(re,pw,"패스워드는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+		     if(!check(rePw,pw.val(),"패스워드는 8~12자의 영문 대소문자와 숫자로만 입력해야합니다.")) {
+		    	 pw.val("");
 		         return false;
 		     }
 		     // 관심분야, 자기소개 미입력시 하라는 메시지 출력
@@ -79,7 +82,8 @@
 		         return false;
 		     }
 		      */
-		     alert("회원가입이 완료되었습니다.");
+		      
+		      return true;
 		 }
 		
 		 function check(re, what, message) {
@@ -87,7 +91,6 @@
 		         return true;
 		     }
 		     alert(message);
-		     what.value = "";
 		     //return false;
 		 }
 		
@@ -100,7 +103,7 @@
 
 	<jsp:include page="inc/top.jsp" flush="true"></jsp:include>
 	<div class="page_wrap login">
-	<div class="layer">
+	<div class="layer login">
 		<div class="login_wrap title-font">
 			<h2><c:out value="${error}" /></h2>
 			<h2><c:out value="${logout}"/></h2>	
@@ -127,7 +130,7 @@
 					</div>
 					
 					<div>
-						<input class="login_div input_area password_confirm" type="password" placeholder="PASSWORD CONFIRM">
+						<input class="login_div input_area password_confirm" type="password" name="userpw_confirm" placeholder="PASSWORD CONFIRM">
 					</div>
 					
 					<div>

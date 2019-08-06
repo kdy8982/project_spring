@@ -59,7 +59,7 @@ $(document).ready(function() {
 			}
 		});
 		
-		$(".uploadResult ul").html(str);
+		$(".photo_list ul").html(str);
 	})
 })
 
@@ -109,7 +109,7 @@ $(document).ready(function() {
 								${essay.content }
 							</div>
 							
-						<div class="uploadResult">
+						<div class="photo_list">
 							<ul>
 							</ul>
 						</div>

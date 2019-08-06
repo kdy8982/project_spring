@@ -111,7 +111,13 @@ $(document).ready(function() {
 										pageContext.setAttribute("filepath", URLEncoder.encode(url));
 									%>
 									<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
-										<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${photoCount[status.index]}</p>
+										<c:if test="${photoCount[status.index] eq '0'}">
+											<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>
+										</c:if>										
+										
+										<c:if test="${photoCount[status.index] ne '0'}">
+											<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${photoCount[status.index]}</p>
+										</c:if>
 									</div> 
 									<div class="desc">
 										<h3>${essay.title}</h3>

@@ -21,6 +21,7 @@ public class MemberVO {
 	private String photo;
 	private String thumbPhoto;
 	
+	private String useremail;
 	
 	private List<AuthVO> authList; // 하나의 사용자는 여러개의 권한을 가질 수 있다(user, member, admin).
 	

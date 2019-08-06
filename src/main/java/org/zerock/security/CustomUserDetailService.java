@@ -25,10 +25,13 @@ public class CustomUserDetailService implements UserDetailsService {
 		log.warn("Load User by UserName : " + userid);
 		
 		MemberVO vo = memberMapper.read(userid);
-		try {
-			vo.setThumbPhoto();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+		
+		if(vo.getPhoto() != null) { // vo에 회원 프로필 사진이 있다면..
+			try {
+				vo.setThumbPhoto();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 		log.warn("quried by member mapper : " + vo);
 		

@@ -95,9 +95,10 @@
 							return true;
 						} // checkExtension(fileName, fileSize)
 
-						$("input[type='file']")
-								.change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
-											
+						$("input[type='file']").change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
+							$(".layer").css("display", "block");
+							$(".center_wrap").css("display","block");
+							
 											var formData = new FormData();
 											var inputFile = $("input[name='uploadFile']");
 											var files = inputFile[0].files;
@@ -108,8 +109,7 @@
 														files[i].size)) {
 													return false;
 												}
-												formData.append("uploadFile",
-														files[i]);
+												formData.append("uploadFile", files[i]);
 											}
 
 											$.ajax({
@@ -124,6 +124,8 @@
 														dataType : "json",
 														success : function(result) {
 															// $(".uploadDiv").html(cloneObj.html());
+															$(".layer").css("display", "none");
+															$(".center_wrap").css("display","none");
 															showUploadedFile(result);
 														},
 														error : function(
@@ -307,7 +309,6 @@
 
 		<div class="content">
 			<div class="list_wrap notice_wrap">
-				게시글 수정
 				<form role="form" action="/photo/modify" method="post">
 
 					<div class="form-group uploadRow">
@@ -326,8 +327,8 @@
 					</div>
 					<div class="row bottom_wrap">
 						<div class="notice_btn">
-							<button class="btn normal_btn middle" data-oper="modify" type="submit">수정 완료</button>
-							<button class="btn normal_btn " data-oper="delete">삭제</button>
+							<button class="btn normal_btn" data-oper="modify" type="submit">수정 완료</button>
+							<button class="btn normal_btn" data-oper="delete">삭제</button>
 						</div>
 					</div>
 
@@ -342,6 +343,8 @@
 					</div>
 
 					<div class="uploadResult uploadLev">
+						<div class="layer" style="display:none"></div>
+						<div class="center_wrap" style="display:none"><img src="/resources/images/sub/ajax-loader.gif" /></div>
 						<ul></ul>
 					</div>
 				</div>

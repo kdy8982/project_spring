@@ -32,7 +32,7 @@ $(document).ready(function() {
 })
 </script>
 
-<title>Insert title here</title>
+<title>관리자 페이지</title>
 </head>
 <body>
 
@@ -41,7 +41,7 @@ $(document).ready(function() {
 <div class="page_wrap">
 	<div class="container page_container">
 		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit title-font">새소식</h2>
+			<h2 class="wrap-inner main_tit title-font">관리자 페이지</h2>
 		</div>
 		
 		<div class="sub_title title-font">

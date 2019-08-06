@@ -12,15 +12,17 @@
 <body>
 	<!-- <div class="login background_wrap"></div> -->
 	<jsp:include page="inc/top.jsp" flush="true"></jsp:include>
+
 	<div class="page_wrap title-font login">
-		<div class="layer"> 
+			<div class="layer login"> 
+			</div>
 			<div class="login_wrap">
-				<h2><c:out value="${error}" /></h2>
-				<h2><c:out value="${logout}"/></h2>	
 				
 				<span class="top_title">EVERY WALL</span>
 				<span class="mid_title">IS A DOOR</span>
 				<span class="bottom_title">모든 벽은 문 이다.</span>
+				<h2><c:out value="${error}" /></h2>
+				<h2><c:out value="${logout}"/></h2>	
 				<div class="login_content">
 					<form method="post" action="/login">
 						<div>
@@ -48,7 +50,7 @@
 					</form>
 				</div>
 			</div>
-		</div>
+		
 		<jsp:include page="inc/footer.jsp" flush="true"></jsp:include>
 	</div>
 	

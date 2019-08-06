@@ -42,7 +42,7 @@ $(document).ready(function() {
 		pause : 2000, // 페이지 넘김 속도를 조절
 		pager : true, // 현재 위치 페이징 표시 여부 설정
 		moveSlides : 1, // 슬라이드 이동시 개수
-		slideWidth : 300, // 슬라이드 너비
+		slideWidth : 400, // 슬라이드 너비
 		minSlides : 4, // 최소 노출 개수
 		maxSlides : 4, // 최대 노출 개수
 		slideMargin : 10, // 슬라이드간의 간격
@@ -146,23 +146,25 @@ $(document).ready(function() {
 				</div>
 				<ul class="gallery_li">
 					<c:forEach var="photo" items="${photoList}" varStatus="status">
-						<a class="move" href="${photo.bno}" data-type="photo"
-							data-url="/photo/get" data-amount="12">
-							<li class="yesupload bg1"><c:set var="attach"
-									value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
-								<%
-									String url = (String) pageContext.getAttribute("attach");
+						<li class="yesupload bg1"><c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
+							<a class="move" href="${photo.bno}" data-type="photo" data-url="/photo/get" data-amount="12">
+									<%
+										String url = (String) pageContext.getAttribute("attach");
 										pageContext.setAttribute("filepath", URLEncoder.encode(url));
-								%>
-								<div class="thumb"
-									style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
-									<p class="photo-cntbox">
-										<i class="fa fa-camera-retro" aria-hidden="true"></i>
-										+${photo_photoCount[status.index]}
-									</p>
-								</div>
-							</li>
-						</a>
+									%>
+									<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
+										<c:if test="${photo_photoCount[status.index] eq '0'}" >
+											<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>
+										</c:if>
+										<c:if test="${photo_photoCount[status.index] ne '0'}" >
+											<p class="photo-cntbox">
+												<i class="fa fa-camera-retro" aria-hidden="true"></i>
+												+${photo_photoCount[status.index]}
+											</p>
+										</c:if>
+									</div>
+							</a>
+						</li>
 					</c:forEach>
 				</ul>
 				<div class="viewmore_wrap">
@@ -187,18 +189,23 @@ $(document).ready(function() {
 									String url = (String) pageContext.getAttribute("attach");
 										pageContext.setAttribute("filepath", URLEncoder.encode(url));
 								%>
-								<div class="thumb"
-									style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
-									<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${essay_photoCount[status.index]}</p>
+								<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
+									<c:if test="${essay_photoCount[status.index] eq '0'}" >
+										<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>
+									</c:if>
+									<c:if test="${essay_photoCount[status.index] ne '0'}">
+										<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${essay_photoCount[status.index]}</p>
+									</c:if>
 								</div>
-								 <c:set var="subsContent" value="${essay.content}" /> <%
- 	String subStr = (String) pageContext.getAttribute("subsContent");
- 		if (subStr.length() > 150) {
- 			subStr = subStr.substring(0, 150) + " ...";
-
- 		}
- 		pageContext.setAttribute("subsContent", subStr);
- %>
+								 <c:set var="subsContent" value="${essay.content}" /> 
+								 <%
+								 	String subStr = (String) pageContext.getAttribute("subsContent");
+								 		if (subStr.length() > 150) {
+								 			subStr = subStr.substring(0, 150) + " ...";
+								
+								 		}
+								 		pageContext.setAttribute("subsContent", subStr);
+								 %>
 								<div class="desc">
 									<span class="book_title">${essay.title}</span>
 									<p>${subsContent}</p>
@@ -218,7 +225,7 @@ $(document).ready(function() {
 			<section class="main_row4 even_row" id="section04">
 				<div class="container">
 					<div class="title_wrap title-font">
-						<h2 class="main_tit">About us</h2>
+						<h2 class="main_tit">더사랑 교회</h2>
 					</div>
 					<ul class="book_li">
 						<li>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <jsp:include page="inc/headTop.jsp" flush="true"></jsp:include>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,37 +20,18 @@
 		/* 확인 : 서버로 전송 버튼 클릭 이벤트 */
 		$(".input_area_button").on("click", function(e) {
 			e.preventDefault();
+			
 			var str="";
 			if($(".input_area_button").hasClass("modify") && $(".input_area_button").hasClass("pw_modify")) { // 둘다 변경
 				formObj.attr("action","memberPhotoPasswordModify");
 				console.log(thumbNail.data("path"));
 				str += "<input type='hidden' name='photo' value='"+ thumbNail.data("path") +"'>";
 				formObj.append(str); 
+				
+				if(validate()) {
+					formObj.submit();
+				};
 
-				/* input박스 null값 체크 . */
-				var inputArea = $(".input_area");
-				
-				console.log(inputArea.length);
-				
-				for(var i=0; i < inputArea.length; i++) {
-					console.log(inputArea[i].value);
-					if(inputArea[i].value == "") {
-						alert("입력하지 않은 정보가 있습니다.");
-						return;
-					}
-				}
-				
-				/* 비밀번호 확인 체크 */
-				var pw = $(".password").val();
-				var pwConfirm = $(".password_confirm").val();
-				console.log("pw : " + pw);
-				console.log("pw confirm : " + pwConfirm);
-				if(pw != pwConfirm) {
-					alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
-					return;
-				}
-				
-				formObj.submit();
 					
 			} else if ($(".input_area_button").hasClass("modify") == true && $(".input_area_button").hasClass("pw_modify") == false ) { // 프로필 사진만 변경
 				formObj.attr("action", "memberPhotoModify");
@@ -59,36 +41,68 @@
 				
 			} else if ($(".input_area_button").hasClass("modify") == false && $(".input_area_button").hasClass("pw_modify") == true) { // 암호만 변경
 				formObj.attr("action", "memberPasswordModify");
+				if(validate()) {
+					formObj.submit();
+				};
 				
-				/* input박스 null값 체크 . */
-				var inputArea = $(".input_area");
-				
-				for(var i=0; i < inputArea.length; i++) {
-					console.log(inputArea[i].value);
-					if(inputArea[i].value == "") {
-						alert("입력하지 않은 정보가 있습니다.");
-						return;
-					}
-				}
-				
-				/* 비밀번호 확인 체크 */
-				var pw = $(".password").val();
-				var pwConfirm = $(".password_confirm").val();
-				console.log("pw : " + pw);
-				console.log("pw confirm : " + pwConfirm);
-				if(pw != pwConfirm) {
-					alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
-					return;
-				}
-				formObj.submit();
-				
-			} else { // 둘 다 안바뀌었을 때
+			} else { // 암호, 프로필사진 둘다 안바뀌었을 때
 				location.href="/";
 			}
 			
-			return;
 		})
 		
+		
+		function validate() {
+			var rePw = /^[a-zA-Z0-9]{8,12}$/ // 패스워드가 적합한지 검사할 정규식
+			
+			var pw = $("input[name='userpw']")
+			var newPw = $("input[name='newpw']")
+			var newPwConfirm = $("input[name='newpw_confirm']")
+		     // ------------ 이메일 까지 -----------
+		    
+		    /* input박스 null값 체크 */
+			var inputArea = $(".input_area");
+			for(var i=0; i < inputArea.length; i++) {
+				if(inputArea[i].value == "") {
+					alert("입력하지 않은 정보가 있습니다.");
+					return false;
+				}
+			}
+		     
+			/* 비밀번호 확인 체크 */
+			if(newPw.val() != newPwConfirm.val()) {	
+				alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
+				newPwConfirm.val("");
+				newPwConfirm.focus();
+				return false;
+			}
+		
+		     if(!check(rePw,newPw.val(),"패스워드는 8~12자의 영문 대소문자와 숫자로만 입력해야합니다.")) {
+		    	 newPw.val("");
+		    	 newPwConfirm.val("")
+		         return false;
+		     }
+		     
+		     if(!check(rePw,newPwConfirm.val(),"패스워드는 8~12자의 영문 대소문자와 숫자로만 입력해야합니다.")) {
+		    	 newPw.val("");
+		    	 newPwConfirm.val("")
+		         return false;
+		     }
+		     
+		     return true;
+		 }
+		
+		 function check(re, what, message) {
+		     if(re.test(what)) {
+		         return true;
+		     }
+		     alert(message);
+		     //return false;
+		 }
+		
+		
+		
+		/** 서버와의 통신 결과를 알리기 위한 모달창 띄우기 위한 부분  **/
 		var result = '<c:out value="${result}"/>';
 		checkModal(result);
 
@@ -162,13 +176,12 @@
 		})
 		
 		
-		
 	}) // document.ready();
 	
 	var csrfHeaderName = "${_csrf.headerName}";
 	var csrfTokenValue = "${_csrf.token}";
 	
-	/* 비밀번호 변경 버튼: 비밀번호 변경 누를 시, 숨어있던 '새로운 비밀번호'+'새로운 비밀번호 확인'이 나온다. */
+	/* 비밀번호 변경 버튼 클릭 이벤트 : 비밀번호 변경 누를 시, 숨어있던 '새로운 비밀번호'+'새로운 비밀번호 확인'이 나온다. */
 	function showPasswordChange() {
 		$(".input_area_button").addClass("pw_modify");
 		
@@ -187,7 +200,7 @@
 		
 		str += '<div class="login_div hidden_div">';
 		str += '<span>새로운 비밀번호 확인</span>';
-		str += '<input class="input_area password_confirm" type="password" value="">';
+		str += '<input class="input_area password_confirm" type="password" name="newpw_confirm" value="">';
 		str += '</div>';
 		
 		$("form[role='form']").append(str);
@@ -213,19 +226,16 @@
 				var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName; // 원본 사진
 				
 				originPath = originPath.replace(new RegExp(/\\/g), "/");
-		
-				console.log(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
-				console.log(fileCallPath);
-				console.log(originPath);
 				
 				$(".thumb").attr("data-path", obj.uploadPath + "_" + obj.uuid+"_" + obj.fileName); // data-path 태그 속성은 업로드 submit시에 formdata로 사용된다. 
-			
+				
+				$(".unknown_image").remove(); // 기존 unknown image div는 삭제한다.
 				
 				$(".thumb").css("background", "url(/display?fileName="+ fileCallPath +")no-repeat top center");
 				$(".thumb").css("background-size", "cover");
 				$(".thumb").css("background-position", "center");
 				
-			}
+			} 
 		});	
 		uploadResult.append(str);
 	}
@@ -262,6 +272,12 @@
 		
 		<div class="profile_wrap">
 			<div class="thumb" style="background: url(/display?fileName=<sec:authentication property="principal.member.thumbPhoto"/>)no-repeat top center; background-size:cover; background-position: center">
+				<sec:authentication var="userProfilePhoto" property='principal.member.photo'/>
+				<c:if test="${userProfilePhoto eq null }">			
+					<div class="unknown_image center_wrap">
+						<i class="fa fa-user-circle-o" aria-hidden="true"></i>
+					</div>
+				</c:if> 	
 				<i class="fa fa-camera-retro profile_change" aria-hidden="true" onclick="changeProfilePhoto()"></i>
 				<input class="input_upload" type="file" name="uploadFile" style="display:none">
 			</div>
@@ -275,6 +291,16 @@
 				<div class="login_div">
 					<span>아이디</span>
 					<input class="input_area" type="text" name="userid" value="<sec:authentication property="principal.member.userid"/>" readonly="readonly">
+				</div>
+				<div class="login_div">
+					<span>회원 유형11</span>
+					<sec:authentication property="principal.member.authList" var="authList"/>
+					
+					<input class="input_area" type="text" name="auth" value="${authList[0].auth}" readonly="readonly">
+				</div>
+				<div class="login_div">
+					<span>이메일</span>
+					<input class="input_area" type="text" name="userid" value="<sec:authentication property="principal.member.useremail"/>" readonly="readonly">
 				</div>
 
  				<div class="login_div input_check show_div">

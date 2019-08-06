@@ -40,11 +40,6 @@ public class HomeController {
 		model.addAttribute("photo_photoCount", boardService.getPhotoCount(new Criteria(1,8,"photo")));
 		model.addAttribute("essay_photoCount", boardService.getPhotoCount(new Criteria(1,3,"essay")));
 
-		
-		//int total = boardService.getTotalNotice(cri);
-		//model.addAttribute("pageMaker", new PageDTO(cri, total));
-		
-		log.info(cri.getPageNum());
 		return "/index";
 	}
 }
