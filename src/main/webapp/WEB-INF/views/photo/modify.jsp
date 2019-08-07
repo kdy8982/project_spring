@@ -19,16 +19,12 @@
 						var formObj = $("form[role='form']");
 						// var cloneObj = $(".uploadDiv").clone();
 
-						$("button[data-oper='modify']")
-								.on(
-										"click",
-										function(e) {
+						$("button[data-oper='modify']").on("click",function(e) {
 											e.preventDefault();
 											var str = "";
 											str += "<input type='hidden' name='bno' value='"+${photo.bno}+"'>";
 											$(".uploadResult ul li")
-													.each(
-															function(i, obj) {
+													.each(function(i, obj) {
 																var jobj = $(obj);
 
 																str += "<input type='hidden' name='attachList["
@@ -176,10 +172,7 @@
 																	"/");
 
 													str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
-													str += "<span>"
-															+ obj.fileName
-															+ "</span>";
-													str += "<button type='button' class='btn btn-warning btn-circle' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
+													str += "<button type='button' class='close_btn' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
 													str += "<img src='/display?fileName="
 															+ fileCallPath
 															+ "'>";
@@ -220,9 +213,7 @@
 										},
 										function(arr) {
 											var str = "";
-											$(arr)
-													.each(
-															function(i, attach) {
+											$(arr).each(function(i, attach) {
 																//image type (썸네일)
 																if (attach.fileType) {
 																	var fileCallPath = encodeURIComponent(attach.uploadPath
@@ -233,9 +224,6 @@
 
 																	str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
 																	str += "<div>";
-																	str += "<span>"
-																			+ attach.fileName
-																			+ "</span>";
 																	str += "<button class='close_btn' data-file=\'" + fileCallPath + "\' data-type='image'><i class='fa fa-times'></i></button><br>"
 																	str += "<img src='/display?fileName="
 																			+ fileCallPath

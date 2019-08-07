@@ -299,6 +299,10 @@
     right: 0;	
 }
 
+.gallery_li .desc p {
+	font-size:0.8rem;
+}
+
 .gallery_li .desc .desc_content{    position: absolute;
     top: 50%;
     left: 50%;

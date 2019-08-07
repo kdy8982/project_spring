@@ -63,13 +63,17 @@ public class CommonController {
 	}
 	
 	@RequestMapping(value="/customSignup", method= {RequestMethod.GET, RequestMethod.POST})
-	public void signUp(MemberVO vo, HttpServletRequest request) {
+	public String signUp(MemberVO vo, HttpServletRequest request, RedirectAttributes rttr) {
 		log.info("sign up call .. ");
 		log.info("요청 type : " + request.getMethod());
 		
 		if(request.getMethod().equals("POST")) {
-			memberService.insert(vo);
+			if (memberService.insert(vo)) {
+				rttr.addFlashAttribute("result", "회원 가입에 성공하였습니다. 환영합니다.");
+				return "redirect:/customLogin";
+			};
 		}
+		return "/customSignup";
 	}
 	
 	@RequestMapping(value="/memberDetail", method= {RequestMethod.GET})

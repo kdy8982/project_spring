@@ -2,6 +2,7 @@ package org.zerock.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -93,6 +94,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVO get(MemberVO vo) {
 		return memberMapper.read(vo.getUserid());
+	}
+
+	@Override
+	public List<MemberVO> getList() {
+		return memberMapper.getList();
+	}
+
+	@Override
+	public boolean grantAuth(AuthVO auth) {
+		return memberMapper.grantAuth(auth) == 1;
+		
 	}
 	
 //    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {

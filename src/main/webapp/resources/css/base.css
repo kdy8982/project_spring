@@ -16,7 +16,7 @@ body{font-size:0.9rem; color:#222;}
 .title-font {font-family: 'Noto Serif KR', 'Montserrat', Dotum, '돋움', sans-serif;}
 .normal-font {font-family: 'Nanum Gothic', Dotum, '돋움', sans-serif;}
 
-html, body {height : 100%;}
+html {min-height : 100%; position:relative;}
 
 /* 제목요소 */
 h1, h2, h3, h4, h5, h6 {font-size: 0.8rem; margin: 0;} 

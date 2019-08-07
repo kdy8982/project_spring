@@ -93,6 +93,41 @@
 		     alert(message);
 		     //return false;
 		 }
+		 
+		/** 서버와의 통신 결과를 알리기 위한 모달창 띄우기 위한 부분  **/
+		var result = '<c:out value="${result}"/>';
+		checkModal(result);
+
+		function checkModal(result) {
+			if (result === "") {
+				return;
+			}
+			if (parseInt(result) > 0) {
+
+			} else {
+				wrapWindowByMask();
+			}
+		}
+
+		function wrapWindowByMask() {
+			//화면의 높이와 너비를 구한다.
+			var maskHeight = $(document).height();
+			var maskWidth = $(window).width();
+
+			//마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+			$('#mask').css({
+				'width' : maskWidth,
+				'height' : maskHeight
+			});
+
+			$('#mask').fadeTo("slow", 0.8);
+			
+			
+			$('.modal_body').html(result);
+			//모달 같은 거 띄운다.
+			$('.modal').css("display", "block");
+			//$(".modal").show();
+		}
 		
 	})
 
@@ -103,7 +138,8 @@
 
 	<jsp:include page="inc/top.jsp" flush="true"></jsp:include>
 	<div class="page_wrap login">
-	<div class="layer login">
+		<div class="layer login">
+		</div>
 		<div class="login_wrap title-font">
 			<h2><c:out value="${error}" /></h2>
 			<h2><c:out value="${logout}"/></h2>	
@@ -143,8 +179,18 @@
 			</div>
 		</div>
 	</div>
-	
 	<jsp:include page="inc/footer.jsp" flush="true"></jsp:include>
+	<div class="modal">
+		<div class="modal_header row">
+			<div class="modal_title">알림</div>
+			<!-- <button class="close_btn"><i class="fa fa-times" aria-hidden="true"></i></button> -->
+		</div>
+
+		<div class="modal_body row">정상적으로 처리 되었습니다.</div>
+
+		<div class="modal_footer row">
+			<button class="btn normal_btn close" type="submit">확인</button>
+		</div>
 	</div>
 </body>
 </html>

@@ -29,6 +29,15 @@
 			mem.userid = #{userid}
 	</select>
 	
+	<select id="getList" resultMap="memberMap">
+		select 
+			mem.userid, mem.username, mem.useremail, mem.regdate, auth
+		from 
+			tbl_member mem left outer join tbl_member_auth auth 
+		on mem.userid = auth.userid
+		order by auth
+	</select>
+	
  	<insert id="insert">
 		insert into tbl_member (userid, userpw, username, useremail)
 		values (#{userid}, #{userpw}, #{username} , #{useremail})
@@ -45,5 +54,9 @@
 	
 	<update id="changeProfilePhoto">
 		update tbl_member set photo = #{photo} where userid=#{userid}
+	</update>
+	
+	<update id="grantAuth">
+		update tbl_member_auth set auth = #{auth} where userid=#{userid}
 	</update>
 </mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>
 <!DOCTYPE html>
 <html>
@@ -18,7 +19,6 @@ $(document).ready(function() {
 		actionForm.submit();
 	})
 	
-	
 	var actionForm = $("#actionForm");
 	$(".move").on("click", function(e) {
 		e.preventDefault();
@@ -27,8 +27,15 @@ $(document).ready(function() {
 		actionForm.append("<input type='hidden' name='boardType' value='notice'>");
 		actionForm.attr("action", "/notice/get");
 		actionForm.submit();
-		
 	})
+	
+	var result = new Array();
+	<c:forEach items="${memberList}" var="member">
+		var json = new Object();
+		json.auth="${member.authList[0].auth}";
+		result.push(json);
+	</c:forEach>
+	
 })
 </script>
 
@@ -57,28 +64,47 @@ $(document).ready(function() {
 			<div class="list_wrap notice_wrap">
 				<table class ="notice_table">
 					<colgroup>
-						<col width="60%">
-						<col width="40%">
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
 					</colgroup>
 					<thead>
 						<tr>
-							<th class="title">소식</th>
-							<th>작성일</th>
+							<th>아이디</th>
+							<th class="title">회원이름</th>
+							<th>이메일</th>
+							<th>등급</th>
+							<th>가입일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${noticeList}" var="notice" varStatus="status" >
+						<c:forEach items="${memberList}" var="member" varStatus="status" >
 							<c:if test="${status.count % 2 == 1}">
-								<tr>
-									<td class="even"><a class="move" href='<c:out value="${notice.bno}" />'><c:out value="${notice.title}"></c:out></a></td>
-									<td class="even"><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
+								<tr onClick= "location.href='/admin/memberDetail?userid=${member.userid}'" style="cursor:pointer" >
+										<td class="even">${member.userid}</td>
+										<td class="even">${member.username}</td>
+										<td class="even">${member.useremail}</td>
+										<td class="even">
+												<c:if test="${member.authList[0].auth eq 'ROLE_USER'}">일반</c:if>
+												<c:if test="${member.authList[0].auth eq 'ROLE_MEMBER'}">더사랑 성도</c:if>
+												<c:if test="${member.authList[0].auth eq 'ROLE_ADMIN'}">더사랑 관리자</c:if>
+										</td>
+										<td class="even"><fmt:formatDate pattern="yyyy-MM-dd" value="${member.regDate}" /></td>
 								</tr>
 							</c:if>
-													
 							<c:if test="${status.count % 2 == 0}">
-								<tr>
-									<td><a class="move" href='<c:out value="${notice.bno}" />'><c:out value="${notice.title}"></c:out></a></td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${notice.regdate}" /></td>
+								<tr onClick= "location.href='/admin/memberDetail?userid=${member.userid}'" style="cursor:pointer" >
+									<td>${member.userid}</td>
+									<td>${member.username}</td>
+									<td>${member.useremail}</td>
+									<td>
+											<c:if test="${member.authList[0].auth eq 'ROLE_USER'}">일반</c:if>
+											<c:if test="${member.authList[0].auth eq 'ROLE_MEMBER'}">더사랑 성도</c:if>
+											<c:if test="${member.authList[0].auth eq 'ROLE_ADMIN'}">더사랑 관리자</c:if>
+									</td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${member.regDate}" /></td>
 								</tr>
 							</c:if>
 
@@ -88,48 +114,6 @@ $(document).ready(function() {
 			</div>
 		</div>
 		<div class="bottom_wrap">
-			<div class="page_box">
-				<ul>
-					<c:if test="${pageMaker.prev}">
-						<li class="page-item">
-							<a class="page-link" href="${pageMaker.startPage -1}" aria-label="Previous">
-					        	<span aria-hidden="true">&laquo;</span>
-								<span class="sr-only">Previous</span>
-							</a>
-						</li>
-					</c:if>
-				
-					<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-						<li class="page-item ${pageMaker.cri.pageNum == num ? "active":""} "><a class="page_num" href="${num}">${num}</a></li>
-					</c:forEach>
-					
-					<c:if test="${pageMaker.next}">
-						<li class="page-item next">
-							<a class="page-link" href="${pageMaker.endPage + 1}" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-	   							<span class="sr-only">Next</span>
-							</a>
-						</li>
-					</c:if>
-				</ul>
-			</div>
-			<div class="search_box">
-				<form id="searchForm" action="/notice/list" method="get">
-					<select class="select" name="type">
-						<option value=""> - </option>
-						<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
-						<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
-						<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-					</select>
-					<input class="keyword" type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword }'/>">
-					<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/> 
-					<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
-					<button class="btn normal_btn search_btn">검색</button>
-				</form>
-			</div>
-			<div class="notice_btn">
-				<button class="btn normal_btn" onclick="location.href='/notice/register'">새소식 쓰기</button>
-			</div>
 		</div>
 	</div>
 		

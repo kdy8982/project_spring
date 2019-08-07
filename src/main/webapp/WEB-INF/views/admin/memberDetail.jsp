@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
-<jsp:include page="inc/headTop.jsp" flush="true"></jsp:include>
+<jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,87 +20,8 @@
 		/* 확인 : 서버로 전송 버튼 클릭 이벤트 */
 		$(".input_area_button").on("click", function(e) {
 			e.preventDefault();
-			
-			var str="";
-			if($(".input_area_button").hasClass("modify") && $(".input_area_button").hasClass("pw_modify")) { // 둘다 변경
-				formObj.attr("action","memberPhotoPasswordModify");
-				console.log(thumbNail.data("path"));
-				str += "<input type='hidden' name='photo' value='"+ thumbNail.data("path") +"'>";
-				formObj.append(str); 
-				
-				if(validate()) {
-					formObj.submit();
-				};
-
-					
-			} else if ($(".input_area_button").hasClass("modify") == true && $(".input_area_button").hasClass("pw_modify") == false ) { // 프로필 사진만 변경
-				formObj.attr("action", "memberPhotoModify");
-				str += "<input type='hidden' name='photo' value='"+ thumbNail.data("path") +"'>";
-				formObj.append(str); 
-				formObj.submit();
-				
-			} else if ($(".input_area_button").hasClass("modify") == false && $(".input_area_button").hasClass("pw_modify") == true) { // 암호만 변경
-				formObj.attr("action", "memberPasswordModify");
-				if(validate()) {
-					formObj.submit();
-				};
-				
-			} else { // 암호, 프로필사진 둘다 안바뀌었을 때
-				location.href="/";
-			}
-			
+			formObj.submit();
 		})
-		
-		
-		function validate() {
-			var rePw = /^[a-zA-Z0-9]{8,12}$/ // 패스워드가 적합한지 검사할 정규식
-			
-			var pw = $("input[name='userpw']")
-			var newPw = $("input[name='newpw']")
-			var newPwConfirm = $("input[name='newpw_confirm']")
-		     // ------------ 이메일 까지 -----------
-		    
-		    /* input박스 null값 체크 */
-			var inputArea = $(".input_area");
-			for(var i=0; i < inputArea.length; i++) {
-				if(inputArea[i].value == "") {
-					alert("입력하지 않은 정보가 있습니다.");
-					return false;
-				}
-			}
-		     
-			/* 비밀번호 확인 체크 */
-			if(newPw.val() != newPwConfirm.val()) {	
-				alert("비밀번호 확인 값을 다르게 입력하셨습니다.");
-				newPwConfirm.val("");
-				newPwConfirm.focus();
-				return false;
-			}
-		
-		     if(!check(rePw,newPw.val(),"패스워드는 8~12자의 영문 대소문자와 숫자로만 입력해야합니다.")) {
-		    	 newPw.val("");
-		    	 newPwConfirm.val("")
-		         return false;
-		     }
-		     
-		     if(!check(rePw,newPwConfirm.val(),"패스워드는 8~12자의 영문 대소문자와 숫자로만 입력해야합니다.")) {
-		    	 newPw.val("");
-		    	 newPwConfirm.val("")
-		         return false;
-		     }
-		     
-		     return true;
-		 }
-		
-		 function check(re, what, message) {
-		     if(re.test(what)) {
-		         return true;
-		     }
-		     alert(message);
-		     //return false;
-		 }
-		
-		
 		
 		/** 서버와의 통신 결과를 알리기 위한 모달창 띄우기 위한 부분  **/
 		var result = '<c:out value="${result}"/>';
@@ -176,6 +97,11 @@
 		})
 		
 		
+		$("select[name='auth']").on("change", function() {
+			
+			
+		})
+		
 	}) // document.ready();
 	
 	var csrfHeaderName = "${_csrf.headerName}";
@@ -207,11 +133,6 @@
 		
 	} 
 
-	function changeProfilePhoto() {
-		alert("click change Profile Photo !");
-		$(".input_upload").click();
-	}
-	
 	function showUploadedFile(uploadResultArr) {
 		if(!uploadResultArr || uploadResultArr.length == 0) {
 			return;
@@ -262,49 +183,59 @@
 </head>
 <body>
 
-	<jsp:include page="inc/top.jsp" flush="true"></jsp:include>
+	<jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	<div class="page_wrap">
 	<div class="login_wrap">
 		<h2><c:out value="${error}" /></h2>
 		<h2><c:out value="${logout}"/></h2>	
 		
 		<div class="profile_wrap">
-			<div class="thumb" style="background: url(/display?fileName=<sec:authentication property="principal.member.thumbPhoto"/>)no-repeat top center; background-size:cover; background-position: center">
-				<sec:authentication var="userProfilePhoto" property='principal.member.photo'/>
-				<c:if test="${userProfilePhoto eq null }">			
+			<div class="thumb" style="background: url(/display?fileName=${member.thumbPhoto})no-repeat top center; background-size:cover; background-position: center">
+				<c:if test="${member.photo eq null}">			
 					<div class="unknown_image center_wrap">
 						<i class="fa fa-user-circle-o" aria-hidden="true"></i>
 					</div>
 				</c:if> 	
-				<i class="fa fa-camera-retro profile_change" aria-hidden="true" onclick="changeProfilePhoto()"></i>
-				<input class="input_upload" type="file" name="uploadFile" style="display:none">
 			</div>
 		</div>
 		<div class="login_content">
-			<form role="form" method="post" action="/memberModify">
+			<form role="form" method="post" action="/admin/grantAuth">
 				<div class="login_div">
 					<span>이름</span>
-					<input class="input_area" type="text" name="username" value="<sec:authentication property="principal.member.username"/>" readonly="readonly">
+					<input class="input_area" type="text" name="username" value="${member.username}" readonly="readonly">
 				</div>
 				<div class="login_div">
 					<span>아이디</span>
-					<input class="input_area" type="text" name="userid" value="<sec:authentication property="principal.member.userid"/>" readonly="readonly">
+					<input class="input_area" type="text" name="userid" value="${member.userid}" readonly="readonly">
 				</div>
 				<div class="login_div">
 					<span>회원 유형</span>
-					<sec:authentication property="principal.member.authList" var="authList"/>
-					
-					<input class="input_area" type="text" name="auth" value='<c:if test="${authList[0].auth eq 'ROLE_USER'}">일반</c:if><c:if test="${authList[0].auth eq 'ROLE_MEMBER'}">더사랑 성도</c:if><c:if test="${authList[0].auth eq 'ROLE_ADMIN'}">더사랑 관리자</c:if>' readonly="readonly">
+						<select name="auth">	
+							<c:if test="${member.authList[0].auth eq 'ROLE_USER'}"><option value="ROLE_USER" selected>일반</option><option value="ROLE_MEMBER">더사랑 교인</option><option value="ROLE_ADMIN">더사랑 관리자</option></c:if>
+							<c:if test="${member.authList[0].auth eq 'ROLE_MEMBER'}"><option value="ROLE_USER">일반</option><option value="ROLE_MEMBER" selected>더사랑 교인</option><option value="ROLE_ADMIN">더사랑 관리자</option></c:if>
+							<c:if test="${member.authList[0].auth eq 'ROLE_ADMIN'}"><option value="ROLE_USER">일반</option><option value="ROLE_MEMBER">더사랑 교인</option><option value="ROLE_ADMIN" selected>더사랑 관리자</option></c:if>
+						</select>
 				</div>
 				<div class="login_div">
 					<span>이메일</span>
-					<input class="input_area" type="text" name="useremail" value="<sec:authentication property="principal.member.useremail"/>" readonly="readonly">
+					<input class="input_area" type="text" name="useremail" value="${member.useremail}" readonly="readonly">
 				</div>
 
- 				<div class="login_div input_check show_div">
-					<span onclick="showPasswordChange()">비밀번호 변경</span>
+<!-- 				<div class="login_div hidden_div" style="display:none">
+					<span>현재 비밀번호</span>
+					<input class="input_area" type="password" name="userpw" value="">
 				</div>
 				
+				<div class="login_div hidden_div" style="display: none">
+					<span>새로운 비밀번호</span>
+					<input class="input_area password" type="password" name="newpw" value="">
+				</div>
+				
+				<div class="login_div hidden_div" style="display: none">
+					<span>새로운 비밀번호 확인</span>
+					<input class="input_area password_confirm" type="password" value="">
+				</div>
+ -->
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
 			<div>
@@ -313,21 +244,21 @@
 		</div>
 	</div>
 	
-	<jsp:include page="inc/footer.jsp" flush="true"></jsp:include>
+	<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 	</div>
 	
 	<div class="modal">
-			<div class="modal_header row">
-				<div class="modal_title">알림</div>
-				<!-- <button class="close_btn"><i class="fa fa-times" aria-hidden="true"></i></button> -->
-			</div>
-
-			<div class="modal_body row">정상적으로 처리 되었습니다.</div>
-
-			<div class="modal_footer row">
-				<button class="btn normal_btn close" type="submit">확인</button>
-			</div>
+		<div class="modal_header row">
+			<div class="modal_title">알림</div>
+			<!-- <button class="close_btn"><i class="fa fa-times" aria-hidden="true"></i></button> -->
 		</div>
+
+		<div class="modal_body row">정상적으로 처리 되었습니다.</div>
+
+		<div class="modal_footer row">
+			<button class="btn normal_btn close" type="submit">확인</button>
+		</div>
+	</div>
 	<div id="mask"></div>
 </body>
 </html>

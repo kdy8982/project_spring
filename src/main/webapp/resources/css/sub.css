@@ -428,14 +428,13 @@
 
 .uploadResult.uploadLev li{
 	display : inline-block;
- 	width: 17%;
-    margin: 10px;
+ 	width: 30%;
+    margin-right: 1.3em;
+    position:relative;
 }
 
 
 .uploadResult li{
-	margin-top : 15px;
-	margin-bottom : 15px;
 }
 
 .uploadResult li img{
@@ -476,14 +475,10 @@
 }
 
 .login_wrap {
- 	transform: translateX(-50%);
-    left: 50%;
-    top: 15%;
-    position: absolute;
-    text-align:center;
+	position : relative;
     width: 31vw;
-    margin: 0 auto;
-    
+    margin: 15vh auto;
+    text-align: center;
 }
 
 .login_wrap .top_title {
@@ -561,6 +556,12 @@
     border-right: 0px;
     border-top: 0px;
     border-left: 0px;
+    border-bottom: 1px solid #261111;
+}
+
+.login_content select{
+	width: 100%;
+    border: none;
     border-bottom: 1px solid #261111;
 }
 

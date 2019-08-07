@@ -269,6 +269,8 @@
     line-height: 1.5rem;
     width: 1.6rem;
     border-radius: 13px;
+    position : absolute;
+    right : -13px;
 }
 
 .modal.close_btn{

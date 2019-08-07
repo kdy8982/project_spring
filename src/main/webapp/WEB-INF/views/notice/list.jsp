@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>
 <!DOCTYPE html>
 <html>
@@ -127,9 +129,11 @@ $(document).ready(function() {
 					<button class="btn normal_btn search_btn">검색</button>
 				</form>
 			</div>
-			<div class="notice_btn">
-				<button class="btn normal_btn" onclick="location.href='/notice/register'">새소식 쓰기</button>
-			</div>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<div class="notice_btn">
+					<button class="btn normal_btn" onclick="location.href='/notice/register'">새소식 쓰기</button>
+				</div>
+			</sec:authorize>
 		</div>
 	</div>
 		
