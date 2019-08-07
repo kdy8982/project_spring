@@ -16,4 +16,7 @@ public interface MemberService {
 	
 	public boolean grantAuth(AuthVO authVO);
 	
+	public int checkIdIsSigned(String userid);
+	public int checkEmailIsSigned(String userid);
+	
 }

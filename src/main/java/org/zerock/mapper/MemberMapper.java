@@ -16,5 +16,8 @@ public interface MemberMapper {
 	public int changeProfilePhoto(MemberVO vo);
 	
 	public int grantAuth(AuthVO auth);
+	
+	public int checkIdIsSigned(String userid);
+	public int checkEmailIsSigned(String userid);
 
 }

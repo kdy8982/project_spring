@@ -38,6 +38,14 @@
 		order by auth
 	</select>
 	
+	<select id="checkIdIsSigned" resultType="int">
+		select count(*) from tbl_member where userid=#{userid}
+	</select>
+	
+	<select id="checkEmailIsSigned" resultType="int">
+		select count(*) from tbl_member where useremail=#{useremail}
+	</select>
+	
  	<insert id="insert">
 		insert into tbl_member (userid, userpw, username, useremail)
 		values (#{userid}, #{userpw}, #{username} , #{useremail})

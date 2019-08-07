@@ -106,6 +106,16 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.grantAuth(auth) == 1;
 		
 	}
+
+	@Override
+	public int checkIdIsSigned(String userid) {
+		return memberMapper.checkIdIsSigned(userid);
+	}
+
+	@Override
+	public int checkEmailIsSigned(String userid) {
+		return memberMapper.checkEmailIsSigned(userid);
+	}
 	
 //    protected Authentication createNewAuthentication(Authentication currentAuth, String username) {
 //    	CustomUserDetailService cuds = new CustomUserDetailService();

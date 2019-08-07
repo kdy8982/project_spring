@@ -14,9 +14,12 @@
 	$(document).ready(function() {
 		
 		var formObj = $("form[role='form']");
+		var csrfHeaderName = "${_csrf.headerName}";
+		var csrfTokenValue = "${_csrf.token}";
 		
 		$(".input_area_button").on("click", function(e) {
 			e.preventDefault();
+			
 			if(validate()) {
 				formObj.submit();
 			};
@@ -36,7 +39,6 @@
 			//var email = document.getElementById("email");
 		     // ------------ 이메일 까지 -----------
 		    
-		     console.log(name + id + pw);
 		     
 		    /* input박스 null값 체크 */
 			var inputArea = $(".input_area");
@@ -74,14 +76,45 @@
 		    	 pw.val("");
 		         return false;
 		     }
-		     // 관심분야, 자기소개 미입력시 하라는 메시지 출력
-		     /* 
-		     if(join.self.value=="") {
-		         alert("자기소개를 적어주세요");
-		         join.self.focus();
-		         return false;
+		     
+		     var ajaxReturn = true; // ajax success data의 return false를 메인 검증 로직에 적용하기 위한 임시 변수
+		     $.ajax({
+		    	 url : "/checkIdIsSigned", // 아이디 중복 검증
+		    	 beforeSend: function(xhr) {
+		    		 xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+		    	 },
+		    	 type : "post",
+		    	 async : false,
+		    	 dataType : 'json',
+		    	 data : id,
+		    	 success : function(data) {
+		    		 if(data == 1) {
+		    			 alert("이미 가입된 아이디 입니다.")
+		    			 ajaxReturn = false;
+		    		 } 
+		    	 }
+		     });
+		     
+		     $.ajax({
+		    	 url : "/checkEmailIsSigned", // 이메일 중복 검증
+		    	 beforeSend: function(xhr) {
+		    		 xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+		    	 },
+		    	 type : "post",
+		    	 async : false,
+		    	 dataType : 'json',
+		    	 data : email,
+		    	 success : function(data) {
+		    		 if(data == 1) {
+		    			 alert("이미 사용중인 이메일 입니다.")
+		    			 ajaxReturn = false;
+		    		 } 
+		    	 }
+		     });
+		     
+		     if(!ajaxReturn) {
+		    	 return false;
 		     }
-		      */
 		      
 		      return true;
 		 }
