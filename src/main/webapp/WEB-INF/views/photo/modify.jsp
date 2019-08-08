@@ -63,8 +63,7 @@
 											formObj.attr("action",
 													"/photo/delete");
 
-											formObj
-													.append("<input type='hidden' name='bno' value='"+ ${photo.bno}+"'>")
+											formObj.append("<input type='hidden' name='bno' value='"+ ${photo.bno}+"'>")
 											formObj.submit();
 										})
 										
@@ -297,7 +296,7 @@
 
 		<div class="content">
 			<div class="list_wrap notice_wrap">
-				<form role="form" action="/photo/modify" method="post">
+				<form role="form" action="/photo/modifySubmit" method="post">
 
 					<div class="form-group uploadRow">
 						<label>제목</label> <input class="form_title" name='title'
@@ -310,8 +309,7 @@
 					</div>
 
 					<div class="form-group uploadRow">
-						<label>작성자</label> <input class="form_writer" name='writer'
-							readonly="readonly" value="${photo.writer }">
+						<label>작성자</label> <input class="form_writer" name='writer' readonly="readonly" value="${photo.writer }">
 					</div>
 					<div class="row bottom_wrap">
 						<div class="notice_btn">

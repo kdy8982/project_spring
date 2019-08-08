@@ -229,7 +229,7 @@
 
 .main_row3 li {
 	position: relative;
-    width : calc(30%);
+    width: calc(33% - 28px);
     margin-right: 1.5em;
     overflow: hidden;
     cursor: pointer;

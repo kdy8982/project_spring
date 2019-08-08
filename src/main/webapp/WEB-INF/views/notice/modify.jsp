@@ -249,7 +249,7 @@ $(document).ready(function() {
 		
 		<div class="content">
 			<div class="list_wrap notice_wrap">
-				<form role="form" action="/notice/modify" method="post">
+				<form role="form" action="/notice/modifySubmit" method="post">
 					
 					<div class="form-group uploadRow">
 						<label>제목</label> <input class="form_title" name='title' value="${notice.title}">
@@ -275,11 +275,14 @@ $(document).ready(function() {
 				</form>
 				
 				<div class="file_upload_wrap uploadRow">
+					<button class="btn tab_btn" data-oper="upload" type="upload">사진 추가</button>
 					<div class="uploadDiv">
-						<input type="file" name="uploadFile" multiple>
+						<input class="input_upload" type="file" name="uploadFile" multiple>
 					</div>
 
-					<div class="uploadResult">
+					<div class="uploadResult uploadLev">
+						<div class="layer" style="display:none"></div>
+						<div class="center_wrap" style="display:none"><img src="/resources/images/sub/ajax-loader.gif" /></div>
 						<ul></ul>
 					</div>
 				</div>

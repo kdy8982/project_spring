@@ -6,11 +6,13 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardAttachVO;
@@ -60,19 +62,21 @@ public class EssayController {
 		model.addAttribute("essay" , boardService.getBoard(board));
 	}
 	
-	@GetMapping("/modify")
-	public void modify(Model model, Criteria cri, BoardVO board) {
-		log.info("essay modify get ... ");
-		board.setBoardType("essay");
-		model.addAttribute("essay", boardService.getBoard(board));
+	@RequestMapping(value="/modify", method= {RequestMethod.POST})
+	@PreAuthorize("#vo.writer == principal.username")
+	public void modify(Model model, Criteria cri, BoardVO vo) {
+		log.info("essay modify call ... ");
+		vo.setBoardType("essay");
+		model.addAttribute("essay", boardService.getBoard(vo));
 	}
 	
-	@RequestMapping ("/modify")
-	public String modify(Criteria cri, BoardVO board) {
-		log.info("essay modify post ...");
+	@RequestMapping(value="/modifySubmit", method= {RequestMethod.POST})
+	@PreAuthorize("#vo.writer == principal.username")
+	public String modify(Criteria cri, BoardVO vo) {
+		log.info("essay modify submit call ...");
 		log.info(cri.getListLink());
 		
-		boardService.modify(board);
+		boardService.modify(vo);
 		
 		return "redirect:/essay/list" + cri.getListLink();
 	}

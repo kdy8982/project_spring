@@ -5,12 +5,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardAttachVO;
@@ -40,7 +42,7 @@ public class NoticeController {
 		model.addAttribute("pageMaker" , new PageDTO(cri, total));
 	}
 	
-	@GetMapping({"/get", "/modify"})
+	@GetMapping("/get")
 	public void get(BoardVO board, Model model, @ModelAttribute("cri") Criteria cri) {
 		log.info("Notice controller get call..");
 		
@@ -77,11 +79,20 @@ public class NoticeController {
 		return "redirect:/notice/list" + cri.getListLink();
 	}
 	
-	@RequestMapping("/modify") 
-	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		log.info("modify post call..!!");
+	@RequestMapping(value="/modify", method= {RequestMethod.POST})
+	@PreAuthorize("#vo.writer == principal.username")
+	public void modify(BoardVO vo, Model model, @ModelAttribute("cri") Criteria cri) {
+		log.info("Notice controller modify call..");
 		
-		if (boardService.modify(board)) {
+		model.addAttribute("notice", boardService.getBoard(vo));
+	}
+	
+	@RequestMapping(value="/modifySubmit", method= {RequestMethod.POST})
+	@PreAuthorize("#vo.writer == principal.username")
+	public String modifySubmit(BoardVO vo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+		log.info("modify submit post call..!!");
+		
+		if (boardService.modify(vo)) {
 			rttr.addFlashAttribute("result", "success");
 		};
 		

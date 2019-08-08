@@ -307,8 +307,7 @@
 	
 			<div class="content">
 				<div class="list_wrap notice_wrap">
-					게시글 수정
-					<form role="form" action="/essay/modify" method="post">
+					<form role="form" action="/essay/modifySubmit" method="post">
 	
 						<div class="form-group uploadRow">
 							<label>제목</label> <input class="form_title" name='title'

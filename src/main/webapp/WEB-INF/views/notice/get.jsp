@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>
 <!DOCTYPE html>
 <html>
@@ -36,24 +38,16 @@ $(document).ready(function() {
 		
 		$(arr).each(function(i, attach) {
 			//image type (썸네일)
-			if(attach.fileType) {
-				var fileCallPath = encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+ "_" + attach.fileName);
+				var fileCallPath = encodeURIComponent(attach.uploadPath+"/"+attach.uuid+ "_" + attach.fileName);
 				
 				str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
 				str += "<div>";
 				str += "<img src='/display?fileName="+ fileCallPath +"'>";
 				str += "</div>"
 				str += "</li>";
-			} else {
-				str += "<li data-path ='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type ='"+ attach.fileType + "'>";
-				str += "<div>"
-				str += "<img src='/resources/img/attach.png'>"
-				str += "</div>"
-				str += "</li>"
-			}
 		});
 		
-		$(".uploadResult ul").html(str);
+		$(".image_box ul").html(str);
 	})
 })
 
@@ -102,26 +96,32 @@ $(document).ready(function() {
 							${notice.content }
 						</div>
 						
-					<div class="uploadResult">
-						<ul>
-						</ul>
-					</div>
+						<div class="image_box">
+							<ul>
+							</ul>
+						</div>
 					</div>
 					
 					<div class="row bottom_wrap">
 						<div class="notice_btn">
 							<button class="normal_btn btn" data-oper="list">목록</button>
-							<button class="normal_btn btn" data-oper="modify">수정</button>
-							<button class="normal_btn btn" onclick="location.href='/notice/delete?bno=' + ${notice.bno}">삭제</button>
+							<sec:authorize access="isAuthenticated()">
+								<sec:authentication property="principal.member.userid" var="loginuserid"/>
+								<c:if test="${notice.writer eq loginuserid }">
+									<button class="btn normal_btn" data-oper="modify">수정</button>
+								</c:if>
+							</sec:authorize>
 						</div>
 					</div>
 					
-				<form id="openForm" action="/notice/modify" method="get">
-					<input type="hidden" id="bno" name="bno" value='<c:out value="${notice.bno}"/>' /> 
+				<form id="openForm" action="/notice/modify" method="post">
+					<input type="hidden" id="bno" name="bno" value='<c:out value="${notice.bno}"/>' />
+					<input type="hidden" id="writer" name="writer" value='<c:out value="${notice.writer}"/>' /> 
 					<input type="hidden" id="pageNum" name="pageNum" value='<c:out value="${cri.pageNum}"/>'> 
 					<input type="hidden" id="amount" name="amount" value='<c:out value="${cri.amount}"/>'> 
 					<input type="hidden" id="keyword" name="keyword" value='<c:out value="${cri.keyword}"/>'> 
 					<input type="hidden" id="type" name="type" value='<c:out value="${cri.type}"/>' />
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>
 					
 				</div>

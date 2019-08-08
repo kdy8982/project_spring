@@ -208,7 +208,7 @@ $(document).ready(function() {
 					
 					<div class="form-group uploadRow">
 						<label>작성자</label>
-						<input class="form_writer" name='writer' readonly="readonly" value="<sec:authentication property="principal.member.username"/>">
+						<input class="form_writer" name='writer' readonly="readonly" value="<sec:authentication property="principal.member.userid"/>">
 					</div>
 					
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
