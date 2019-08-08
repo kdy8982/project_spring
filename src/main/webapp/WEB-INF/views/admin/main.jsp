@@ -48,7 +48,7 @@ $(document).ready(function() {
 <div class="page_wrap">
 	<div class="container page_container">
 		<div class="title_wrap">
-			<h2 class="wrap-inner main_tit title-font">관리자 페이지</h2>
+			<h2 class="wrap-inner main_tit title-font">회원 관리</h2>
 		</div>
 		
 		<div class="sub_title title-font">
