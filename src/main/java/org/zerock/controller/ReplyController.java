@@ -1,5 +1,6 @@
 package org.zerock.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -42,13 +43,24 @@ public class ReplyController {
 	}
 	
 	@GetMapping(value="/pages/{bno}/{page}")
-	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
+	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) throws UnsupportedEncodingException {
 		Criteria cri = new Criteria(page, 5);
 		
 		log.info(MediaType.APPLICATION_XML_VALUE);
 		log.info(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		
-		return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
+		ReplyPageDTO replyPageDTO = service.getListPage(cri, bno);
+		List<ReplyVO> replyList = replyPageDTO.getList();
+
+		for(ReplyVO reply : replyList) {
+			reply.setThumbPhoto();
+		}
+		
+		replyPageDTO.setList(replyList);
+		
+		log.info(replyPageDTO);
+		
+		return new ResponseEntity<>(replyPageDTO, HttpStatus.OK);
 	}
 	
 	

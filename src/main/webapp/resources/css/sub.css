@@ -465,7 +465,6 @@
 }
 
 .bottom_wrap {
-	margin-top : 15px;
 	margin-bottom: 50px;
 	position : relative;
 }
@@ -504,10 +503,13 @@
 
 .login.background_wrap {
     height: 79vh;
-   /*  background: url(/resources/images/sub/ewall1.jpg)no-repeat top center; */
     background-size: cover;
     background-position: center;
-    /* opacity: 0.13; */
+}
+
+.layer.login{
+	background: rgba( 255, 255, 255, 0.8);
+    margin-top: -69px;
 }
 
 .profile_wrap {
@@ -584,4 +586,12 @@
 	margin-bottom:10px;
 	text-decoration: underline;
 	font-weight: 600;
+}
+
+.error_box {
+	padding: 1em;
+    background-color: rgba( 255, 255, 255, 0.8);
+    border-radius: 7px;
+    line-height: 2rem;
+    width: 27rem;
 }

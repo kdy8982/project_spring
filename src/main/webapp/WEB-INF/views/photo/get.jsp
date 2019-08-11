@@ -55,6 +55,28 @@ $(document).ready(function() {
 		
 		$(".image_box ul").html(str);
 	})
+	
+	
+	/** 댓글 AJAX 조회 **/
+ 	$.getJSON("/replies/pages/297/1", function (data) {
+ 		console.log(data);
+		console.log(data.list);
+		var str= "";
+		$(data.list).each(function(i, rep) {
+ 			str += "<li class='reply_li'>";
+			str += "<div class='reply_thumb_box'>";
+			str += "<div class='thumb' style='background: url(/display?fileName=" + rep.thumbPhoto + ")no-repeat top center; background-size:cover; background-position: center'>";
+			str += "</div>";
+			str += "<span class='userid'>" + rep.replyer + "</span>";
+			str += "</div> ";
+			str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
+			str += "</li>";
+		});                   
+		
+		$(".reply_ul").prepend(str);
+		
+	}) 
+	
 })
 
 
@@ -110,9 +132,22 @@ $(document).ready(function() {
 					</div>
 					
 					<div class="row bottom_wrap">
+						<ul class="reply_ul">
+							<li class="reply_li">
+								<div class="reply_thumb_box">
+									<div class="thumb" style="background: url(/display?fileName=2019%5C07%5C29%2Fs_9a32a94c-59fd-480f-b927-53dc01270c8a_lys.jpg)no-repeat top center; background-size:cover; background-position: center">
+									</div><span class="userid">admin90</span>
+								</div>
+								<div class="reply_content_box">
+									<textarea placeholder="새로운 댓글을 작성해보세요!"></textarea>
+								</div>
+								<button class="btn small_btn">댓글 올리기</button>
+							</li>
+						</ul>
+					
+					
 						<div class="notice_btn">
 							<ul>
-								<li></li>
 							</ul>
 							<button class="btn normal_btn" data-oper="list">목록</button>
 							<sec:authorize access="isAuthenticated()">

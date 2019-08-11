@@ -222,48 +222,6 @@ $(document).ready(function() {
 			</section>
 
 
-			<section class="main_row4 even_row" id="section04">
-				<div class="container">
-					<div class="title_wrap title-font">
-						<h2 class="main_tit">더사랑 교회</h2>
-					</div>
-					<ul class="book_li">
-						<li>
-							<div class="center_wrap">
-								<a class="move" href="<c:out value='${essay.bno}'/>" data-amount="6" data-type="essay" data-url="/essay/get"> 
-									<div class="thumb" style="background: url(/resources/images/index/index2.jpg)no-repeat top center; background-size: cover; background-position: center;">
-									</div>
-									<div class="desc">
-										<h3 class="desc_title normal-font">교회 소개</h3>
-									</div>
-								</a>
-							</div>
-						</li>
-						<li>
-							<div class="center_wrap">
-								<a class="move" href="<c:out value='${essay.bno}'/>" data-amount="6" data-type="essay" data-url="/essay/get"> 
-									<div class="thumb" style="background: url(/resources/images/index/sayuk.jpg)no-repeat top center; background-size: cover; background-position: center;">
-									</div>
-									<div class="desc">
-										<h3 class="desc_title normal-font">사역</h3>
-									</div>
-								</a>
-							</div>
-						</li>
-						<li>
-							<div class="center_wrap">
-								<a class="move" href="<c:out value='${essay.bno}'/>" data-amount="6" data-type="essay" data-url="/essay/get"> 
-									<div class="thumb" style="background: url(/resources/images/index/sayuk.jpg)no-repeat top center; background-size: cover; background-position: center;">
-									</div>
-									<div class="desc">
-										<h3 class="desc_title normal-font">오시는 길</h3>
-									</div>
-								</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</section>
 		</div>
 	<jsp:include page="./inc/footer.jsp" flush="true"></jsp:include>
 	</div>

@@ -25,17 +25,14 @@
 	
 	<select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
 		<![CDATA[
-		select rno, bno, reply, replyer, replydate, updatedate
-		from
+			select replyer, replydate, reply, photo
+			from
 			(
-				select /*+INDEX(tbl_reply idx_reply) */
-				rownum rn, bno, rno, reply, replyer, replydate, updatedate
-				from tbl_reply
-				where bno=#{bno}
-				and rno > 0
-				and rownum <= #{cri.pageNum} * #{cri.amount}
+			select rownum rn, reply.replyer, reply.replydate, reply.reply, memb.photo 
+			from tbl_reply reply left join tbl_member memb on reply.replyer = memb.userid 
+			where reply.bno = '297' and rownum <= #{cri.pageNum} * #{cri.amount} order by reply.replydate desc
 			)
-		where rn > (#{cri.pageNum}-1) * #{cri.amount}
+			where rn > (#{cri.pageNum}-1) * #{cri.amount}
 		]]>
 	</select>
 	
