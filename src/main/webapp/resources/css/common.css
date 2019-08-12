@@ -413,6 +413,22 @@
     
 }
 
+.reply_paging_box {
+	flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.reply_paging_box ul{
+	display: flex;
+    flex-direction: row;
+    font-weight: 600;
+}
+
+.reply_paging_box ul li{
+    margin-right: 1.5em;
+}
+
 textarea {
 	width: 100%;
 	padding: 12px 20px;
@@ -427,12 +443,13 @@ textarea {
 	display: flex;
     width: 90%;
     justify-content: flex-end;
+    flex-direction: column;
     margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin-bottom: 2em;
 }
 
 .reply_btn_box {
-	width: 90%;
 	justify-content: flex-end;
 	display: flex;
+	margin-top: 1em;
 }

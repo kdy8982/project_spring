@@ -23,6 +23,23 @@ var replyService = (function() {
 
 		})
 	}
+	
+/*	function getList(param, callback, error) {
+		var bno = param.bno;
+		var page = param.page || 1;
+
+		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
+				function(data) {
+					if (callback) {
+						callback(data.replyCnt, data.list)
+					}
+				}).fail(function(xhr, status, err) {
+			if (error) {
+				error();
+			}
+		});
+	}
+*/
 
 	function getList(param, callback, error) {
 		var bno = param.bno;
@@ -31,7 +48,7 @@ var replyService = (function() {
 		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
 				function(data) {
 					if (callback) {
-						callback(data.replyCnt, data.list)
+						callback(data)
 					}
 				}).fail(function(xhr, status, err) {
 			if (error) {

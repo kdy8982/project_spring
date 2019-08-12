@@ -60,6 +60,7 @@ $(document).ready(function() {
 		
 		replyService.add(reply , function(result) {
 			alert(result);
+			showList(-1);
 		});
 	})
 	
@@ -85,13 +86,18 @@ $(document).ready(function() {
 	}) 
 	
 	
-	/** 댓글 AJAX 조회!! **/
+	/** 댓글 AJAX 조회 **/
  	$.getJSON("/replies/pages/366/1", function (data) {
 		var str= "";
 		console.log(data);
 		$(data.list).each(function(i, rep) {
 			if(rep.thumbPhoto!="") {
 	 			str += "<li class='reply_li'>";
+				str += "<div class='reply_thumb_box'>";
+				str += "<div class='thumb' style='background: url(/display?fileName=" + rep.thumbPhoto + ")no-repeat top center; background-size:cover; background-position: center'>";
+				str += "</div>";
+				str += "<span class='userid'>" + rep.replyer + "</span>";
+				str += "</div> ";
 				str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
 				str += "</li>";
 			} else {
@@ -105,11 +111,105 @@ $(document).ready(function() {
 				str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
 				str += "</li>";
 			}
-			
-		});                   
+		});         
+		
 		$(".reply_ul").prepend(str);
 		
-	}) 
+		showReplyPage(data.replyCnt);
+	})
+	
+	function showList(page) {
+		replyService.getList({bno:bnoValue, page:page||1}, function (data) {
+			
+			var replyCnt = data.replyCnt;
+			
+			if(page == -1) { // -1 --> crud작업이후 바로 일 경우,
+				pageNum = Math.ceil(replyCnt/5.0);
+				showList(pageNum);
+				return;
+			}
+			
+			$(".reply_ul").html("");
+			
+			var str= "";
+			console.log(data);
+			$(data.list).each(function(i, rep) {
+				if(rep.thumbPhoto!="") {
+		 			str += "<li class='reply_li'>";
+					str += "<div class='reply_thumb_box'>";
+					str += "<div class='thumb' style='background: url(/display?fileName=" + rep.thumbPhoto + ")no-repeat top center; background-size:cover; background-position: center'>";
+					str += "</div>";
+					str += "<span class='userid'>" + rep.replyer + "</span>";
+					str += "</div> ";
+					str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
+					str += "</li>";
+				} else {
+		 			str += "<li class='reply_li'>";
+					str += "<div class='reply_thumb_box'>";
+					str += "<div class='thumb'>";
+					str += "<i class='fa fa-user-circle-o' aria-hidden='true'></i>";
+					str += "</div>";
+					str += "<span class='userid'>" + rep.replyer + "</span>";
+					str += "</div> ";
+					str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
+					str += "</li>";
+				}
+			});         
+			
+			$(".reply_ul").prepend(str);
+			
+			showReplyPage(data.replyCnt);
+		}) // end function
+	} // end showList()
+		
+	
+	
+	/* 댓글 페이징 처리 */
+	var pageNum = 1;
+	var replyPageFooter = $(".reply_paging_box");
+	
+	function showReplyPage(replyCnt) {
+		
+		var endNum = Math.ceil(pageNum / 10.0) * 10;
+		var startNum = endNum - 9;
+		
+		var prev = startNum != 1;
+		var next = false;
+		
+		if(endNum*5 >= replyCnt) {
+			endNum = Math.ceil(replyCnt/5.0);
+		}
+		
+		if(endNum*5 < replyCnt) {
+			next = true;
+		}
+		var str = "<ul class='pagination pull-right'>";
+		
+		if(prev) {
+			str += "<li class='page-item'><a class='page-link' href='" + (startNum -1) + "'>Previous</a></li>";
+		}
+		for(var i = startNum; i <= endNum; i++) {
+			var active = pageNum == i ? "active" : "";
+			str += "<li class='page-item "+ active + "'><a class='page-link' href='"+ i + "'>" + i + "</a></li>";
+		}
+		
+		if(next) {
+			str += "<li class='page-item'><a class='page-link' href='" + (endNum + 1) + "'>Next</a></li>";
+			str += "</ul></div>";
+			
+			console.log(str);
+		}
+		replyPageFooter.html(str);
+	}
+		
+	/* 댓글 페이지 번호 클릭 이벤트*/
+	replyPageFooter.on("click", "li a", function(e) {
+		e.preventDefault();
+		var targetPageNum = $(this).attr("href");
+		console.log("targetPageNum : " + targetPageNum);
+		pageNum = targetPageNum;
+		showList(targetPageNum);
+	});	
 	
 	
 })
@@ -168,33 +268,31 @@ $(document).ready(function() {
 					
 					<div class="row bottom_wrap">
 						<ul class="reply_ul">
-							<li class="reply_write_li">
-								<sec:authorize access="isAuthenticated()">
-									<div class="reply_thumb_box">
-										<div class="thumb" style="background: url(/display?fileName=<sec:authentication property="principal.member.thumbPhoto"/>)no-repeat top center; background-size:cover; background-position: center">
-										</div>
+						</ul>
+						<div class="reply_paging_box">
+						</div>
+						<div class="reply_write_li">
+							<sec:authorize access="isAuthenticated()">
+								<div class="reply_thumb_box">
+									<div class="thumb" style="background: url(/display?fileName=<sec:authentication property="principal.member.thumbPhoto"/>)no-repeat top center; background-size:cover; background-position: center">
 									</div>
-									<div class="reply_paging_box">
-										1 2 3 4
-									</div>
-									<div class="reply_write_box">
-										<textarea placeholder="새로운 댓글을 작성해보세요!!"></textarea>
-									</div>
+								</div>
+								<div class="reply_write_box">
+									<textarea placeholder="새로운 댓글을 작성해보세요"></textarea>
 									<div class="reply_btn_box">
 										<button class="btn small_btn reply_btn">댓글 올리기</button>
 									</div>
-								</sec:authorize>
-									
-								<sec:authorize access="isAnonymous()">
-									<div class="reply_paging_box">
-										1 2 3 4
-									</div>
-									<div class="reply_write_box">
-										<textarea placeholder="댓글을 작성하시려면, 로그인 하셔야 합니다." readonly="readonly"></textarea>
-									</div>
-								</sec:authorize>
-							</li>
-						</ul>
+								</div>
+							</sec:authorize>
+								
+							<sec:authorize access="isAnonymous()">
+								<div class="reply_write_box">
+									<textarea placeholder="댓글을 작성하시려면, 로그인 하셔야 합니다." readonly="readonly"></textarea>
+								</div>
+								<div class="reply_paging_box">
+								</div>
+							</sec:authorize>
+						</div>
 
 					
 						<div class="notice_btn">
