@@ -30,7 +30,7 @@
 			(
 			select rownum rn, reply.replyer, reply.replydate, reply.reply, memb.photo 
 			from tbl_reply reply left join tbl_member memb on reply.replyer = memb.userid 
-			where reply.bno = '297' and rownum <= #{cri.pageNum} * #{cri.amount} order by reply.replydate desc
+			where reply.bno = #{bno} and rownum <= #{cri.pageNum} * #{cri.amount} order by reply.replydate desc
 			)
 			where rn > (#{cri.pageNum}-1) * #{cri.amount}
 		]]>

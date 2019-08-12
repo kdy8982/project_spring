@@ -23,6 +23,10 @@ public class ReplyVO {
 	private String thumbPhoto;
 	
 	public void setThumbPhoto() throws UnsupportedEncodingException {
+		if(this.photo == null) {
+			this.thumbPhoto = "";
+			return;
+		}
 		
 		String fileName = this.photo.substring(this.photo.indexOf("_", 11)+1);
 		log.info("File Name : " + fileName);
