@@ -25,13 +25,13 @@
 	
 	<select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
 		<![CDATA[
-			select replyer, replydate, reply, photo
+			select replyer, rno, replydate, reply, photo
 				from
 				(
-				    select rownum rn, replyer, replydate, reply, photo
+				    select rownum rn, rno, replyer, replydate, reply, photo
 				    from
 				    (
-				        select reply.replyer, reply.replydate, reply.reply, memb.photo 
+				        select reply.rno, reply.replyer, reply.replydate, reply.reply, memb.photo 
 				        from tbl_reply reply left join tbl_member memb on reply.replyer = memb.userid 
 				        where reply.bno = #{bno} 
 				        order by reply.replydate desc

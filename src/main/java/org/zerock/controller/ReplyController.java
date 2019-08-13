@@ -79,7 +79,7 @@ public class ReplyController {
 		
 		log.info("remove : " + rno);
 		log.info("replyer : " + vo.getReplyer());
-		return service.remove(rno) == 1 ? new ResponseEntity<String>("success", HttpStatus.OK):new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return service.remove(rno) == 1 ? new ResponseEntity<String>("댓글을 삭제하였습니다.", HttpStatus.OK):new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	/* [댓글 수정 컨트롤러] */

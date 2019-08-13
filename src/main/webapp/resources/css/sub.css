@@ -367,11 +367,6 @@
 	margin-right : 10px;
 }
 
-.page_box ul li.active {
-    text-decoration: underline;
-    font-weight: 700;
-}
-
 .notice_get_wrap #table {
 	margin-top: 30px;
 	margin-bottom : 50px;

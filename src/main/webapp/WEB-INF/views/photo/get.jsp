@@ -49,6 +49,15 @@ $(document).ready(function() {
 		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 	})
 	
+	$(document).on("click", ".reply_close_btn", function(e) {
+		var rno = $(this).data("rno");
+		var replyer = $(this).data("replyer");
+		replyService.remove(rno, replyer, function(result) {
+			alert(result);
+			showList(1);
+		});
+	})
+
 	$(".reply_btn").on("click", function(e) { // 댓글 등록 버튼 클릭. 
 		e.preventDefault();
 		
@@ -60,7 +69,7 @@ $(document).ready(function() {
 		
 		replyService.add(reply , function(result) {
 			alert(result);
-			showList(-1);
+			showList(1);
 		});
 	})
 	
@@ -85,41 +94,11 @@ $(document).ready(function() {
 		$(".image_box ul").html(str);
 	}) 
 	
-	
-	/** 댓글 AJAX 조회 **/
- 	$.getJSON("/replies/pages/366/1", function (data) {
-		var str= "";
-		console.log(data);
-		$(data.list).each(function(i, rep) {
-			if(rep.thumbPhoto!="") {
-	 			str += "<li class='reply_li'>";
-				str += "<div class='reply_thumb_box'>";
-				str += "<div class='thumb' style='background: url(/display?fileName=" + rep.thumbPhoto + ")no-repeat top center; background-size:cover; background-position: center'>";
-				str += "</div>";
-				str += "<span class='userid'>" + rep.replyer + "</span>";
-				str += "</div> ";
-				str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
-				str += "</li>";
-			} else {
-	 			str += "<li class='reply_li'>";
-				str += "<div class='reply_thumb_box'>";
-				str += "<div class='thumb'>";
-				str += "<i class='fa fa-user-circle-o' aria-hidden='true'></i>";
-				str += "</div>";
-				str += "<span class='userid'>" + rep.replyer + "</span>";
-				str += "</div> ";
-				str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
-				str += "</li>";
-			}
-		});         
-		
-		$(".reply_ul").prepend(str);
-		
-		showReplyPage(data.replyCnt);
-	})
+	showList(1);
 	
 	function showList(page) {
 		replyService.getList({bno:bnoValue, page:page||1}, function (data) {
+			console.log(data);
 			
 			var replyCnt = data.replyCnt;
 			
@@ -132,6 +111,8 @@ $(document).ready(function() {
 			$(".reply_ul").html("");
 			
 			var str= "";
+			var loginuser = '<sec:authentication property="principal.username"/>';
+			alert("loginuser is : " + loginuser)
 			console.log(data);
 			$(data.list).each(function(i, rep) {
 				if(rep.thumbPhoto!="") {
@@ -142,6 +123,9 @@ $(document).ready(function() {
 					str += "<span class='userid'>" + rep.replyer + "</span>";
 					str += "</div> ";
 					str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
+					if(rep.replyer == loginuser) {
+						str += '<button class="reply_close_btn" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-times" aria-hidden="true"></i></button>';
+					}
 					str += "</li>";
 				} else {
 		 			str += "<li class='reply_li'>";
@@ -158,7 +142,7 @@ $(document).ready(function() {
 			
 			$(".reply_ul").prepend(str);
 			
-			showReplyPage(data.replyCnt);
+			showReplyPage(data.replyCnt); // 넘버링된 페이징 번호를 보여준다.
 		}) // end function
 	} // end showList()
 		
@@ -210,10 +194,7 @@ $(document).ready(function() {
 		pageNum = targetPageNum;
 		showList(targetPageNum);
 	});	
-	
-	
 })
-
 
 </script>
 
@@ -278,7 +259,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 								<div class="reply_write_box">
-									<textarea placeholder="새로운 댓글을 작성해보세요"></textarea>
+									<textarea placeholder="새로운 댓글을 작성해보세요!"></textarea>
 									<div class="reply_btn_box">
 										<button class="btn small_btn reply_btn">댓글 올리기</button>
 									</div>
@@ -288,8 +269,6 @@ $(document).ready(function() {
 							<sec:authorize access="isAnonymous()">
 								<div class="reply_write_box">
 									<textarea placeholder="댓글을 작성하시려면, 로그인 하셔야 합니다." readonly="readonly"></textarea>
-								</div>
-								<div class="reply_paging_box">
 								</div>
 							</sec:authorize>
 						</div>
@@ -317,7 +296,6 @@ $(document).ready(function() {
 					<input type="hidden" id="type" name="type" value='<c:out value="${cri.type}"/>' />
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>
-					
 				</div>
 			</div>
 		</div>
