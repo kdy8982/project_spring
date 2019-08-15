@@ -89,7 +89,7 @@ public class BoardController {
 		model.addAttribute("board", service.get(bno)); // jsp view에서 사용할 객체를 보낸다.
 	}
 	
-	@PreAuthorize("principal.username == #board.writer")
+	@PreAuthorize("isAuthenticated() and principal.username == #board.writer")
 	@RequestMapping("/modify")
 	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("modify : " + board);
@@ -108,7 +108,7 @@ public class BoardController {
 	}
 	
 	/* 게시글 삭제 */
-	@PreAuthorize("principal.username == #writer")
+	@PreAuthorize("isAuthenticated() and principal.username == #writer")
 	@RequestMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, String writer) {
 		log.info("remove : " + bno);

@@ -1,6 +1,7 @@
 package org.zerock.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,8 +18,7 @@ public class CommonExceptionAdvice {
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public String notAllowedRequest(Exception ex, Model model) {
 		log.error("Exception .... " + ex.getMessage());
-		model.addAttribute("exception", ex);
-		log.error(model);
+		model.addAttribute("exception", "올바르지 않은 요청입니다.");
 		return "customNotAllowedRequest";
 	}
 
@@ -36,5 +36,10 @@ public class CommonExceptionAdvice {
 	public String handle404(NoHandlerFoundException ex) {
 		return "custom404";
 	}
-
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	public String accessDenied(AccessDeniedException ex, Model model) {
+		model.addAttribute("exception", "권한이 없습니다.");
+		return "customNotAllowedRequest";
+	}
 }

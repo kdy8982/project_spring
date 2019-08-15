@@ -73,7 +73,7 @@ public class PhotoController {
 	
 	
 	  @RequestMapping(value="/modify", method= {RequestMethod.POST})
-	  @PreAuthorize("#vo.writer == principal.username") 
+	  @PreAuthorize("isAuthenticated() and #vo.writer == principal.username") 
 	  public void modify(Model model, Criteria cri, BoardVO vo) {
 		  log.info("photo modify get ... "); 
 		  
@@ -84,7 +84,7 @@ public class PhotoController {
 	 
 	
 	@RequestMapping ("/modifySubmit")
-	@PreAuthorize("#vo.writer == principal.username")
+	@PreAuthorize("isAuthenticated() and #vo.writer == principal.username")
 	public String modify(Criteria cri, BoardVO vo) {
 		log.info("photo modify post ...");
 		log.info(cri.getListLink());
@@ -95,7 +95,7 @@ public class PhotoController {
 	}
 	
 	@RequestMapping("/delete")
-	@PreAuthorize("#vo.writer == principal.username")
+	@PreAuthorize("isAuthenticated() and #vo.writer == principal.username")
 	public String delete(BoardVO vo, Criteria cri, RedirectAttributes rttr ) {
 		log.info("photo delete ....!!");
 		

@@ -273,13 +273,13 @@
     right : -13px;
 }
 
-.reply_close_btn {
-	display : inline-block;
-	cursor: pointer; 
+.reply_btn {
 	border: none;
-    line-height: 1.5rem;
-    width: 1.6rem;
-    border-radius: 13px;
+	background: none;
+}
+
+.reply_modify_submit_btn {
+	margin-left: 0.5em;
 }
 
 .modal.close_btn{
@@ -287,6 +287,7 @@
 }
 
 .small_btn {
+	background-color: #DDDDDD;
 	display : inline-block;
     padding: 0.5em;
 	border: none;
@@ -354,20 +355,28 @@
 	text-align: left;
 	padding: 1.5em;
 }
-
 .reply_li {
+	border-bottom: 1px solid #CACACA;
+}
+
+.reply_li .reply_wrap {
 	flex-wrap: wrap;
 	display: flex;
 	position: relative;
 	width: 100%;
 	min-height: 8vh;
-	border-bottom: 1px solid #CACACA;
+
 	align-items: center;
 	
 	padding-top: 0.6em;
     padding-bottom: 0.6em;
     
     justify-content: flex-start;
+}
+
+.re_reply {
+	padding-left: 3.0em;
+	background : url(/resources/images/common/reply.png) no-repeat 18px 40px;
 }
 
 .reply_write_li {
@@ -419,6 +428,12 @@
     height: 100%;
     text-align: left;
     font-size: 0.8rem;
+    white-space: pre;
+}
+
+.reply_btn_wrap {
+	position: absolute;
+	right: 0;
 }
 
 .reply_paging_box {

@@ -13,8 +13,7 @@
 		<div class="error_box center_wrap">
 			<div class="error_message">
 				<p class="title-font" style="font-size: 1.2rem; text-align: center; font-weight: 600; margin-bottom: 0.7em;">ERROR</p>
-				<p></p>
-				<p>사용자의 요청  또는, 서버 상황의 이유 등으로 에러가 발생하였습니다.</p>
+				<p>${exception}</p>
 				<p>계속해서 같은 문제가 발생하면 관리자에게 문의해주세요.</p>
 			</div>
 		</div>

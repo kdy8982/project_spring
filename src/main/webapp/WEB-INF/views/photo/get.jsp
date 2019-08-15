@@ -49,7 +49,7 @@ $(document).ready(function() {
 		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 	})
 	
-	$(document).on("click", ".reply_close_btn", function(e) {
+	$(document).on("click", ".reply_btn.remove", function(e) {
 		var rno = $(this).data("rno");
 		var replyer = $(this).data("replyer");
 		replyService.remove(rno, replyer, function(result) {
@@ -57,9 +57,57 @@ $(document).ready(function() {
 			showList(1);
 		});
 	})
+	
+		
+	var isClickModifyBtn = false;
+	$(document).on("click", ".reply_btn.modify", function(e) { // 댓글 수정 버튼 클릭.
+		e.preventDefault();
 
+		if(isClickModifyBtn) {
+			alert("한번에 하나의 댓글만 수정할 수 있습니다.");
+			return;
+		}
+		isClickModifyBtn = true;
+	
+		var rno = $(this).data("rno");
+		var replyer = $(this).data("replyer");
+		
+		var replyContentBox = $(this).parent().parent().children(".reply_content_box");
+		var replyContentBoxVal = replyContentBox.text();
+
+		replyContentBox.contents().unwrap().wrap('<textarea class="reply_content_box"></textarea>');
+		$(this).parent().children(".reply_content_box").text(replyContentBoxVal);
+		$(this).parent().children(".reply_content_box").height(1).height($(this).parent().children(".reply_content_box").prop('scrollHeight')-10);
+
+		
+		$(this).parent().append("<button class='small_btn reply_modify_submit_btn' data-rno='" + rno + "' data-replyer='" + replyer + "'>확인</button>")
+		$(this).prev().remove();
+		$(this).next().remove();
+		$(this).remove();
+	})
+	
+	$(document).on("click", ".reply_modify_submit_btn", function(e) {
+		e.preventDefault();
+		var reply = {
+			reply: $(this).prev().val(),
+			replyer: $(this).data('replyer'),
+			rno: $(this).data('rno')
+		}
+		
+		replyService.update(reply, function(result) {
+			alert(result);
+			showList(1);
+			isClickModifyBtn = false;
+		});
+	})
+	
 	$(".reply_btn").on("click", function(e) { // 댓글 등록 버튼 클릭. 
 		e.preventDefault();
+	
+		if($.trim(inputReply.val()).length == 0) { // 아무것도 입력하지 않았는지 체크(공백이나 엔터는 입력한 문자로 계산하지 않음)
+			alert("댓글을 입력하셔야 합니다");
+			return;
+		}
 		
 		var reply = {
 			reply : inputReply.val(),
@@ -68,16 +116,16 @@ $(document).ready(function() {
 		};
 		
 		replyService.add(reply , function(result) {
+			console.log(result);
 			alert(result);
 			showList(1);
+			inputReply.val("");
 		});
 	})
 	
 	/* 첨부파일 조회 AJAX */
 	var bno = '<c:out value="${photo.bno}"/>';
 	$.getJSON("/board/getAttachList" , {bno : bno}, function (arr) {
-		console.log(arr);
-		
 		var str="";
 		
 		$(arr).each(function(i, attach) {
@@ -98,7 +146,6 @@ $(document).ready(function() {
 	
 	function showList(page) {
 		replyService.getList({bno:bnoValue, page:page||1}, function (data) {
-			console.log(data);
 			
 			var replyCnt = data.replyCnt;
 			
@@ -111,31 +158,60 @@ $(document).ready(function() {
 			$(".reply_ul").html("");
 			
 			var str= "";
-			var loginuser = '<sec:authentication property="principal.username"/>';
-			alert("loginuser is : " + loginuser)
-			console.log(data);
+			var loginuser = null;
+			'<sec:authorize access="isAuthenticated()">'
+				loginuser = '<sec:authentication property="principal.username"/>';
+			'</sec:authorize>'
+
 			$(data.list).each(function(i, rep) {
+				console.log(rep.parent)
 				if(rep.thumbPhoto!="") {
-		 			str += "<li class='reply_li'>";
+					if(rep.parent==null) {
+		 				str += "<li class='reply_li'>";
+					} else {
+						str += "<li class='reply_li re_reply'>"
+					}
+					str += "<div class='reply_wrap'>"
 					str += "<div class='reply_thumb_box'>";
 					str += "<div class='thumb' style='background: url(/display?fileName=" + rep.thumbPhoto + ")no-repeat top center; background-size:cover; background-position: center'>";
 					str += "</div>";
 					str += "<span class='userid'>" + rep.replyer + "</span>";
 					str += "</div> ";
-					str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
+					str += "<div class='reply_content_box'>" + rep.reply + "</div>";
+					str += "<div class='reply_btn_wrap'>"
 					if(rep.replyer == loginuser) {
-						str += '<button class="reply_close_btn" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-times" aria-hidden="true"></i></button>';
+						str += '<button class="reply_btn remove" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-times" aria-hidden="true"></i></button>';
+						str += '<button class="reply_btn modify" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>';
 					}
+					if(loginuser != null) {
+						str += '<button class="reply_btn rereply" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-commenting-o" aria-hidden="true"></i></button>';
+					}
+					str += "</div>";
+					str += "</div>";
 					str += "</li>";
 				} else {
-		 			str += "<li class='reply_li'>";
+					if(rep.parent==null) {
+		 				str += "<li class='reply_li'>";
+					} else {
+						str += "<li class='reply_li re_reply'>"
+					}
+					str += "<div class='reply_wrap'>"
 					str += "<div class='reply_thumb_box'>";
 					str += "<div class='thumb'>";
 					str += "<i class='fa fa-user-circle-o' aria-hidden='true'></i>";
 					str += "</div>";
 					str += "<span class='userid'>" + rep.replyer + "</span>";
 					str += "</div> ";
-					str += "<div class='reply_content_box'><span>" + rep.reply + "</span></div>";
+					str += "<div class='reply_content_box'>" + rep.reply + "</div>";
+					str += "<div class='reply_btn_wrap'>"
+					if(rep.replyer == loginuser) {
+						str += '<button class="reply_btn remove" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-times" aria-hidden="true"></i></button>';
+						str += '<button class="reply_btn modify" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>';
+					}
+					if(loginuser != null) {
+						str += '<button class="reply_btn rereply" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-commenting-o" aria-hidden="true"></i></button>';
+					}
+					str == "</div>";
 					str += "</li>";
 				}
 			});         
@@ -193,7 +269,16 @@ $(document).ready(function() {
 		console.log("targetPageNum : " + targetPageNum);
 		pageNum = targetPageNum;
 		showList(targetPageNum);
-	});	
+	})
+
+	/** 댓글 textarea 사이즈 자동 조절  **/
+	$(document).on("keyup keydown", ".reply_content_box", function(e) {
+		$(this).height(1).height( $(this).prop('scrollHeight')-10);	
+	})
+	
+	$(document).on("keyup keydown", ".reply_write_box textarea", function(e) {
+		$(this).height(1).height( $(this).prop('scrollHeight')-10);	
+	})
 })
 
 </script>

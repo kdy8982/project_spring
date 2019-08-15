@@ -3,6 +3,7 @@ package org.zerock.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,7 @@ public class ReplyController {
 		log.info("ReplyVO : " + vo);
 		int insertCount = service.register(vo);
 		log.info("Reply INSERT COUNT : " + insertCount);
+		
 		return insertCount == 1 ? new ResponseEntity<>("새로운 댓글이 등록되었습니다." , HttpStatus.OK):new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
@@ -73,24 +75,23 @@ public class ReplyController {
 	}
 	*/
 	
-	@PreAuthorize("principal.username == #vo.replyer")
-	@DeleteMapping(value="/{rno}", produces= {MediaType.TEXT_PLAIN_VALUE})
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.replyer")
+	@DeleteMapping(value="/{rno}", produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
 	public ResponseEntity<String> remove(@RequestBody ReplyVO vo, @PathVariable("rno") Long rno) {
-		
 		log.info("remove : " + rno);
 		log.info("replyer : " + vo.getReplyer());
-		return service.remove(rno) == 1 ? new ResponseEntity<String>("댓글을 삭제하였습니다.", HttpStatus.OK):new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return service.remove(rno) == 1 ? new ResponseEntity<>("댓글을 삭제하였습니다.", HttpStatus.OK):new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	/* [댓글 수정 컨트롤러] */
-	@PreAuthorize("principal.username == #vo.replyer")
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.replyer")
 	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/{rno}", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify (@RequestBody ReplyVO vo, @PathVariable("rno") Long rno) {
 
 		log.info("rno : " + vo.getRno());
 		log.info("modify : " + vo );
 		
-		return service.modify(vo) == 1 ? new ResponseEntity <> ("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return service.modify(vo) == 1 ? new ResponseEntity <> ("댓글을 수정하였습니다.", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@GetMapping(value="/{rno}")

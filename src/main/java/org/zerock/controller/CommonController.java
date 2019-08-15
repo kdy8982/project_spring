@@ -79,6 +79,7 @@ public class CommonController {
 		return "/customSignup";
 	}
 
+	@PreAuthorize("isAuthenticated() and principal.username == #vo.userid")
 	@RequestMapping(value = "/memberDetail", method = { RequestMethod.GET })
 	public void memberDetail(MemberVO vo, Model model) throws UnsupportedEncodingException {
 		log.info("member detail call ..");

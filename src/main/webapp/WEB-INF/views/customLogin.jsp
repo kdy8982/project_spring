@@ -74,7 +74,7 @@
 					</div>
 					
 					<div>
-						<input class="login_div input_area" type="password" name="password" value="rlaeod12" placeholder="PASSWORD">
+						<input class="login_div input_area" type="password" name="password" value="dusvlf18" placeholder="PASSWORD">
 					</div>
 					
 					<div class="input_check">
