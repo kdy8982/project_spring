@@ -183,7 +183,7 @@ $(document).ready(function() {
 						str += '<button class="reply_btn remove" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-times" aria-hidden="true"></i></button>';
 						str += '<button class="reply_btn modify" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>';
 					}
-					if(loginuser != null) {
+					if(loginuser != null && rep.parent == null) { // 로그인한 유져이고, 부모댓글 이면.. 
 						str += '<button class="reply_btn rereply" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-commenting-o" aria-hidden="true"></i></button>';
 					}
 					str += "</div>";
@@ -208,7 +208,7 @@ $(document).ready(function() {
 						str += '<button class="reply_btn remove" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-times" aria-hidden="true"></i></button>';
 						str += '<button class="reply_btn modify" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>';
 					}
-					if(loginuser != null) {
+					if(loginuser != null && rep.parent == null) {
 						str += '<button class="reply_btn rereply" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-commenting-o" aria-hidden="true"></i></button>';
 					}
 					str == "</div>";
