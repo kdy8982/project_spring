@@ -7,6 +7,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -94,7 +95,7 @@ public class PhotoController {
 		return "redirect:/photo/list" + cri.getListLink();
 	}
 	
-	@RequestMapping("/delete")
+	@RequestMapping(value= "/delete", produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
 	@PreAuthorize("isAuthenticated() and #vo.writer == principal.username")
 	public String delete(BoardVO vo, Criteria cri, RedirectAttributes rttr ) {
 		log.info("photo delete ....!!");

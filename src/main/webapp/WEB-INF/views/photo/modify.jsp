@@ -10,267 +10,253 @@
 <meta charset="UTF-8">
 
 <script>
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
 
-	$(document)
-			.ready(
-					function() {
-						var formObj = $("form[role='form']");
-						// var cloneObj = $(".uploadDiv").clone();
+$(document).ready(function() {
+	var formObj = $("form[role='form']");
+	// var cloneObj = $(".uploadDiv").clone();
 
-						$("button[data-oper='modify']").on("click",function(e) {
-											e.preventDefault();
-											var str = "";
-											str += "<input type='hidden' name='bno' value='"+${photo.bno}+"'>";
-											$(".uploadResult ul li")
-													.each(function(i, obj) {
-																var jobj = $(obj);
+	$("button[data-oper='modify']").on("click",function(e) {
+		e.preventDefault();
+		var str = "";
+		str += "<input type='hidden' name='bno' value='"+${photo.bno}+"'>";
+		$(".uploadResult ul li").each(function(i, obj) {
+			var jobj = $(obj);
 
-																str += "<input type='hidden' name='attachList["
-																		+ i
-																		+ "].fileName' value='"
-																		+ jobj
-																				.data("filename")
-																		+ "'>";
-																str += "<input type='hidden' name='attachList["
-																		+ i
-																		+ "].uuid' value='"
-																		+ jobj
-																				.data("uuid")
-																		+ "'>";
-																str += "<input type='hidden' name='attachList["
-																		+ i
-																		+ "].uploadPath' value='"
-																		+ jobj
-																				.data("path")
-																		+ "'>";
-																str += "<input type='hidden' name='attachList["
-																		+ i
-																		+ "].fileType' value='"
-																		+ jobj
-																				.data("type")
-																		+ "'>";
-															});
-											formObj.append(str).submit();
-										})
+			str += "<input type='hidden' name='attachList["
+					+ i
+					+ "].fileName' value='"
+					+ jobj
+							.data("filename")
+					+ "'>";
+			str += "<input type='hidden' name='attachList["
+					+ i
+					+ "].uuid' value='"
+					+ jobj
+							.data("uuid")
+					+ "'>";
+			str += "<input type='hidden' name='attachList["
+					+ i
+					+ "].uploadPath' value='"
+					+ jobj
+							.data("path")
+					+ "'>";
+			str += "<input type='hidden' name='attachList["
+					+ i
+					+ "].fileType' value='"
+					+ jobj
+							.data("type")
+					+ "'>";
+		});
+		formObj.append(str).submit();
+	})
 
-						$("button[data-oper='delete']")
-								.on(
-										"click",
-										function(e) {
-											e.preventDefault();
-											formObj.attr("action",
-													"/photo/delete");
+	$("button[data-oper='delete']").on("click", function(e) {
+		e.preventDefault();
+		formObj.attr("action",
+				"/photo/delete");
 
-											formObj.append("<input type='hidden' name='bno' value='"+ ${photo.bno}+"'>")
-											formObj.submit();
-										})
-										
-						$("button[data-oper='upload']").on("click", function(e) {
-							e.preventDefault();
-							$(".input_upload").click();
-						})
-						
+		formObj.append("<input type='hidden' name='bno' value='"+ ${photo.bno}+"'>")
+		formObj.submit();
+	})
+					
+	$("button[data-oper='upload']").on("click", function(e) {
+		e.preventDefault();
+		$(".input_upload").click();
+	})
+	
 
-						/* 첨부파일 추가 */
-						var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-						var maxSize = 5242880;
+	/* 첨부파일 추가 */
+	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	var maxSize = 5242880;
 
-						function checkExtension(fileName, fileSize) { // 파일 확장자 및 사이즈 체크 메서드.
-							if (fileSize > maxSize) {
-								alert("파일 사이즈 초과 !!");
-								return false;
-							}
+	function checkExtension(fileName, fileSize) { // 파일 확장자 및 사이즈 체크 메서드.
+		if (fileSize > maxSize) {
+			alert("파일 사이즈 초과 !!");
+			return false;
+		}
 
-							if (regex.test(fileName)) {
-								alert("해당 종류의 파일은 업로드 할 수 없습니다.");
-								return false;
-							}
-							return true;
-						} // checkExtension(fileName, fileSize)
+		if (regex.test(fileName)) {
+			alert("해당 종류의 파일은 업로드 할 수 없습니다.");
+			return false;
+		}
+		return true;
+	} // checkExtension(fileName, fileSize)
 
-						$("input[type='file']").change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
-							$(".layer").css("display", "block");
-							$(".center_wrap").css("display","block");
-							
-											var formData = new FormData();
-											var inputFile = $("input[name='uploadFile']");
-											var files = inputFile[0].files;
+	$("input[type='file']").change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
+		$(".layer").css("display", "block");
+		$(".center_wrap").css("display","block");
+		
+		var formData = new FormData();
+		var inputFile = $("input[name='uploadFile']");
+		var files = inputFile[0].files;
 
-											for (var i = 0; i < files.length; i++) {
-												if (!checkExtension(
-														files[i].name,
-														files[i].size)) {
-													return false;
-												}
-												formData.append("uploadFile", files[i]);
-											}
+		for (var i = 0; i < files.length; i++) {
+			if (!checkExtension(
+					files[i].name,
+					files[i].size)) {
+				return false;
+			}
+			formData.append("uploadFile", files[i]);
+		}
 
-											$.ajax({
-														url : "/uploadAjaxAction",
-														processData : false,
-														contentType : false,
-														beforeSend : function(xhr) {
-															xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-														},
-														data : formData,
-														type : "post",
-														dataType : "json",
-														success : function(result) {
-															// $(".uploadDiv").html(cloneObj.html());
-															$(".layer").css("display", "none");
-															$(".center_wrap").css("display","none");
-															showUploadedFile(result);
-														},
-														error : function(
-																request,
-																status, error) {
-															alert("code:"
-																	+ request.status
-																	+ "\n"
-																	+ "message:"
-																	+ request.responseText
-																	+ "\n"
-																	+ "error:"
-																	+ error);
-														}
-													}) // $.ajax()
+		$.ajax({
+					url : "/uploadAjaxAction",
+					processData : false,
+					contentType : false,
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					data : formData,
+					type : "post",
+					dataType : "json",
+					success : function(result) {
+						// $(".uploadDiv").html(cloneObj.html());
+						$(".layer").css("display", "none");
+						$(".center_wrap").css("display","none");
+						showUploadedFile(result);
+					},
+					error : function(
+							request,
+							status, error) {
+						alert("code:"
+								+ request.status
+								+ "\n"
+								+ "message:"
+								+ request.responseText
+								+ "\n"
+								+ "error:"
+								+ error);
+					}
+				}) // $.ajax()
 
-										}) // $("input[type='file']").change
+	}) // $("input[type='file']").change
 
-						function showUploadedFile(uploadResultArr) {
+	function showUploadedFile(uploadResultArr) {
 
-							if (!uploadResultArr || uploadResultArr.length == 0) {
-								return;
-							}
+		if (!uploadResultArr || uploadResultArr.length == 0) {
+			return;
+		}
 
-							var uploadResult = $(".uploadResult ul");
-							var str = "";
+		var uploadResult = $(".uploadResult ul");
+		var str = "";
 
-							$(uploadResultArr)
-									.each(
-											function(i, obj) {
-												if (obj.image) {
+		$(uploadResultArr).each(function(i, obj) {
+			if (obj.image) {
 
-													var fileCallPath = encodeURIComponent(obj.uploadPath
-															+ "/s_"
-															+ obj.uuid
-															+ "_"
-															+ obj.fileName);
-													var originPath = obj.uploadPath
-															+ "\\"
-															+ obj.uuid
-															+ "_"
-															+ obj.fileName;
+				var fileCallPath = encodeURIComponent(obj.uploadPath
+						+ "/s_"
+						+ obj.uuid
+						+ "_"
+						+ obj.fileName);
+				var originPath = obj.uploadPath
+						+ "\\"
+						+ obj.uuid
+						+ "_"
+						+ obj.fileName;
 
-													originPath = originPath
-															.replace(
-																	new RegExp(
-																			/\\/g),
-																	"/");
+				originPath = originPath
+						.replace(
+								new RegExp(
+										/\\/g),
+								"/");
 
-													str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
-													str += "<button type='button' class='close_btn' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
-													str += "<img src='/display?fileName="
-															+ fileCallPath
-															+ "'>";
-													// str += "<a href=\"javascript:showImage('" + originPath + "')\"><img src='/display?fileName=" + fileCallPath + "'></a>"; 
-													// str += "<span data-file=\'" + fileCallPath + "\' data-type='image'> x </span>";
-													str += "</div></li>";
+				str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
+				str += "<button type='button' class='close_btn' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
+				str += "<img src='/display?fileName="
+						+ fileCallPath
+						+ "'>";
+				// str += "<a href=\"javascript:showImage('" + originPath + "')\"><img src='/display?fileName=" + fileCallPath + "'></a>"; 
+				// str += "<span data-file=\'" + fileCallPath + "\' data-type='image'> x </span>";
+				str += "</div></li>";
 
-												} else {
+			} else {
 
-													var fileCallPath = encodeURIComponent(obj.uploadPath
-															+ "/"
-															+ obj.uuid
-															+ "_"
-															+ obj.fileName);
-													var fileLink = fileCallPath
-															.replace(
-																	new RegExp(
-																			/\\/g),
-																	"/");
+				var fileCallPath = encodeURIComponent(obj.uploadPath
+						+ "/"
+						+ obj.uuid
+						+ "_"
+						+ obj.fileName);
+				var fileLink = fileCallPath
+						.replace(
+								new RegExp(
+										/\\/g),
+								"/");
 
-													str += "<li";
-													str += "data-path='"
-															+ obj.uploadPath
-															+ "' data-uuid= '"
-															+ obj.uuid
-															+ "' data-fileName"
-												}
-											});
-							// alert(str);
-							uploadResult.append(str);
-						} // showUploadedFile(uploadResultArr)
+				str += "<li";
+				str += "data-path='"
+						+ obj.uploadPath
+						+ "' data-uuid= '"
+						+ obj.uuid
+						+ "' data-fileName"
+			}
+		});
+		// alert(str);
+		uploadResult.append(str);
+	} // showUploadedFile(uploadResultArr)
 
-						var bno = '<c:out value="${photo.bno}"/>';
-						$.getJSON(
-										"/board/getAttachList",
-										{
-											bno : bno
-										},
-										function(arr) {
-											var str = "";
-											$(arr).each(function(i, attach) {
-																//image type (썸네일)
-																if (attach.fileType) {
-																	var fileCallPath = encodeURIComponent(attach.uploadPath
-																			+ "/s_"
-																			+ attach.uuid
-																			+ "_"
-																			+ attach.fileName);
+	var bno = '<c:out value="${photo.bno}"/>';
+	$.getJSON("/board/getAttachList",
+					{
+						bno : bno
+					},
+		function(arr) {
+			var str = "";
+			$(arr).each(function(i, attach) {
+				//image type (썸네일)
+				if (attach.fileType) {
+					var fileCallPath = encodeURIComponent(attach.uploadPath
+							+ "/s_"
+							+ attach.uuid
+							+ "_"
+							+ attach.fileName);
 
-																	str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
-																	str += "<div>";
-																	str += "<button class='close_btn' data-file=\'" + fileCallPath + "\' data-type='image'><i class='fa fa-times'></i></button><br>"
-																	str += "<img src='/display?fileName="
-																			+ fileCallPath
-																			+ "'>";
-																	str += "</div>"
-																	str += "</li>";
-																} else {
-																	str += "<li data-path ='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type ='"+ attach.fileType + "'>";
-																	str += "<div>"
-																	str += "<img src='/resources/img/attach.png'>"
-																	str += "</div>"
-																	str += "</li>"
-																}
-															});
-											$(".uploadResult ul").html(str);
-										})
+					str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
+					str += "<div>";
+					str += "<button class='close_btn' data-file=\'" + fileCallPath + "\' data-type='image'><i class='fa fa-times'></i></button><br>"
+					str += "<img src='/display?fileName="
+							+ fileCallPath
+							+ "'>";
+					str += "</div>"
+					str += "</li>";
+				} else {
+					str += "<li data-path ='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type ='"+ attach.fileType + "'>";
+					str += "<div>"
+					str += "<img src='/resources/img/attach.png'>"
+					str += "</div>"
+					str += "</li>"
+				}
+			});
+			$(".uploadResult ul").html(str);
+		})
 
-						$(".uploadResult").on(
-								"click",
-								"button",
-								function(e) {
-									var targetFile = $(this).data("file");
-									var type = $(this).data("type");
+	$(".uploadResult").on("click", "button", function(e) {
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
 
-									var targetLi = $(this).closest("li");
+		var targetLi = $(this).closest("li");
 
-									$.ajax({
-										url : '/deleteFile',
-										data : {
-											fileName : targetFile,
-											type : type
-										},
-										beforeSend : function(xhr) {
-											xhr.setRequestHeader(
-													csrfHeaderName,
-													csrfTokenValue);
-										},
-										dataType : 'text',
-										type : 'POST',
-										success : function(result) {
-											alert(result);
-											targetLi.remove();
-										}
-									})
-
-								});
-
-					})
+		$.ajax({
+			url : '/deleteFile',
+			data : {
+				fileName : targetFile,
+				type : type
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(
+						csrfHeaderName,
+						csrfTokenValue);
+			},
+			dataType : 'text',
+			type : 'POST',
+			success : function(result) {
+				alert(result);
+				targetLi.remove();
+			}
+		})
+	});
+})
 </script>
 
 <title>Insert title here</title>

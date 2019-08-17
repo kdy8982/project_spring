@@ -43,6 +43,65 @@ $(document).ready(function() {
 		$(".input_upload").click();
 	})
 	
+	$(document).on("click", ".uploadResult .close_btn" ,function () {
+		var thisBtn = $(this);
+		
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		var targetLi = $(this).closest("li");
+		
+		$.ajax({
+			url : '/deleteFile',
+			data : {
+				fileName : targetFile,
+				type : type
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(
+						csrfHeaderName,
+						csrfTokenValue);
+			},
+			dataType : 'text',
+			type : 'POST',
+			success : function(result) {
+				alert(result);
+				console.log(thisBtn.data("file"));
+				targetLi.remove();
+				$(".write_box ." +  thisBtn.data("file")).remove();
+			}
+		})	
+	}) 
+	
+	/*
+	$(".uploadResult").on("click", "button", function(e) {
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+
+		var targetLi = $(this).closest("li");
+		
+		$.ajax({
+			url : '/deleteFile',
+			data : {
+				fileName : targetFile,
+				type : type
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(
+						csrfHeaderName,
+						csrfTokenValue);
+			},
+			dataType : 'text',
+			type : 'POST',
+			success : function(result) {
+				alert(result);
+				targetLi.remove();
+				var imsi = $(this).data("file");
+				console.log(imsi)
+				$("img " + imsi).remove();
+			}
+		})
+	})
+	*/
 	
 	
 	/* 첨부파일 추가 */
@@ -126,19 +185,17 @@ $(document).ready(function() {
 										+ "_"
 										+ obj.fileName;
 	
-								originPath = originPath
-										.replace(
-												new RegExp(
-														/\\/g),
-												"/");
+								originPath = originPath.replace(new RegExp(/\\/g), "/");
 								
-								$(".write_box").append("<img src='/display?fileName=" + originPath + "'>");
+								var onlyFilename = obj.fileName.split(".");
+								
+								$(".write_box").append("<img class='"+ obj.uuid + "_" + onlyFilename[0] +"' src='/display?fileName=" + originPath + "'>");
 	
 								str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
 								str += "<span>"
 										+ obj.fileName
 										+ "</span>";
-								str += "<button type='button' class='close_btn' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
+								str += "<button type='button' class='close_btn' data-file=\'"+ obj.uuid + "_" + onlyFilename[0] +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
 								str += "<img src='/display?fileName="
 										+ fileCallPath
 										+ "'>";
@@ -167,7 +224,6 @@ $(document).ready(function() {
 										+ "' data-fileName"
 							}
 						});
-		// alert(str);
 		uploadResult.append(str);
 	} // showUploadedFile(uploadResultArr)
 
@@ -219,9 +275,6 @@ $(document).ready(function() {
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						<input type="hidden" name="boardType" value="photo" />
 					</form>
-					<div class="bottom_wrap">
-						<button class="btn normal_btn middle" type="submit">작성완료</button>
-					</div>
 					
 					<div class="file_upload_wrap uploadRow">
 						<div class="uploadDiv">
@@ -231,6 +284,10 @@ $(document).ready(function() {
 					<button class="btn tab_btn middle" type="upload">이미지 첨부</button>
 					<div class="uploadResult uploadLev">
 						<ul></ul>
+					</div>
+					
+					<div class="bottom_wrap">
+						<button class="btn normal_btn middle" type="submit">작성완료</button>
 					</div>
 				</div>
 			</div>

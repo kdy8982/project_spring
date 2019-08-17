@@ -208,7 +208,7 @@ public class UploadController {
 	
 	
 	@PreAuthorize("isAuthenticated()")
-	@PostMapping(value="/deleteFile")
+	@PostMapping(value="/deleteFile" , produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String fileName, String type) {
 		log.info("deleteFile : " + fileName);
@@ -231,7 +231,7 @@ public class UploadController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<String> ("deleted" , HttpStatus.OK);
+		return new ResponseEntity<String> ("첨부파일이 삭제되었습니다." , HttpStatus.OK);
 	}
 
 	// 파일 저장할 때, 날짜별로 폴더를 디렉토리를 생성하는 메서드 

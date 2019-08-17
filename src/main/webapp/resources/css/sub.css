@@ -296,7 +296,8 @@
 }
 
 .container .write_box img {
-	height: 80vh;	
+	display:block;
+    width: 80%;	
 }
 
 .container .list_wrap.notice_wrap .uploadDiv {
@@ -450,7 +451,8 @@
 }
 
 .notice_get_wrap #table .notice_content img{
-	height: 80vh;	
+	width: 80%;	
+	display: block;
 }
 
 .image_box img{
