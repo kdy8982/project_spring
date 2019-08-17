@@ -263,6 +263,7 @@
 
 
 .container .content{
+	position: relative;
 	margin-top : 40px;
 	min-height: calc(100vh - 509px)
 }
@@ -284,9 +285,8 @@
 	width : 99%;	
 }
 
-.container .list_wrap.notice_wrap form textarea {
+.container .list_wrap.notice_wrap form .write_box {
 	width: 100%;
-	height: 150px;
 	padding: 12px 20px;
 	box-sizing: border-box;
 	border: 2px solid #ccc;
@@ -460,8 +460,8 @@
 }
 
 .bottom_wrap {
-	margin-bottom: 50px;
-	position : relative;
+    margin-bottom: 3em;
+    position: relative;
 }
 
 .bottom_wrap .notice_btn {

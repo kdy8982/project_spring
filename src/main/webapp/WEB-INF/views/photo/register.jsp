@@ -22,6 +22,10 @@ $(document).ready(function() {
 		e.preventDefault();
 		var str = "";
 		
+		console.log($(".write_box").html());
+		
+		$("textarea").html($(".write_box").html());
+		
 		$(".uploadResult ul li").each(function(i, obj) {
 			var jobj = $(obj);
 			
@@ -127,6 +131,8 @@ $(document).ready(function() {
 												new RegExp(
 														/\\/g),
 												"/");
+								
+								$(".write_box").append("<img src='/display?fileName=" + fileCallPath + "'>");
 	
 								str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
 								str += "<span>"
@@ -201,7 +207,8 @@ $(document).ready(function() {
 	
 						<div class="form-group uploadRow">
 							<label>글 내용</label>
-							<textarea class="" rows="3" name='content'></textarea>
+							<textarea style="visibility:hidden" name='content'></textarea>
+							<div class="write_box" contentEditable="true"></div>
 						</div>
 						
 						<div class="form-group uploadRow">

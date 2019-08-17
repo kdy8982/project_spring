@@ -106,6 +106,7 @@ $(document).ready(function() {
 			<ul class="gallery_li">
 				<c:forEach var="photo" items="${photoList}" varStatus="status">
 						<li class="yesupload bg1">
+							<div>
 							<a class="move" href="<c:out value='${photo.bno}'/>">
 								<c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
 								<%
@@ -127,8 +128,21 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</a>
-						</li>		
+							</div>
+						</li>
 				</c:forEach>
+				<c:if test="${fn:length(photoList) eq 1}">
+					<li style="visibility: hidden"></li>
+					<li style="visibility: hidden"></li>
+					<li style="visibility: hidden"></li>
+				</c:if>
+				<c:if test="${fn:length(photoList) eq 2}">
+					<li style="visibility: hidden"></li>
+					<li style="visibility: hidden"></li>
+				</c:if>
+				<c:if test="${fn:length(photoList) eq 3}">
+					<li style="visibility: hidden"></li>
+				</c:if>						
 			</ul>
 		</div>
 		

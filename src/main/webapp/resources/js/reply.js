@@ -4,7 +4,6 @@ var replyService = (function() {
 
 	function add(reply, callback, error) {
 		console.log("reply............");
-
 		$.ajax({
 			type : 'post',
 			url : '/replies/new',
@@ -20,7 +19,26 @@ var replyService = (function() {
 					error(er);
 				}
 			}
-
+		})
+	}
+	
+	function addRereply(reply, callback, error) {
+		console.log("reply............");
+		$.ajax({
+			type : 'post',
+			url : '/replies/newRereply',
+			data : JSON.stringify(reply),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr) {
+				if (callback) {
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er) {
+				if (error) {
+					error(er);
+				}
+			}
 		})
 	}
 	
@@ -77,13 +95,10 @@ var replyService = (function() {
 	}
 	
 	function get (rno, callback, error) {
-		
 		$.get("/replies/" + rno + ".json", function (result) {
-			
 			if(callback) {
 				callback(result);
 			}
-			
 		}).fail(function(xhr, status, err) {
 			if(error) {
 				error();
@@ -110,16 +125,41 @@ var replyService = (function() {
 	function displayTime(timeValue)  {
 		var today = new Date(); // 오늘시간 
 		var gap = today.getTime() - timeValue; // 오늘시간과 주어진 시간의 차이
-		
 		var dateObj = new Date(timeValue); // 주어진 시간 객체
+		var min = 60 * 1000;
+		var minsAgo = Math.floor(gap / min);
+		
+		var result = {
+				//'raw': d.getFullYear() + '-' + (d.getMonth() + 1 > 9 ? '' : '0') + (d.getMonth() + 1) + '-' + (d.getDate() > 9 ? '' : '0') +  d.getDate() + ' ' + (d.getHours() > 9 ? '' : '0') +  d.getHours() + ':' + (d.getMinutes() > 9 ? '' : '0') +  d.getMinutes() + ':'  + (d.getSeconds() > 9 ? '' : '0') +  d.getSeconds(),
+				'formatted' : '',
+		};
+		
+		if (minsAgo < 60) { // 1시간 내
+			result.formatted = minsAgo + '분 전';
+		} else if (minsAgo < 60 * 24) { // 하루 내
+			result.formatted = Math.floor(minsAgo / 60) + '시간 전';
+		} else { // 하루 이상
+			result.formatted = Math.floor(minsAgo / 60 / 24) + '일 전';
+		};
+
 		var str = "";
 		
 		if(gap < (1000 * 60 * 60 * 24)) { // 현재 시간과 작성일이의 차이가 하루가 넘는가?
-			var hh = dateObj.getHours();
-			var mi = dateObj.getMinutes();
-			var ss = dateObj.getSeconds();
+			var result = {
+					//'raw': d.getFullYear() + '-' + (d.getMonth() + 1 > 9 ? '' : '0') + (d.getMonth() + 1) + '-' + (d.getDate() > 9 ? '' : '0') +  d.getDate() + ' ' + (d.getHours() > 9 ? '' : '0') +  d.getHours() + ':' + (d.getMinutes() > 9 ? '' : '0') +  d.getMinutes() + ':'  + (d.getSeconds() > 9 ? '' : '0') +  d.getSeconds(),
+					'formatted' : '',
+			};
 			
-			return [(hh>9 ? '': '0') + hh, ':', (mi>0 ? '':'0') + mi, ':', (ss>9?'':'0') + ss].join('');
+			if (minsAgo < 60) { // 1시간 내
+				result.formatted = minsAgo + '분 전';
+			} else if (minsAgo < 60 * 24) { // 하루 내
+				result.formatted = Math.floor(minsAgo / 60) + '시간 전';
+			} else { // 하루 이상
+				result.formatted = Math.floor(minsAgo / 60 / 24) + '일 전';
+			};
+			
+			
+			return result.formatted;
 		} else {
 			var yy = dateObj.getFullYear();
 			var mm = dateObj.getMonth() + 1; // getMonth() is zero-based
@@ -129,8 +169,10 @@ var replyService = (function() {
 		}
 	}; 
 	
+	
 	return {
 		add : add,
+		addRereply : addRereply,
 		getList : getList,
 		remove : remove,
 		get : get,

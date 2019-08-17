@@ -13,10 +13,10 @@ public class ReplyVO {
 
 	private Long rno;
 	private Long bno;
+	private Long parent;
 	
 	private String reply;
 	private String replyer;
-	private String parent;
 	private Date replyDate;
 	private Date updateDate;
 	

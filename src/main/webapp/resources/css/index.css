@@ -74,10 +74,10 @@
 	background-color: #FAFBFD;
 }
 
-.even_row .gallery_li li {
+/* .even_row .gallery_li li {
 	height: 20vh;
     width : calc(25% - 35px);
-    /* width: calc(25% - 28px); */
+    width: calc(25% - 28px);
     margin: 0.9em;
     overflow: hidden;
     cursor: pointer;
@@ -85,7 +85,7 @@
     
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
-
+ */
 .even_row .gallery_li li .thumbnail {
 	background-color : white;
 }
@@ -169,16 +169,14 @@
 
 .swipe_wrap li .notice_box{
 	border: 1px solid lightgray;
-    padding: 40px 25px 30px 25px;
-    height: 140px;
-    /* background-color: #f5f5f5; */
+    padding: 2em;
 }
 
 .notice_box a {
 }
 
 .notice_box a .main_notice {
-	font-size: 22px;
+	font-size: 1.3rem;
     font-weight: 500;
     color: #222;
     letter-spacing: -1px;
@@ -224,31 +222,41 @@
 }
 
 .book_li {
-	text-align : center;
+	flex-wrap: wrap;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .main_row3 li {
 	position: relative;
-    width: calc(33% - 28px);
-    margin-right: 1.5em;
+    display: flex;
+    height: 32vw;
+    width: 22vw;
+    
     overflow: hidden;
     cursor: pointer;
-    display: inline-block;
-    
-    max-height : 325px;
-   	min-height: 55vh;
    	
    	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
 .book_li li .thumb {
-	position:relative;
-	min-height: 25vh;
+	width: 100%;
+    position: absolute;
+    min-height: 40%;
     background-size: cover;
     background-position: center;
     border-bottom: 1px solid #efefef;
-    
-	/* text-align : center; */
+    /* text-align: center; */
+}
+
+.book_li li .desc_content_box {
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    top: 40%;
+    line-height: 19px;
 }
 
 .book_li li .thumb img{
@@ -256,8 +264,11 @@
 }
 
 .book_li li .desc {
-	padding: 10px;
-	line-height:19px;
+	padding: 1em;
+}
+
+.book_li li .thumb_content{
+	padding: 1em;
 }
 
 .book_li li .book_title {
@@ -271,16 +282,29 @@
 	font-size : 15px;
 	margin-top: 10px;
 }
+
+.main_row2 .gallery_li {
+}
+
+.content .gallery_li {
+}
+
+.gallery_li {
+	flex-wrap: wrap;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+ }
  
 .gallery_li li {
-	position: relative;
-    width: calc(25% - 28px);
-    height: 30vh;
-    margin: 11px;
-    overflow: hidden;
-    cursor: pointer;
-    display: inline-block;
-    border: solid 1px #eee;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    display: flex;
+    height: 16vw;
+    width: 16vw;
+    position: relative;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
 .gallery_li .desc {

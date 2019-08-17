@@ -60,4 +60,11 @@ public class ReplyServiceImpl implements ReplyService {
 		return new ReplyPageDTO(mapper.getCountByBno(bno), mapper.getListWithPaging(cri, bno));
 	}
 
+	@Override
+	public int registerRereply(ReplyVO vo) {
+		vo.setParent(vo.getRno());
+		log.info(vo);
+		return mapper.insertRereply(vo);
+	}
+
 }

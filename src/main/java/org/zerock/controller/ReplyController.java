@@ -33,6 +33,7 @@ public class ReplyController {
 	// @Setter(onMethod_= {@Autowired}) //AllArgsConstructor 사용함으로써 Autwoired안 해줘도 됨.
 	private ReplyService service;
 	
+	/** 댓글 작성**/
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/new", consumes = "application/json", produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {
@@ -44,20 +45,31 @@ public class ReplyController {
 		
 	}
 	
+	/** 대댓글 작성**/
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value="/newRereply", consumes = "application/json", produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
+	public ResponseEntity<String> createRereply(@RequestBody ReplyVO vo) {
+		log.info("Rereply insert Controller call !");
+		
+		 log.info("ReplyVO : " + vo);
+		 int insertCount = service.registerRereply(vo);
+		 //log.info("Reply INSERT COUNT : " + insertCount);
+		 
+		 return insertCount == 1 ? new ResponseEntity<>("새로운 대댓글이 등록되었습니다." , HttpStatus.OK):new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
 	@GetMapping(value="/pages/{bno}/{page}")
 	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) throws UnsupportedEncodingException {
-		Criteria cri = new Criteria(page, 5);
-		
-		log.info(MediaType.APPLICATION_XML_VALUE);
-		log.info(MediaType.APPLICATION_JSON_UTF8_VALUE);
+		log.info(page);
+		Criteria cri = new Criteria(page, 10);
 		
 		ReplyPageDTO replyPageDTO = service.getListPage(cri, bno);
 		List<ReplyVO> replyList = replyPageDTO.getList();
 
-		for(ReplyVO reply : replyList) {
+		for(ReplyVO reply : replyList) { // 프로필의 썸네일을 넣어준다. 
 			reply.setThumbPhoto();
 		}
-		
 		replyPageDTO.setList(replyList);
 		
 		log.info(replyPageDTO);
@@ -85,7 +97,7 @@ public class ReplyController {
 	
 	/* [댓글 수정 컨트롤러] */
 	@PreAuthorize("isAuthenticated() and principal.username == #vo.replyer")
-	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/{rno}", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
+	@RequestMapping(method= {RequestMethod.PUT, RequestMethod.PATCH}, value="/{rno}", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
 	public ResponseEntity<String> modify (@RequestBody ReplyVO vo, @PathVariable("rno") Long rno) {
 
 		log.info("rno : " + vo.getRno());

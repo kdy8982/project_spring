@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.zerock.domain.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <jsp:include page="inc/headTop.jsp" flush="true"></jsp:include>
 
 
@@ -166,11 +167,24 @@ $(document).ready(function() {
 							</a>
 						</li>
 					</c:forEach>
-				</ul>
-				<div class="viewmore_wrap">
-					<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
+					
+					<c:if test="${fn:length(photoList) eq 1}">
+						<li style="visibility: hidden"></li>
+						<li style="visibility: hidden"></li>
+						<li style="visibility: hidden"></li>
+					</c:if>
+					<c:if test="${fn:length(photoList) eq 2}">
+						<li style="visibility: hidden"></li>
+						<li style="visibility: hidden"></li>
+					</c:if>
+					<c:if test="${fn:length(photoList) eq 3}">
+						<li style="visibility: hidden"></li>
+					</c:if>		
+					</ul>
+					<div class="viewmore_wrap">
+						<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
+					</div>
 				</div>
-			</div>
 			</section>
 
 
@@ -189,31 +203,39 @@ $(document).ready(function() {
 									String url = (String) pageContext.getAttribute("attach");
 										pageContext.setAttribute("filepath", URLEncoder.encode(url));
 								%>
-								<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
-									<c:if test="${essay_photoCount[status.index] eq '0'}" >
-										<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>
-									</c:if>
-									<c:if test="${essay_photoCount[status.index] ne '0'}">
-										<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${essay_photoCount[status.index]}</p>
-									</c:if>
-								</div>
-								 <c:set var="subsContent" value="${essay.content}" /> 
-								 <%
-								 	String subStr = (String) pageContext.getAttribute("subsContent");
-								 		if (subStr.length() > 150) {
-								 			subStr = subStr.substring(0, 150) + " ...";
-								
-								 		}
-								 		pageContext.setAttribute("subsContent", subStr);
-								 %>
-								<div class="desc">
-									<span class="book_title">${essay.title}</span>
-									<p>${subsContent}</p>
+									<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
+										<c:if test="${essay_photoCount[status.index] eq '0'}" >
+											<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>
+										</c:if>
+										<c:if test="${essay_photoCount[status.index] ne '0'}">
+											<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${essay_photoCount[status.index]}</p>
+										</c:if>
+									</div>
+									<div class="desc_content_box">
+									 <c:set var="subsContent" value="${essay.content}" /> 
+									 <%
+									 	String subStr = (String) pageContext.getAttribute("subsContent");
+									 		if (subStr.length() > 150) {
+									 			subStr = subStr.substring(0, 150) + " ...";
+									
+									 		}
+									 		pageContext.setAttribute("subsContent", subStr);
+									 %>
+									<div class="desc">
+										<span class="book_title">${essay.title}</span>
+										<p>${subsContent}</p>
+									</div>
 								</div>
 						</a></li>
 
 					</c:forEach>
-
+					<c:if test="${fn:length(essayList) eq 1}">
+						<li style="visibility: hidden"></li>
+						<li style="visibility: hidden"></li>
+					</c:if>
+					<c:if test="${fn:length(essayList) eq 2}">
+						<li style="visibility: hidden"></li>
+					</c:if>
 				</ul>
 				<div class="viewmore_wrap">
 					<a class="viewmore_btn" href="/essay/list">view more</a>

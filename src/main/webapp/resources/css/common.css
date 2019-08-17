@@ -180,13 +180,13 @@
 
 .page_wrap.list .content ul li {
     position: relative;
-    width: calc(33% - 25px);
-    margin: 11px;
+    width: 21vw;
+    height: 32vw;
     overflow: hidden;
     cursor: pointer;
     display: inline-block;
-    max-height: 325px;
-    min-height: 52vh;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
@@ -353,7 +353,9 @@
 /** 댓글 **/
 .reply_ul {
 	text-align: left;
-	padding: 1.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    padding-bottom: 1.5em;
 }
 .reply_li {
 	border-bottom: 1px solid #CACACA;
@@ -424,7 +426,7 @@
 }
 
 .reply_li .reply_content_box {
-	width: 75%;
+	width: 65%;
     height: 100%;
     text-align: left;
     font-size: 0.8rem;
@@ -432,8 +434,15 @@
 }
 
 .reply_btn_wrap {
-	position: absolute;
+    position: absolute;
+    font-size: 0.8rem;
 	right: 0;
+}
+
+.reply_date_box {
+	position: absolute;
+    right: 0;
+	min-width: 56px;
 }
 
 .reply_paging_box {

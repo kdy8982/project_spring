@@ -42,7 +42,7 @@ $(document).ready(function() {
 							</a>
 						
 						<ul class="member_dropmenu">
-							<li><a href="/memberDetail"><i class="fa fa-user user_mark" aria-hidden="true"></i>내 정보 관리</a></li>
+							<li><a href="/memberDetail?userid=<sec:authentication property='principal.member.userid'/>"><i class="fa fa-user user_mark" aria-hidden="true"></i>내 정보 관리</a></li>
 							<li><a href="/customLogout"><i class="fa fa-sign-out user_mark" aria-hidden="true"></i>로그아웃</a></li>
 							<sec:authorize access="hasRole('ROLE_ADMIN')">
 								<li><a href="/admin/main"><i class="fa fa-cogs user_mark" aria-hidden="true"></i>관리자 메뉴</a></li>

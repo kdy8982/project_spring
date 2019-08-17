@@ -7,6 +7,11 @@
 		values (seq_reply.nextval, #{bno}, #{reply}, #{replyer})
 	</insert>
 	
+	<insert id="insertRereply">
+		insert into tbl_reply (rno, bno, reply, replyer, parent)
+		values (seq_reply.nextval, #{bno}, #{reply}, #{replyer}, #{parent})
+	</insert>
+	
 	<select id="read" resultType="org.zerock.domain.ReplyVO">
 		select 
 		*
@@ -25,16 +30,16 @@
 	
 	<select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
 		<![CDATA[
-			select parent, seq, replyer, rno, replydate, reply, photo
+			select parent, seq, replyer, bno, rno, replydate, reply, photo
 				from
 				(
-				     select rownum rn, parent, seq, rno, replyer, replydate, reply, photo
+				     select rownum rn, parent, seq, bno, rno, replyer, replydate, reply, photo
 				    from
 				    (
-				        select reply.parent, reply.seq, reply.rno, reply.replyer, reply.replydate, reply.reply, memb.photo 
+				        select reply.parent, reply.seq, reply.bno, reply.rno, reply.replyer, reply.replydate, reply.reply, memb.photo 
 				        from tbl_reply reply left join tbl_member memb on reply.replyer = memb.userid 
 				        where reply.bno = #{bno} 
-				        order by nvl(parent,rno) desc, seq
+				        order by nvl(parent,rno) desc, replydate
 				    )
 				    where rownum <= #{cri.pageNum} * #{cri.amount}
 				)

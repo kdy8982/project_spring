@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.zerock.domain.*"%>
 
@@ -119,13 +120,26 @@ $(document).ready(function() {
 											<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${photoCount[status.index]}</p>
 										</c:if>
 									</div> 
-									<div class="desc">
-										<h3>${essay.title}</h3>
-										<p>${essay.writer}</p>
+									<div class="desc_content_box">
+										<div class="desc">
+											<h3>${essay.title}</h3>
+											<p>${essay.writer}</p>
+										</div>
+										<div class="thumb_content">
+											${essay.content}
+										</div>
 									</div>
 								</a>
 							</li>		
 					</c:forEach>
+					<c:if test="${fn:length(essayList) eq 1}">
+						<li style="visibility: hidden"></li>
+						<li style="visibility: hidden"></li>
+					</c:if>
+					<c:if test="${fn:length(essayList) eq 2}">
+						<li style="visibility: hidden"></li>
+					</c:if>
+					
 				</ul>
 			</div>
 			
