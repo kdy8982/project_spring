@@ -163,7 +163,7 @@ $(document).ready(function() {
 	})
 	
 	/* 첨부파일 조회 AJAX */
-	var bno = '<c:out value="${photo.bno}"/>';
+/* 	var bno = '<c:out value="${photo.bno}"/>';
 	$.getJSON("/board/getAttachList" , {bno : bno}, function (arr) {
 		
 		
@@ -181,7 +181,7 @@ $(document).ready(function() {
 		});
 		
 		$(".image_box ul").html(str);
-	}) 
+	}) */ 
 	
 	showList(1); // 댓글의 리스트 출력
 	

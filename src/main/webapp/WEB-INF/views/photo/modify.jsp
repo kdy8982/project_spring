@@ -305,7 +305,8 @@
 
 					<div class="form-group uploadRow">
 						<label>글 내용</label>
-						<textarea class="" rows="3" name='content'>${photo.content }</textarea>
+						<textarea style="display: none" name="content"></textarea>
+						<div class="write_box" contentEditable="true">${photo.content}</div>
 					</div>
 
 					<div class="form-group uploadRow">

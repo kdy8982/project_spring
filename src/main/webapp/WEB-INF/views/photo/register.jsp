@@ -132,7 +132,7 @@ $(document).ready(function() {
 														/\\/g),
 												"/");
 								
-								$(".write_box").append("<img src='/display?fileName=" + fileCallPath + "'>");
+								$(".write_box").append("<img src='/display?fileName=" + originPath + "'>");
 	
 								str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
 								str += "<span>"
@@ -207,7 +207,7 @@ $(document).ready(function() {
 	
 						<div class="form-group uploadRow">
 							<label>글 내용</label>
-							<textarea style="visibility:hidden" name='content'></textarea>
+							<textarea style="display: none" name="content"></textarea>
 							<div class="write_box" contentEditable="true"></div>
 						</div>
 						

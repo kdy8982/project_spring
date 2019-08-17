@@ -295,6 +295,10 @@
 	resize: none;	
 }
 
+.container .write_box img {
+	height: 80vh;	
+}
+
 .container .list_wrap.notice_wrap .uploadDiv {
 	display: none;
 }
@@ -443,6 +447,10 @@
 	font-weight: 500;
 	font-size: 17px;
 	white-space: pre-line;
+}
+
+.notice_get_wrap #table .notice_content img{
+	height: 80vh;	
 }
 
 .image_box img{
