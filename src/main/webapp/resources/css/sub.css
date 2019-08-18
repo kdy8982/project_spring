@@ -296,8 +296,10 @@
 }
 
 .container .write_box img {
-	display:block;
-    width: 80%;	
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    display: block;
+    width: 50%;
 }
 
 .container .list_wrap.notice_wrap .uploadDiv {
@@ -426,15 +428,21 @@
 	margin-bottom: 15px;
 }
 
+.uploadResult.uploadLev ul {
+	flex-wrap: wrap;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .uploadResult.uploadLev li{
-	display : inline-block;
- 	width: 30%;
-    margin-right: 1.3em;
-    position:relative;
+ 	width: 18%;
 }
 
 
 .uploadResult li{
+	position: relative;
 }
 
 .uploadResult li img{
@@ -451,8 +459,9 @@
 }
 
 .notice_get_wrap #table .notice_content img{
-	width: 80%;	
+	width: 60%;	
 	display: block;
+    margin-top: 0.5em;
 }
 
 .image_box img{
@@ -475,8 +484,7 @@
 }
 
 .bottom_wrap .notice_btn {
-/* 	position : absolute;
-	right : 0; */
+	margin-top: 1em;
 }
 
 .modal .close_btn {

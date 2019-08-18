@@ -8,7 +8,7 @@
 <head>
 
 <meta charset="UTF-8">
-
+<script type="text/javascript" src="/resources/js/board.js"></script>
 <script>
 var csrfHeaderName = "${_csrf.headerName}";
 var csrfTokenValue = "${_csrf.token}";
@@ -26,7 +26,8 @@ $(document).ready(function() {
 		
 		$("textarea").html($(".write_box").html());
 		
-		$(".uploadResult ul li").each(function(i, obj) {
+		// 각각의 첨부파일마다 서버로 저장할 정보들을 저장한다. 
+		$(".uploadResult ul .file_li").each(function(i, obj) {
 			var jobj = $(obj);
 			
 			str += "<input type='hidden' name='attachList[" + i + "].fileName' value='"+jobj.data("filename")+"'>";
@@ -161,7 +162,6 @@ $(document).ready(function() {
 					}) // $("input[type='file']").change
 	
 	function showUploadedFile(uploadResultArr) {
-	
 		if (!uploadResultArr || uploadResultArr.length == 0) {
 			return;
 		}
@@ -169,66 +169,61 @@ $(document).ready(function() {
 		var uploadResult = $(".uploadResult ul");
 		var str = "";
 	
-		$(uploadResultArr)
-				.each(
-						function(i, obj) {
-							if (obj.image) {
-	
-								var fileCallPath = encodeURIComponent(obj.uploadPath
-										+ "/s_"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName);
-								var originPath = obj.uploadPath
-										+ "\\"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName;
-	
-								originPath = originPath.replace(new RegExp(/\\/g), "/");
-								
-								var onlyFilename = obj.fileName.split(".");
-								
-								$(".write_box").append("<img class='"+ obj.uuid + "_" + onlyFilename[0] +"' src='/display?fileName=" + originPath + "'>");
-	
-								str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
-								str += "<span>"
-										+ obj.fileName
-										+ "</span>";
-								str += "<button type='button' class='close_btn' data-file=\'"+ obj.uuid + "_" + onlyFilename[0] +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
-								str += "<img src='/display?fileName="
-										+ fileCallPath
-										+ "'>";
-								// str += "<a href=\"javascript:showImage('" + originPath + "')\"><img src='/display?fileName=" + fileCallPath + "'></a>"; 
-								// str += "<span data-file=\'" + fileCallPath + "\' data-type='image'> x </span>";
-								str += "</div></li>";
-	
-							} else {
-	
-								var fileCallPath = encodeURIComponent(obj.uploadPath
-										+ "/"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName);
-								var fileLink = fileCallPath
-										.replace(
-												new RegExp(
-														/\\/g),
-												"/");
-	
-								str += "<li";
-								str += "data-path='"
-										+ obj.uploadPath
-										+ "' data-uuid= '"
-										+ obj.uuid
-										+ "' data-fileName"
-							}
-						});
-		uploadResult.append(str);
-	} // showUploadedFile(uploadResultArr)
+		$(uploadResultArr).each(function(i, obj) {
+			if (obj.image) {
 
-	
-	
+				var fileCallPath = encodeURIComponent(obj.uploadPath
+						+ "/s_"
+						+ obj.uuid
+						+ "_"
+						+ obj.fileName);
+				var originPath = obj.uploadPath
+						+ "\\"
+						+ obj.uuid
+						+ "_"
+						+ obj.fileName;
+
+				originPath = originPath.replace(new RegExp(/\\/g), "/");
+				
+				var onlyFilename = obj.fileName.split(".");
+				
+				$(".write_box").append("<img class='"+ obj.uuid + "_" + onlyFilename[0] +"' src='/display?fileName=" + originPath + "'>");
+
+				str += "<li class='file_li' data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
+				str += "<button type='button' class='close_btn' data-file=\'"+ obj.uuid + "_" + onlyFilename[0] +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
+				str += "<img src='/display?fileName="
+						+ fileCallPath
+						+ "'>";
+				// str += "<a href=\"javascript:showImage('" + originPath + "')\"><img src='/display?fileName=" + fileCallPath + "'></a>"; 
+				// str += "<span data-file=\'" + fileCallPath + "\' data-type='image'> x </span>";
+				str += "</div></li>";
+
+			} else {
+
+				var fileCallPath = encodeURIComponent(obj.uploadPath
+						+ "/"
+						+ obj.uuid
+						+ "_"
+						+ obj.fileName);
+				var fileLink = fileCallPath
+						.replace(
+								new RegExp(
+										/\\/g),
+								"/");
+
+				str += "<li";
+				str += "class='file_li '"
+				str += "data-path='"
+						+ obj.uploadPath
+						+ "' data-uuid= '"
+						+ obj.uuid
+						+ "' data-fileName"
+			}
+		});
+		
+		board.refreshFileUploadPreview(uploadResult, str, 15, 5, uploadResult.children(".file_li").length);
+		
+	} // showUploadedFile(uploadResultArr)
 	
 })
 </script>

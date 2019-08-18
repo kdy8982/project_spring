@@ -12,6 +12,7 @@
 <head>
 
 <meta charset="UTF-8">
+<script type="text/javascript" src="/resources/js/board.js"></script>
 <script>
 
 $(document).ready(function() {
@@ -75,6 +76,9 @@ $(document).ready(function() {
     	$("#mask").css("display", "none");
     })
     
+    /** 썸네일이 한줄에 네개 이하로  될 시, 예쁘게 정렬되지 않기 때문에 계산하여, 빈<li></li>를 만들어준다. **/
+   	var emptyLi = board.makeEmptyLi(12, 4, ${fn:length(photoList)});
+    $("ul.gallery_li").append(emptyLi);
 })
 
 
@@ -131,18 +135,6 @@ $(document).ready(function() {
 							</div>
 						</li>
 				</c:forEach>
-				<c:if test="${fn:length(photoList) eq 1}">
-					<li style="visibility: hidden"></li>
-					<li style="visibility: hidden"></li>
-					<li style="visibility: hidden"></li>
-				</c:if>
-				<c:if test="${fn:length(photoList) eq 2}">
-					<li style="visibility: hidden"></li>
-					<li style="visibility: hidden"></li>
-				</c:if>
-				<c:if test="${fn:length(photoList) eq 3}">
-					<li style="visibility: hidden"></li>
-				</c:if>						
 			</ul>
 		</div>
 		

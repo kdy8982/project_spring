@@ -17,11 +17,14 @@ $(document).ready(function() {
 	var formObj = $("form[role='form']");
 	// var cloneObj = $(".uploadDiv").clone();
 
-	$("button[data-oper='modify']").on("click",function(e) {
+	$("button[data-oper='modify']").on("click",function(e) {	
 		e.preventDefault();
 		var str = "";
 		str += "<input type='hidden' name='bno' value='"+${photo.bno}+"'>";
-		$(".uploadResult ul li").each(function(i, obj) {
+		
+		$("textarea").html($(".write_box").html());
+		
+		$(".uploadResult ul .file_li").each(function(i, obj) {
 			var jobj = $(obj);
 
 			str += "<input type='hidden' name='attachList["
@@ -140,6 +143,7 @@ $(document).ready(function() {
 		}
 
 		var uploadResult = $(".uploadResult ul");
+		console.log(uploadResult.children("li").length);
 		var str = "";
 
 		$(uploadResultArr).each(function(i, obj) {
@@ -162,7 +166,7 @@ $(document).ready(function() {
 										/\\/g),
 								"/");
 
-				str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
+				str += "<li class='file_li' data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
 				str += "<button type='button' class='close_btn' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
 				str += "<img src='/display?fileName="
 						+ fileCallPath
@@ -194,6 +198,17 @@ $(document).ready(function() {
 		});
 		// alert(str);
 		uploadResult.append(str);
+		
+		// 올린 사진이 다섯개 이하일 경우, 빈 li를 추가해준다. 
+		if(uploadResult.children("li").length < 5) {
+			str = "";
+			var makeLiCount = 5 - uploadResult.children("li").length
+			console.log("makeLiCount is : " + makeLiCount);
+			for (var i=0; i<makeLiCount; i++) {
+				str += "<li></li>";
+			}
+			uploadResult.append(str);
+		}
 	} // showUploadedFile(uploadResultArr)
 
 	var bno = '<c:out value="${photo.bno}"/>';
@@ -203,6 +218,9 @@ $(document).ready(function() {
 					},
 		function(arr) {
 			var str = "";
+			var uploadResult = $(".uploadResult ul");
+			console.log(arr);
+			
 			$(arr).each(function(i, attach) {
 				//image type (썸네일)
 				if (attach.fileType) {
@@ -229,6 +247,16 @@ $(document).ready(function() {
 				}
 			});
 			$(".uploadResult ul").html(str);
+			
+			// 올린 사진이 다섯개 이하일 경우, 빈 li를 추가해준다. 
+			if(uploadResult.children("li").length) {
+				str = "";
+				var makeEmptyLiCount = 5 - uploadResult.children("li").length;
+				for (var i=0; i<makeEmptyLiCount; i++) {
+					str += "<li></li>";
+				}
+				uploadResult.append(str);
+			}
 		})
 
 	$(".uploadResult").on("click", "button", function(e) {
@@ -276,7 +304,7 @@ $(document).ready(function() {
 			<h3>
 				"그래서 우리는 위로를 받았습니다.<br> 또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱
 				기뻐하게 되었습니다.<br> 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
-				고린도후서 7장 13절
+				고린도후서 7장 13절.
 			</h3>
 		</div>
 
@@ -290,20 +318,15 @@ $(document).ready(function() {
 					</div>
 
 					<div class="form-group uploadRow">
+						<label>작성자</label> <input class="form_writer" name='writer' readonly="readonly" value="${photo.writer }">
+					</div>
+					
+					<div class="form-group uploadRow">
 						<label>글 내용</label>
 						<textarea style="display: none" name="content"></textarea>
 						<div class="write_box" contentEditable="true">${photo.content}</div>
 					</div>
 
-					<div class="form-group uploadRow">
-						<label>작성자</label> <input class="form_writer" name='writer' readonly="readonly" value="${photo.writer }">
-					</div>
-					<div class="row bottom_wrap">
-						<div class="notice_btn">
-							<button class="btn normal_btn" data-oper="modify" type="submit">수정 완료</button>
-							<button class="btn normal_btn" data-oper="delete">삭제</button>
-						</div>
-					</div>
 
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 					<input type="hidden" name="type" value="photo" />
@@ -319,6 +342,13 @@ $(document).ready(function() {
 						<div class="layer" style="display:none"></div>
 						<div class="center_wrap" style="display:none"><img src="/resources/images/sub/ajax-loader.gif" /></div>
 						<ul></ul>
+					</div>
+				</div>
+
+				<div class="row bottom_wrap">
+					<div class="notice_btn">
+						<button class="btn normal_btn" data-oper="modify" type="submit">수정 완료</button>
+						<button class="btn normal_btn" data-oper="delete">삭제</button>
 					</div>
 				</div>
 
