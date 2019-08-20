@@ -25,13 +25,18 @@ var board = (function() {
 		var oldFileLi;
 		var emptyLi;
 		
+		if(photoCount == 0 ) {
+			ulTag.html("")
+		}
+		
 		if(ulTag.children(".file_li").length != 0) {
 			oldFileLi = ulTag.children(".file_li");
 			ulTag.html("");
 			ulTag.append(oldFileLi);
 		}
+		
 		ulTag.append(str);
-		photoCount = ulTag.children(".file_li").length;
+		photoCount = ulTag.find(".file_li").length;
 		
 		emptyLi = makeEmptyLi(allPhotoCount, aRowCount, photoCount);
 		ulTag.append(emptyLi)

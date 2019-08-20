@@ -293,6 +293,7 @@
 	border-radius: 4px;
 	background-color: #f8f8f8;
 	resize: none;	
+	min-height: 20vh;
 }
 
 .container .write_box img {
@@ -424,7 +425,7 @@
 .uploadResult.uploadLev {
 	position : relative;
 	border : 1px solid #CCC;
-	min-height : 150px;
+	min-height : 20vh;
 	margin-bottom: 15px;
 }
 
