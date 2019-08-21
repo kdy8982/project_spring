@@ -189,8 +189,13 @@ $(document).ready(function() {
 		board.refreshFileUploadPreview(uploadResult, str, 15, 5, uploadResult.children(".file_li").length);
 	} // showUploadedFile(uploadResultArr)
 	
-	  
 	
+	$(".write_box").on("copy", function(e) {
+		e.preventDefault();
+		console.log(window.clipboardData.getData('Text'))
+	})
+	
+	return; 
 	
 	$(".write_box").on("keyup", function(e) {
 		var writeBoxVal = $(".write_box").find(".uploadImg");
@@ -206,82 +211,70 @@ $(document).ready(function() {
 		uploadBoxVal.each(function(index, item) {
 			uploadBoxArr.push($(item).data());
 		})
+
+		removeFileIsArr = uploadBoxArr.filter(function(a) {
+			console.log(writeBoxArr.findIndex(i => i.info == a.info))
+			return writeBoxArr.findIndex(i => i.info == a.info);
+		}) 
 		
-		
-		$(uploadBoxArr).each(function(index, item) {
-			//console.log(item.uuid)
-			// console.log($(writeBoxArr).get(index).uuid)
-			
-			// console.log(item.uuid == $(writeBoxArr).get(index).uuid)
-			
-			
-			if(! item.uuid == $(writeBoxArr).get(index).uuid) {
-				console.log("AAA")
-				removeFileIsArr.push(item);
-			} 
-		})
 		console.log(removeFileIsArr)
 		
 		
-		if(e.keyCode == 8) {
-			if(writeBoxVal.length < uploadBoxVal.length) {
-				
+		if(writeBoxVal.length < uploadBoxVal.length) {
+			removeFileIsArr = uploadBoxArr.filter(function(a) {
+				return writeBoxArr.findIndex(i => i.info == a.info) === -1;
+			}) 
+			
+			$(removeFileIsArr).each(function(index, item) {
+				// console.log($(item).data('info'))
 				/* 
-				removeFileIsArr = uploadBoxArr.filter(function(a) {
-					
-					return writeBoxArr.indexOf(a) === -1;
-				}) */
-				
-				console.log(removeFileIsArr)
-				return;
-				
-				$(removeFileIs).each(function(index, item) {
-					// console.log($(item).data('info'))
-					/* 
-					$.ajax({
-						url : '/deleteFile',
-						data : {
-							fileName : $(".uploadResult li." + item ).find(".close_btn").data("file"), type : $(".uploadResult li." + item ).find(".close_btn").data("type")
-						},
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-						},
-						dataType : 'text',
-						type : 'POST',
-						success : function(result) {
-							alert(result);
-						}
-					})
-					 */
-					 
-					$(".uploadResult li").remove("[data-info='" + $(item).data('info') + "']")
-					board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
+				$.ajax({
+					url : '/deleteFile',
+					data : {
+						fileName : $(".uploadResult li." + item ).find(".close_btn").data("file"), type : $(".uploadResult li." + item ).find(".close_btn").data("type")
+					},
+					beforeSend : function(xhr) {
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
+					dataType : 'text',
+					type : 'POST',
+					success : function(result) {
+						alert(result);
+					}
 				})
+				 */
+				$(".uploadResult li").remove("[data-info='" + item.info + "']")
+				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
+			})
+		} else {
+			
+			console.log("writeBoxVal.length : " + writeBoxVal.length)
+			console.log("uploadBoxVal.length : " + uploadBoxVal.length)
+			
+			if(writeBoxVal.length > uploadBoxVal.length) {
+				console.log("문제의 상황")
+				
+				removeFileIsArr = writeBoxArr.filter(function(a) {
+					return uploadBoxArr.findIndex(i => i.info == a.info) === -1;
+				}) 
+				console.log(removeFileIsArr)
+				
+				var str = "";
+				$(removeFileIsArr).each(function(index, item) {
+					console.log(item)
+					str += "<li class='file_li' data-path='"+ item.path +"' data-uuid='"+ item.uuid + "' data-filename = '" + item.filename + "' data-type='" + item.type + "' data-info='"+ item.info +"'><div>";
+					str += "<button type='button' class='close_btn' data-type='image'><i class='fa fa-times'></i></button><br>";
+					str += "<img src='/display?fileName="
+							+ item.thumbpath
+							+ "'>";
+					str += "</div></li>";
+				});
+				
+				board.refreshFileUploadPreview($(".uploadResult ul"), str, 15, 5, $(".uploadResult").find(".file_li").length);
+
 			}
 		}
 		
-		if( e.which === 90 && e.ctrlKey ){
-			if(writeBoxVal.length > uploadBoxVal.length) {
-				console.log("문제의 상황")
-				removeFileIs = writeBoxArr.filter(function(a) {
-					return uploadBoxArr.indexOf(a) === -1;
-				})
-				console.log(removeFileIs);
-				
-				var str = "";
-				
-				str += "<li class='file_li " + obj.uuid + "_" + onlyFilename[0] + "' data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "' data-info='"+ obj.uuid + "_" + onlyFilename[0] +"'><div>";
-				str += "<button type='button' class='close_btn' data-file=\'"+ obj.uuid + "_" + onlyFilename[0] +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
-				str += "<img src='/display?fileName="
-						+ fileCallPath
-						+ "'>";
-				// str += "<a href=\"javascript:showImage('" + originPath + "')\"><img src='/display?fileName=" + fileCallPath + "'></a>"; 
-				// str += "<span data-file=\'" + fileCallPath + "\' data-type='image'> x </span>";
-				str += "</div></li>";
-					
-					
-			}
-	      }       
 	});
 	 
 })
@@ -304,7 +297,7 @@ $(document).ready(function() {
 				"그래서 우리는 위로를 받았습니다.<br> 
 				또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
 				 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
-				고린도후서 7장 13절
+				고린도후서 7장 13절.
 			 </h3>
 			</div>
 			
@@ -337,7 +330,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<button class="btn tab_btn middle" type="upload">이미지 첨부</button>
-					<div class="uploadResult uploadLev">
+					<div class="uploadResult uploadLev" contenteditable="true">
 						<ul></ul>
 					</div>
 					
