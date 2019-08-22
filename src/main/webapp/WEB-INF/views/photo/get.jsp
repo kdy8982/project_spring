@@ -362,7 +362,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-						<div class="row notice_content_box">
+						<div class="row notice_content_box" ondragstart="return false">
 							<div class="notice_content">${photo.content }</div>
 
 							<div class="image_box">

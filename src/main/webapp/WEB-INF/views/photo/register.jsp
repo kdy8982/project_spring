@@ -136,7 +136,6 @@ $(document).ready(function() {
 	
 		$(uploadResultArr).each(function(i, obj) {
 			if (obj.image) {
-
 				var fileCallPath = encodeURIComponent(obj.uploadPath
 						+ "/s_"
 						+ obj.uuid
@@ -152,10 +151,10 @@ $(document).ready(function() {
 				
 				var onlyFilename = obj.fileName.split(".");
 				
-				$(".write_box").append("<img class=uploadImg " + "data-thumbpath='" + fileCallPath + "'" + " data-path= '" + obj.uploadPath + "'" + " data-uuid='" + obj.uuid + "'" + " data-filename='"+ obj.fileName + "'" + " data-type= '" + obj.image + "'" + " data-info='" + obj.uuid + "_" + onlyFilename[0] + "' src='/display?fileName=" + originPath + "'><div><br></div>");
+				$(".write_box").append("<img class=uploadImg " + " data-index='" + i + "' "+ "data-thumbpath='" + fileCallPath + "'" + " data-path= '" + obj.uploadPath + "'" + " data-uuid='" + obj.uuid + "'" + " data-filename='"+ obj.fileName + "'" + " data-type= '" + obj.image + "'" + " data-info='" + obj.uuid + "_" + onlyFilename[0] + "' src='/display?fileName=" + originPath + "'><div><br></div>");
 				// oldVal = uploadResult.children(".file_li").length;
 				
-				str += "<li class='file_li' " + "data-thumbpath='" + fileCallPath + "'" + "' data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "' data-info='"+ obj.uuid + "_" + onlyFilename[0] +"'><div>";
+				str += "<li class='file_li' " + "data-index='" + i + "'" + "data-thumbpath='" + fileCallPath + "'" + "' data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "' data-info='"+ obj.uuid + "_" + onlyFilename[0] +"'><div>";
 				str += "<button type='button' class='close_btn' data-file=\'"+ obj.uuid + "_" + onlyFilename[0] +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
 				str += "<img src='/display?fileName="
 						+ fileCallPath
@@ -190,12 +189,12 @@ $(document).ready(function() {
 	} // showUploadedFile(uploadResultArr)
 	
 	
-	$(".write_box").on("copy", function(e) {
+	$(".write_box").on("paste", function(e) {
 		e.preventDefault();
-		console.log(window.clipboardData.getData('Text'))
+		var pastedData = event.clipboardData ||  window.clipboardData;
+		var textData = pastedData.getData('Text');
+		window.document.execCommand('insertHTML', false,  textData);
 	})
-	
-	return; 
 	
 	$(".write_box").on("keyup", function(e) {
 		var writeBoxVal = $(".write_box").find(".uploadImg");
@@ -211,14 +210,12 @@ $(document).ready(function() {
 		uploadBoxVal.each(function(index, item) {
 			uploadBoxArr.push($(item).data());
 		})
-
+		/*
 		removeFileIsArr = uploadBoxArr.filter(function(a) {
-			console.log(writeBoxArr.findIndex(i => i.info == a.info))
+			console.log(writeBoxArr.findIndex(i => i.info == a.info));
 			return writeBoxArr.findIndex(i => i.info == a.info);
-		}) 
-		
-		console.log(removeFileIsArr)
-		
+		})
+		*/
 		
 		if(writeBoxVal.length < uploadBoxVal.length) {
 			removeFileIsArr = uploadBoxArr.filter(function(a) {
@@ -247,34 +244,38 @@ $(document).ready(function() {
 				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
 			})
 		} else {
-			
-			console.log("writeBoxVal.length : " + writeBoxVal.length)
-			console.log("uploadBoxVal.length : " + uploadBoxVal.length)
-			
 			if(writeBoxVal.length > uploadBoxVal.length) {
 				console.log("문제의 상황")
-				
 				removeFileIsArr = writeBoxArr.filter(function(a) {
 					return uploadBoxArr.findIndex(i => i.info == a.info) === -1;
 				}) 
-				console.log(removeFileIsArr)
 				
 				var str = "";
 				$(removeFileIsArr).each(function(index, item) {
-					console.log(item)
-					str += "<li class='file_li' data-path='"+ item.path +"' data-uuid='"+ item.uuid + "' data-filename = '" + item.filename + "' data-type='" + item.type + "' data-info='"+ item.info +"'><div>";
-					str += "<button type='button' class='close_btn' data-type='image'><i class='fa fa-times'></i></button><br>";
+					str += "<li class='file_li' data-index='" + item.index + "' data-thumbpath='" + item.thumbpath + "' data-path='"+ item.path +"' data-uuid='"+ item.uuid + "' data-filename = '" + item.filename + "' data-type='" + item.type + "' data-info='"+ item.info +"'><div>";
+					str += "<button type='button' class='close_btn' data-file='" + item.info + "' data-type='image'><i class='fa fa-times'></i></button><br>";
 					str += "<img src='/display?fileName="
 							+ item.thumbpath
 							+ "'>";
 					str += "</div></li>";
+					
+					if (item.index == 0) {
+						alert("11111")
+						var old = $(".uploadResult ul").children("li")
+						$(".uploadResult ul").html("");
+						$(".uploadResult ul").append(str);
+						$(".uploadResult ul").append(old);
+						str="";
+					} else {
+						alert("2222")
+						console.log(str)
+						$(".uploadResult ul li:nth-child(" + item.index + ")").after(str);
+						str="";
+					}					
 				});
-				
-				board.refreshFileUploadPreview($(".uploadResult ul"), str, 15, 5, $(".uploadResult").find(".file_li").length);
-
+				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
 			}
 		}
-		
 	});
 	 
 })
@@ -312,7 +313,7 @@ $(document).ready(function() {
 						<div class="form-group uploadRow">
 							<label>글 내용</label>
 							<textarea style="display:none" name="content"></textarea>
-							<div class="write_box" contentEditable="true"></div>
+							<div class="write_box" contentEditable="true" ondragstart="return false"></div>
 						</div>
 						
 						<div class="form-group uploadRow">
@@ -330,7 +331,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<button class="btn tab_btn middle" type="upload">이미지 첨부</button>
-					<div class="uploadResult uploadLev" contenteditable="true">
+					<div class="uploadResult uploadLev">
 						<ul></ul>
 					</div>
 					

@@ -138,6 +138,7 @@
 }
 
 .notice_wrap {
+	font-size : 1rem;
 	min-height : 242px;
 }
 
@@ -225,16 +226,20 @@
 	flex-wrap: wrap;
     display: flex;
     position: relative;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
 .main_row3 li {
+	
+	
 	position: relative;
     display: flex;
     height: 32vw;
     width: 22vw;
     
+	margin: 1em;
+	
     overflow: hidden;
     cursor: pointer;
    	
@@ -293,13 +298,12 @@
 	flex-wrap: wrap;
     display: flex;
     position: relative;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
  }
  
 .gallery_li li {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+	margin: 1em;
     display: flex;
     height: 16vw;
     width: 16vw;

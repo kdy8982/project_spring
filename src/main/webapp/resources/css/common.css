@@ -166,8 +166,6 @@
 }
 
 .page_wrap {
-	position: relative;
-    min-height: 100%;
     padding-bottom: 100px;
     padding-top:69px;
 }
@@ -185,13 +183,12 @@
     overflow: hidden;
     cursor: pointer;
     display: inline-block;
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
+	margin: 1em;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
 }
 
 .container {
-	width: 70vw;
+    width: 72vw;
 	margin : 0 auto;
 	/* width : 1200px; */
 }
@@ -298,7 +295,10 @@
 
 .normal_btn {
 	display : inline-block;
-    padding: 0.8em;
+	padding-left: 1.5em;
+    padding-right: 1.5em;
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
 	border: none;
     border-radius: 5px;
 	cursor: pointer; 
@@ -307,14 +307,6 @@
 
 .btn:hover {
 	background-color: #CACACA;
-}
-
-.normal_btn.middle {
-	display : inline-block;
-	cursor: pointer; 
-	border: none;
-	padding: 0.8em;
-    border-radius: 5px;
 }
 
 .tab_btn {
