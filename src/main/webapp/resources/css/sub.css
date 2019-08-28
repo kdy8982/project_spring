@@ -256,15 +256,10 @@
 /* 怨듭� �럹�씠吏� (/notice/list) */
 
 .container .sub_title{
-	opacity:0.4;
-    margin-top: 30px;
+	opacity: 0.4;
+    margin-top: 3em;
+    margin-bottom: 3em;
     text-align: right;
-}
-
-
-.container .content{
-	position: relative;
-	margin-top : 40px;
 }
 
 .container .list_wrap.notice_wrap form label {
@@ -293,6 +288,13 @@
 	background-color: #f8f8f8;
 	resize: none;	
 	min-height: 20vh;
+	display: inline-block;
+	white-space: pre-wrap;
+}
+
+.container .list_wrap.notice_wrap form .write_box p{
+	display: block;
+	width: 100%;
 }
 
 .container .write_box img {
@@ -384,12 +386,12 @@
 
 
 .notice_get_wrap #table .notice_title {
-	font-size: 2.5rem;
+	font-size: 1.8rem;
     padding-left: 30px;
 }
 
 .notice_get_wrap #table .notice_info {
-	font-size: 20px;
+	font-size: 1rem;
 	padding-top: 15px;
     padding-bottom: 10px;
     padding-left: 30px;
@@ -452,7 +454,7 @@
 	/* background-color: white; */
     height: 100%;
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: 1rem;
     white-space: pre-line;
 }
 
@@ -460,6 +462,7 @@
 	width: 60%;	
 	display: block;
     margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 .image_box img{

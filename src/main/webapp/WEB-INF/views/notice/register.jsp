@@ -9,7 +9,7 @@
 <head>
 
 <meta charset="UTF-8">
-
+<script type="text/javascript" src="/resources/js/board.js"></script>
 <script>
 var csrfHeaderName = "${_csrf.headerName}";
 var csrfTokenValue = "${_csrf.token}";
@@ -40,7 +40,38 @@ $(document).ready(function() {
 		formObj.submit();
 	})
 	
-	
+	$(document).on("click", ".uploadResult .close_btn" ,function () {
+		var thisBtn = $(this);
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		var uploadPath = $(this).data("path")
+		var targetLi = $(this).closest("li");
+		if(type) {
+			type = "image"; 
+		}
+		
+		$.ajax({
+			url : '/deleteFile',
+			data : {
+				fileName : targetFile, 
+				type : type,
+				uploadPath : uploadPath
+			},
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			dataType : 'text',
+			type : 'POST',
+			success : function(result) {
+				alert(result);
+				targetLi.remove();
+				console.log(thisBtn.data("file"));
+				$("[data-info='" + thisBtn.data("file") + "']").remove();
+				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
+			}
+		})	
+	}) // $(document).on("click", ".uploadResult .close_btn" ,function () {}
+
 	
 	/* 첨부파일 추가 */
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
@@ -60,116 +91,100 @@ $(document).ready(function() {
 	} // checkExtension(fileName, fileSize)
 	
 	
-	$("input[type='file']")
-			.change(
-					function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
-						var formData = new FormData();
-						var inputFile = $("input[name='uploadFile']");
-						var files = inputFile[0].files;
-	
-						for (var i = 0; i < files.length; i++) {
-							if (!checkExtension(
-									files[i].name,
-									files[i].size)) {
-								return false;
-							}
-							formData.append("uploadFile",
-									files[i]);
-						}
-	
-						$.ajax({
-							url : "/uploadAjaxAction",
-							processData : false,
-							contentType : false,
-							beforeSend: function(xhr) {
-								xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
-							},
-							data : formData,
-							type : "post",
-							dataType : "json",
-							success : function(result) {
-								$(".uploadDiv").html(
-										cloneObj.html());
-								showUploadedFile(result);
-							},
-							error : function (request,status,error) {
-						        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-							}
-						}) // $.ajax()
-	
-					}) // $("input[type='file']").change
-	
-	function showUploadedFile(uploadResultArr) {
-	
-		if (!uploadResultArr || uploadResultArr.length == 0) {
-			return;
-		}
-	
-		var uploadResult = $(".uploadResult ul");
-		var str = "";
-	
-		$(uploadResultArr)
-				.each(
-						function(i, obj) {
-							if (obj.image) {
-	
-								var fileCallPath = encodeURIComponent(obj.uploadPath
-										+ "/s_"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName);
-								var originPath = obj.uploadPath
-										+ "\\"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName;
-	
-								originPath = originPath
-										.replace(
-												new RegExp(
-														/\\/g),
-												"/");
-	
-								str += "<li data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "'><div>";
-								str += "<span>"
-										+ obj.fileName
-										+ "</span>";
-								str += "<button type='button' class='btn btn-warning btn-circle' data-file=\'"+ fileCallPath +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
-								str += "<img src='/display?fileName="
-										+ fileCallPath
-										+ "'>";
-								// str += "<a href=\"javascript:showImage('" + originPath + "')\"><img src='/display?fileName=" + fileCallPath + "'></a>"; 
-								// str += "<span data-file=\'" + fileCallPath + "\' data-type='image'> x </span>";
-								str += "</div></li>";
-	
-							} else {
-	
-								var fileCallPath = encodeURIComponent(obj.uploadPath
-										+ "/"
-										+ obj.uuid
-										+ "_"
-										+ obj.fileName);
-								var fileLink = fileCallPath
-										.replace(
-												new RegExp(
-														/\\/g),
-												"/");
-	
-								str += "<li";
-								str += "data-path='"
-										+ obj.uploadPath
-										+ "' data-uuid= '"
-										+ obj.uuid
-										+ "' data-fileName"
-							}
-						});
-		// alert(str);
-		uploadResult.append(str);
-	} // showUploadedFile(uploadResultArr)
+	$("input[type='file']").change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
+		var formData = new FormData();
+		var inputFile = $("input[name='uploadFile']");
+		var files = inputFile[0].files;
 
+		for (var i = 0; i < files.length; i++) {
+			if (!checkExtension(
+					files[i].name,
+					files[i].size)) {
+				return false;
+			}
+			formData.append("uploadFile",
+					files[i]);
+		}
+
+		$.ajax({
+			url : "/uploadAjaxAction",
+			processData : false,
+			contentType : false,
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue); 
+			},
+			data : formData,
+			type : "post",
+			dataType : "json",
+			success : function(result) {
+				$(".uploadDiv").html(
+						cloneObj.html());
+				board.showUploadedFile(result);
+			},
+			error : function (request,status,error) {
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		}) // $.ajax()
+
+	}) // $("input[type='file']").change
+
+	/** 이미지 복사 붙여넣기 막는 이벤트 **/
+	$(".write_box").on("paste", function(e) {
+		e.preventDefault();
+		var pastedData = event.clipboardData ||  window.clipboardData;
+		var textData = pastedData.getData('Text');
+		window.document.execCommand('insertHTML', false,  textData);
+	})
 	
-	
-	
+	$(".write_box").on("keyup", function(e) {
+		var writeBoxVal = $(".write_box").find(".uploadImg");
+		var uploadBoxVal = $(".uploadResult").find(".file_li");
+		var writeBoxArr = [];
+		var uploadBoxArr = [];
+		var removeFileIsArr = [];
+
+		writeBoxVal.each(function(index, item) {
+			writeBoxArr.push($(item).data());
+		})
+		
+		uploadBoxVal.each(function(index, item) {
+			uploadBoxArr.push($(item).data());
+		})
+		
+		if(writeBoxVal.length < uploadBoxVal.length) {
+			removeFileIsArr = uploadBoxArr.filter(function(a) {
+				return writeBoxArr.findIndex(i => i.info == a.info) === -1;
+			}) 
+			
+			$(removeFileIsArr).each(function(index, item) {
+				$(".uploadResult li").remove("[data-info='" + item.info + "']")
+				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
+			})
+		} else if(writeBoxVal.length > uploadBoxVal.length) {
+				removeFileIsArr = writeBoxArr.filter(function(a) {
+					return uploadBoxArr.findIndex(i => i.info == a.info) === -1;
+				}) 
+				
+				var str = "";
+				$(removeFileIsArr).each(function(index, item) {
+					str += "<li class='file_li' data-index='" + item.index + "' data-thumbpath='" + item.thumbpath + "' data-path='"+ item.path +"' data-uuid='"+ item.uuid + "' data-filename = '" + item.filename + "' data-type='" + item.type + "' data-info='"+ item.info +"'><div>";
+					str += "<button type='button' class='close_btn' data-file='" + item.info + "' data-type='" + item.fileType+ "' data-path='" + item.path + "'><i class='fa fa-times'></i></button><br>";
+					str += "<img src='/display?fileName="
+							+ item.thumbpath
+							+ "'>";
+					str += "</div></li>";
+				});
+				$(".uploadResult ul").append(str);
+				var sortData = $(".uploadResult ul").children(".file_li").sort(function(a, b) {
+					return +a.dataset.index - +b.dataset.index;
+				})
+				
+				$(".uploadResult ul").html("");
+				$(".uploadResult ul").append(sortData);
+						
+				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
+		}
+	}); // $(".write_box").on("keyup", function(e) {}	
 })
 </script>
 
@@ -203,7 +218,8 @@ $(document).ready(function() {
 
 					<div class="form-group uploadRow">
 						<label>글 내용</label>
-						<textarea class="" rows="3" name='content'></textarea>
+						<textarea style="display:none" name="content"></textarea>
+						<div class="write_box" contentEditable="true" ondragstart="return false"></div>
 					</div>
 					
 					<div class="form-group uploadRow">

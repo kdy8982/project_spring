@@ -4,13 +4,11 @@
 
 <script>
 $(document).ready(function() {
-	
 	$('.login_area').mouseenter(function() {
 	    $('.member_dropmenu').dequeue().stop(true, true).show(400);
 	}).mouseleave(function() {
 	    $('.member_dropmenu').dequeue().stop(true, true).hide(400);
 	});
-	
 })
 
 </script>

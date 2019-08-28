@@ -39,14 +39,16 @@ $(window).scroll(
 $(document).ready(function() {
 	var slider = $('.swipe_wrap').bxSlider({
 		mode : 'horizontal',// 가로 방향 수평 슬라이드
+		nextText : '<i class="fa fa-chevron-right" aria-hidden="true"></i>',
+		prevText : '<i class="fa fa-chevron-left" aria-hidden="true"></i>',
 		speed : 500, // 이동 속도를 설정
 		pause : 2000, // 페이지 넘김 속도를 조절
-		pager : true, // 현재 위치 페이징 표시 여부 설정
+		pager : false, // 현재 위치 페이징 표시 여부 설정
 		moveSlides : 1, // 슬라이드 이동시 개수
 		slideWidth : 400, // 슬라이드 너비
 		minSlides : 4, // 최소 노출 개수
 		maxSlides : 4, // 최대 노출 개수
-		slideMargin : 10, // 슬라이드간의 간격
+		slideMargin : 20, // 슬라이드간의 간격
 		auto : false, // 자동 실행 여부
 		autoHover : true, // 마우스 호버시 정지 여부
 		controls : true, // 이전 다음 버튼 노출 여부
@@ -60,27 +62,27 @@ $(document).ready(function() {
 	
 	var actionForm = $("#actionForm");
 	$(".move").on("click", function(e) {
-						e.preventDefault();
-						console.log($(this).attr('href'));
-						actionForm.append("<input type='hidden' name='amount' value='"
-										+ $(this).data('amount')
-										+ "'>");
-						actionForm.append("<input type='hidden' name='bno' value='"
-										+ $(this).attr('href')
-										+ "'>");
-						actionForm.append("<input type='hidden' name='boardType' value='"
-										+ $(this).data('type')
-										+ "'>");
-						actionForm.attr("action", $(this).data("url"));
-						actionForm.submit();
-
+		e.preventDefault();
+		console.log($(this).attr('href'));
+		actionForm.append("<input type='hidden' name='amount' value='"
+						+ $(this).data('amount')
+						+ "'>");
+		actionForm.append("<input type='hidden' name='bno' value='"
+						+ $(this).attr('href')
+						+ "'>");
+		actionForm.append("<input type='hidden' name='boardType' value='"
+						+ $(this).data('type')
+						+ "'>");
+		actionForm.attr("action", $(this).data("url"));
+		actionForm.submit();
 	})
 
+	/** 더사랑이야기 게시판 리스트를 뿌려줄 때, 이미지를 제외한 순수한 텍스트만 보여주기 위해 추가 **/
+	$(".desc_content_box .content").each(function(i, obj){
+		$(this).html(obj.innerText);
+	})
 })
 
-
-					
-					
 					
 </script>
 
@@ -115,9 +117,9 @@ $(document).ready(function() {
 				</div>
 
 				<div class="notice_wrap">
-					<ul class="swipe_wrap">
+					<div class="swipe_wrap controls">
 						<c:forEach items="${noticeList}" var="notice">
-							<li>
+							<div>
 								<div class="notice_box">
 									<a class="move" href='<c:out value="${notice.bno}"/>' data-type="notice" data-url="/notice/get" data-amount="10">
 										<p class="main_notice">
@@ -129,9 +131,9 @@ $(document).ready(function() {
 										</p>
 									</a>
 								</div>
-							</li>
+							</div>
 						</c:forEach>
-					</ul>
+					</div>
 				</div>
 				<div class="viewmore_wrap">
 					<a class="viewmore_btn" href="/notice/list">view more</a>
@@ -212,18 +214,10 @@ $(document).ready(function() {
 										</c:if>
 									</div>
 									<div class="desc_content_box">
-									 <c:set var="subsContent" value="${essay.content}" /> 
-									 <%
-									 	String subStr = (String) pageContext.getAttribute("subsContent");
-									 		if (subStr.length() > 150) {
-									 			subStr = subStr.substring(0, 150) + " ...";
-									
-									 		}
-									 		pageContext.setAttribute("subsContent", subStr);
-									 %>
 									<div class="desc">
-										<span class="book_title">${essay.title}</span>
-										<p>${subsContent}</p>
+										<h3 class="book_title">${essay.title}</h3>
+										<p>${essay.writer}</p>
+										<div class="content">${essay.content}</div>
 									</div>
 								</div>
 						</a></li>

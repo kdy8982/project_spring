@@ -14,22 +14,31 @@ var csrfHeaderName = "${_csrf.headerName}";
 var csrfTokenValue = "${_csrf.token}";
 
 $(document).ready(function() {
-	
+	board.nextIndex($(".write_box").find(".uploadImg").length);
 	var formObj = $("form[role='form']");
-	// var cloneObj = $(".uploadDiv").clone();
-	
 	$("button[type='submit']").on("click", function(e) {
 		e.preventDefault();
 		var str = "";
+
+		if(!board.checkEmptyDataBeforeSubmit()){
+			alert("글을 등록하기 위해서는, 제목과 내용을 입력하셔야 합니다.")
+			return;
+		};
 		
-		console.log($(".write_box").html());
-		
+		/** 첨부파일 인덱스를 다시 0부터 순차적으로 매긴다 **/
+		$(".write_box").find(".uploadImg").each(function(index, item) {
+			// console.log($(item).data("index"));
+			$(item).attr("data-index", index);
+		})
+		$(".uploadResult .file_li").each(function(index, item) {
+			console.log($(item).data("index"));
+			$(item).attr("data-index", index);
+		})
+		 
 		$("textarea").html($(".write_box").html());
-		
 		// 각각의 첨부파일마다 서버로 저장할 정보들을 저장한다. 
 		$(".uploadResult ul .file_li").each(function(i, obj) {
 			var jobj = $(obj);
-			
 			str += "<input type='hidden' name='attachList[" + i + "].fileName' value='"+jobj.data("filename")+"'>";
 			str += "<input type='hidden' name='attachList[" + i + "].uuid' value='"+jobj.data("uuid")+"'>";
 			str += "<input type='hidden' name='attachList["+ i +"].uploadPath' value='"+jobj.data("path")+"'>";
@@ -46,15 +55,20 @@ $(document).ready(function() {
 	
 	$(document).on("click", ".uploadResult .close_btn" ,function () {
 		var thisBtn = $(this);
-		
 		var targetFile = $(this).data("file");
 		var type = $(this).data("type");
+		var uploadPath = $(this).data("path")
 		var targetLi = $(this).closest("li");
+		if(type) {
+			type = "image"; 
+		}
 		
 		$.ajax({
 			url : '/deleteFile',
 			data : {
-				fileName : targetFile, type : type
+				fileName : targetFile, 
+				type : type,
+				uploadPath : uploadPath
 			},
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
@@ -69,9 +83,8 @@ $(document).ready(function() {
 				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
 			}
 		})	
-	}) 
-	
-	
+	}) // $(document).on("click", ".uploadResult .close_btn" ,function () {}
+
 	/* 첨부파일 추가 */
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880;
@@ -81,7 +94,6 @@ $(document).ready(function() {
 			alert("파일 사이즈 초과 !!");
 			return false;
 		}
-	
 		if (regex.test(fileName)) {
 			alert("해당 종류의 파일은 업로드 할 수 없습니다.");
 			return false;
@@ -90,6 +102,7 @@ $(document).ready(function() {
 	} // checkExtension(fileName, fileSize)
 	
 	
+	/** 파일 업로드 **/
 	$("input[type='file']").change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
 		var formData = new FormData();
 		var inputFile = $("input[name='uploadFile']");
@@ -104,7 +117,6 @@ $(document).ready(function() {
 			formData.append("uploadFile",
 					files[i]);
 		}
-
 		$.ajax({
 			url : "/uploadAjaxAction",
 			processData : false,
@@ -117,78 +129,16 @@ $(document).ready(function() {
 			dataType : "json",
 			success : function(result) {
 				// $(".uploadDiv").html(cloneObj.html());
-				showUploadedFile(result);
+				board.showUploadedFile(result);
+				$("input[type='file']").val("");
 			},
 			error : function (request,status,error) {
 		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		}) // $.ajax()
-
-	}) // $("input[type='file']").change
+	}) // $("input[type='file']").change	
 	
-	function showUploadedFile(uploadResultArr) {
-		if (!uploadResultArr || uploadResultArr.length == 0) {
-			return;
-		}
-	
-		var uploadResult = $(".uploadResult ul");
-		var str = "";
-	
-		$(uploadResultArr).each(function(i, obj) {
-			if (obj.image) {
-				var fileCallPath = encodeURIComponent(obj.uploadPath
-						+ "/s_"
-						+ obj.uuid
-						+ "_"
-						+ obj.fileName);
-				var originPath = obj.uploadPath
-						+ "\\"
-						+ obj.uuid
-						+ "_"
-						+ obj.fileName;
-
-				originPath = originPath.replace(new RegExp(/\\/g), "/");
-				
-				var onlyFilename = obj.fileName.split(".");
-				
-				$(".write_box").append("<img class=uploadImg " + " data-index='" + i + "' "+ "data-thumbpath='" + fileCallPath + "'" + " data-path= '" + obj.uploadPath + "'" + " data-uuid='" + obj.uuid + "'" + " data-filename='"+ obj.fileName + "'" + " data-type= '" + obj.image + "'" + " data-info='" + obj.uuid + "_" + onlyFilename[0] + "' src='/display?fileName=" + originPath + "'><div><br></div>");
-				// oldVal = uploadResult.children(".file_li").length;
-				
-				str += "<li class='file_li' " + "data-index='" + i + "'" + "data-thumbpath='" + fileCallPath + "'" + "' data-path='"+ obj.uploadPath +"' data-uuid='"+ obj.uuid + "' data-filename = '" + obj.fileName + "' data-type='" + obj.image + "' data-info='"+ obj.uuid + "_" + onlyFilename[0] +"'><div>";
-				str += "<button type='button' class='close_btn' data-file=\'"+ obj.uuid + "_" + onlyFilename[0] +"\' data-type='image'><i class='fa fa-times'></i></button><br>";
-				str += "<img src='/display?fileName="
-						+ fileCallPath
-						+ "'>";
-				// str += "<a href=\"javascript:showImage('" + originPath + "')\"><img src='/display?fileName=" + fileCallPath + "'></a>"; 
-				// str += "<span data-file=\'" + fileCallPath + "\' data-type='image'> x </span>";
-				str += "</div></li>";
-
-			} else {
-
-				var fileCallPath = encodeURIComponent(obj.uploadPath
-						+ "/"
-						+ obj.uuid
-						+ "_"
-						+ obj.fileName);
-				var fileLink = fileCallPath
-						.replace(
-								new RegExp(
-										/\\/g),
-								"/");
-
-				str += "<li";
-				str += "class='file_li '"
-				str += "data-path='"
-						+ obj.uploadPath
-						+ "' data-uuid= '"
-						+ obj.uuid
-						+ "' data-fileName"
-			}
-		});
-		board.refreshFileUploadPreview(uploadResult, str, 15, 5, uploadResult.children(".file_li").length);
-	} // showUploadedFile(uploadResultArr)
-	
-	
+	/** 이미지 복사 붙여넣기 막는 이벤트 **/
 	$(".write_box").on("paste", function(e) {
 		e.preventDefault();
 		var pastedData = event.clipboardData ||  window.clipboardData;
@@ -210,12 +160,6 @@ $(document).ready(function() {
 		uploadBoxVal.each(function(index, item) {
 			uploadBoxArr.push($(item).data());
 		})
-		/*
-		removeFileIsArr = uploadBoxArr.filter(function(a) {
-			console.log(writeBoxArr.findIndex(i => i.info == a.info));
-			return writeBoxArr.findIndex(i => i.info == a.info);
-		})
-		*/
 		
 		if(writeBoxVal.length < uploadBoxVal.length) {
 			removeFileIsArr = uploadBoxArr.filter(function(a) {
@@ -223,29 +167,10 @@ $(document).ready(function() {
 			}) 
 			
 			$(removeFileIsArr).each(function(index, item) {
-				// console.log($(item).data('info'))
-				/* 
-				$.ajax({
-					url : '/deleteFile',
-					data : {
-						fileName : $(".uploadResult li." + item ).find(".close_btn").data("file"), type : $(".uploadResult li." + item ).find(".close_btn").data("type")
-					},
-					beforeSend : function(xhr) {
-						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-					},
-					dataType : 'text',
-					type : 'POST',
-					success : function(result) {
-						alert(result);
-					}
-				})
-				 */
 				$(".uploadResult li").remove("[data-info='" + item.info + "']")
 				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
 			})
-		} else {
-			if(writeBoxVal.length > uploadBoxVal.length) {
-				console.log("문제의 상황")
+		} else if(writeBoxVal.length > uploadBoxVal.length) {
 				removeFileIsArr = writeBoxArr.filter(function(a) {
 					return uploadBoxArr.findIndex(i => i.info == a.info) === -1;
 				}) 
@@ -253,32 +178,24 @@ $(document).ready(function() {
 				var str = "";
 				$(removeFileIsArr).each(function(index, item) {
 					str += "<li class='file_li' data-index='" + item.index + "' data-thumbpath='" + item.thumbpath + "' data-path='"+ item.path +"' data-uuid='"+ item.uuid + "' data-filename = '" + item.filename + "' data-type='" + item.type + "' data-info='"+ item.info +"'><div>";
-					str += "<button type='button' class='close_btn' data-file='" + item.info + "' data-type='image'><i class='fa fa-times'></i></button><br>";
+					str += "<button type='button' class='close_btn' data-file='" + item.info + "' data-type='" + item.fileType+ "' data-path='" + item.path + "'><i class='fa fa-times'></i></button><br>";
 					str += "<img src='/display?fileName="
 							+ item.thumbpath
 							+ "'>";
 					str += "</div></li>";
-					
-					if (item.index == 0) {
-						alert("11111")
-						var old = $(".uploadResult ul").children("li")
-						$(".uploadResult ul").html("");
-						$(".uploadResult ul").append(str);
-						$(".uploadResult ul").append(old);
-						str="";
-					} else {
-						alert("2222")
-						console.log(str)
-						$(".uploadResult ul li:nth-child(" + item.index + ")").after(str);
-						str="";
-					}					
 				});
+				$(".uploadResult ul").append(str);
+				var sortData = $(".uploadResult ul").children(".file_li").sort(function(a, b) {
+					return +a.dataset.index - +b.dataset.index;
+				})
+				
+				$(".uploadResult ul").html("");
+				$(".uploadResult ul").append(sortData);
+						
 				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
-			}
 		}
-	});
-	 
-})
+	}); // $(".write_box").on("keyup", function(e) {}
+}); //document.ready
 
 </script>
 

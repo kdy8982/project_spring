@@ -48,7 +48,7 @@ public class PhotoController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		model.addAttribute("photoList", boardService.getList(cri));
 		model.addAttribute("photoCount", boardService.getPhotoCount(cri));
-		
+		log.info(boardService.getList(cri));
 		log.info(boardService.getPhotoCount(cri));
 	}
 	
@@ -118,7 +118,7 @@ public class PhotoController {
 		attachList.forEach(attach -> {
 			try {
 				Path file = Paths.get("C:\\upload\\" + attach.getUploadPath() + "\\" + attach.getUuid() + "_" + attach.getFileName());
-				
+				log.info(file);
 				Files.deleteIfExists(file);
 					if(Files.probeContentType(file).startsWith("image")) {
 						Path thumbNail = Paths.get("C:\\upload\\" + attach.getUploadPath()+"\\s_" + attach.getUuid() + "_" + attach.getFileName());

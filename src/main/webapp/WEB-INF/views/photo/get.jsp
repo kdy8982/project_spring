@@ -14,9 +14,13 @@
 <script>
 
 $(document).ready(function() {
+	
+	console.log($(".notice_content"));
+	console.log($(".notice_content").get(0).innerText);
+
 	var actionForm = $("#actionForm"); 
 	$(".page_num").on("click", function(e) {
-		console.log("click page_num !!!");
+		console.log("click page_num !!");
 		e.preventDefault();
 		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 		actionForm.submit();
@@ -364,11 +368,6 @@ $(document).ready(function() {
 
 						<div class="row notice_content_box" ondragstart="return false">
 							<div class="notice_content">${photo.content }</div>
-
-							<div class="image_box">
-								<ul>
-								</ul>
-							</div>
 						</div>
 
 						<div class="row bottom_wrap">

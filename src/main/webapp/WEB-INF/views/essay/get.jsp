@@ -12,6 +12,9 @@
 <script>
 
 $(document).ready(function() {
+	console.log($(".notice_content"));
+	console.log($(".notice_content").get(0).innerText)
+	
 	var actionForm = $("#actionForm"); 
 	$(".page_num").on("click", function(e) {
 		console.log("click page_num !!!");
@@ -33,28 +36,6 @@ $(document).ready(function() {
 		openForm.attr("action", "/essay/modify").submit();
 	})
 	
-	
-	/* 첨부파일 조회 AJAX */
-	
-	var bno = '<c:out value="${essay.bno}"/>';
-	$.getJSON("/board/getAttachList" , {bno : bno}, function (arr) {
-		console.log(arr);
-		
-		var str="";
-		
-		$(arr).each(function(i, attach) {
-			//image type (썸네일)
-				var fileCallPath = encodeURIComponent(attach.uploadPath+"/"+attach.uuid+ "_" + attach.fileName);
-				
-				str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
-				str += "<div>";
-				str += "<img src='/display?fileName="+ fileCallPath +"'>";
-				str += "</div>"
-				str += "</li>";
-		});
-		
-		$(".image_box ul").html(str);
-	})
 })
 
 
@@ -101,11 +82,6 @@ $(document).ready(function() {
 						<div class="row notice_content_box">
 							<div class="notice_content">
 								${essay.content }
-							</div>
-							
-							<div class="image_box">
-								<ul>
-								</ul>
 							</div>
 						</div>
 						

@@ -5,8 +5,8 @@
 #header .top_title{
 	font-weight: 600;
     display: inline-block;
+    white-space:nowrap;
     font-size: 1.3rem;
-    min-width: 201px;
 	margin-left: 15px;
 }
 
@@ -27,27 +27,28 @@
 	height:100%;
 	width:86%;
 	text-align:right;
+	padding-left: 5vw;
 }
 
 #header .header_inner ul{
-	display : inline-block;
+	white-space: nowrap;
+	display: inline-block;
 	height:100%;
 }
 
 #header .header_inner nav li{
 	display:inline-block;
-	margin-right:5vw;
-	font-size:1.2rem;
+    margin-right: 1.5em;
+    font-size: 1.1rem;
 	font-weight:600;
 	line-height: 4.25rem;
 }
 
 #header .header_inner nav li.login_area{
 	font-size:1rem;
-	margin-right:0px;
+	margin-left: 1em;
+	margin-right: 1em;
 	position: relative;
-	padding-right: 15px;
-	min-width: 75px;
 }
 
 #header .header_inner nav li.login_area .thumb{
@@ -188,9 +189,9 @@
 }
 
 .container {
-    width: 72vw;
-	margin : 0 auto;
-	/* width : 1200px; */
+    width: 80vw;
+    margin: 0 auto;
+    padding-bottom: 1em;
 }
 
 .container.page_container {
@@ -199,8 +200,8 @@
 
 .title_wrap {
 	text-align: center;
-    margin-bottom: 15px;
-    padding-top: 15px;
+    padding-bottom: 1em;
+    padding-top: 1em;
 }
 
 .main_tit {
@@ -329,6 +330,7 @@
 }
 
 .center_wrap {
+	white-space:nowrap;
 	position: absolute;
 	top:50%;
 	left:50%;
@@ -481,4 +483,35 @@ textarea {
 li.active {
     text-decoration: underline;
     font-weight: 700;
+}
+
+
+@media ( max-width: 768px ) { /* tablet braek point */
+	#header .top_title {
+		font-size : 1rem;
+	}
+	#header .header_inner nav li {
+	    font-size: 0.9rem;
+	}
+	#header .header_inner nav li.login_area {
+	    font-size: 0.7rem;
+	    margin-right: 0px;
+	    position: relative;
+	}
+}
+
+@media ( max-width: 425px ) { /* Mobile L braek point */
+	#header .top_title {
+		font-size : 1rem;
+	}
+	#header .header_inner nav li {
+	    font-size: 0.9rem;
+	}
+	#header .header_inner nav li.login_area {
+	    font-size: 0.7rem;
+	    margin-right: 0px;
+	    position: relative;
+	    padding-right: 15px;
+	    min-width: 75px;
+	}
 }

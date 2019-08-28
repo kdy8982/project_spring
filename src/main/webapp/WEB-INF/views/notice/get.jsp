@@ -29,7 +29,6 @@ $(document).ready(function() {
 	
 	
 	/* 첨부파일 조회 AJAX */
-	
 	var bno = '<c:out value="${notice.bno}"/>';
 	$.getJSON("/board/getAttachList" , {bno : bno}, function (arr) {
 		console.log(arr);

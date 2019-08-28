@@ -7,6 +7,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -210,25 +212,19 @@ public class UploadController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/deleteFile" , produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
 	@ResponseBody
-	public ResponseEntity<String> deleteFile(String fileName, String type) {
+	public ResponseEntity<String> deleteFile(String fileName, String uploadPath, String type) {
 		log.info("deleteFile : " + fileName);
 		log.info("type : " + type);
-		
-		File file;
+		log.info("uploadPath : " + uploadPath);
 		
 		try {
-			file = new File("c:\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
-			file.delete();
-			
-			if(type.equals("image")) {
-				String largeFileName = file.getAbsolutePath().replace("s_", "");
-				log.info("largeFileName : " + largeFileName);
-				file = new File(largeFileName);
-				file.delete();
-			}
-		} catch(UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			Path file = Paths.get("C:\\upload\\" + uploadPath + "\\"+ fileName);
+			if(Files.deleteIfExists(file)){
+				Path thumbNail = Paths.get("C:\\upload\\" + uploadPath + "\\s_" + fileName);
+				Files.delete(thumbNail);
+			};
+		} catch(Exception e ) {
+			log.error("delete file erro" + e.getMessage() );
 		}
 		
 		return new ResponseEntity<String> ("첨부파일이 삭제되었습니다." , HttpStatus.OK);

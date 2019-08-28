@@ -9,8 +9,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
+
+<script type="text/javascript" src="/resources/js/board.js"></script>
 <script>
 
 $(document).ready(function() {
@@ -38,9 +39,6 @@ $(document).ready(function() {
 		e.preventDefault();
 		searchForm.submit();
 	})
-	
-	
-	
 	
 	var result='<c:out value="${result}"/>';
 	checkModal(result);
@@ -76,6 +74,16 @@ $(document).ready(function() {
     	$("#mask").css("display", "none");
     })
     
+    // 리스트 ui 출력을 위한 부분. 
+    var emptyLi = board.makeEmptyLi(6, 3, ${fn:length(essayList)});
+    $("ul.book_li").append(emptyLi);
+    
+    // 각 게시글의 제목 미리보기 출력 부분(이미지를 제외하기 위함).
+	$(".desc_content_box .content").each(function(i, obj){
+		console.log($(obj))
+		$(this).html(obj.innerText);
+	})
+    
 })
 
 	
@@ -93,12 +101,10 @@ $(document).ready(function() {
 			</div>
 			
 			<div class="sub_title title-font">
-			<h3>
 				"그래서 우리는 위로를 받았습니다.<br> 
 				또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
 				 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
 				고린도후서 7장 13절
-			 </h3>
 			</div>
 			
 			<div class="content">
@@ -124,22 +130,12 @@ $(document).ready(function() {
 										<div class="desc">
 											<h3>${essay.title}</h3>
 											<p>${essay.writer}</p>
-										</div>
-										<div class="thumb_content">
-											${essay.content}
+											<div class="content">${essay.content}</div>
 										</div>
 									</div>
 								</a>
 							</li>		
 					</c:forEach>
-					<c:if test="${fn:length(essayList) eq 1}">
-						<li style="visibility: hidden"></li>
-						<li style="visibility: hidden"></li>
-					</c:if>
-					<c:if test="${fn:length(essayList) eq 2}">
-						<li style="visibility: hidden"></li>
-					</c:if>
-					
 				</ul>
 			</div>
 			
