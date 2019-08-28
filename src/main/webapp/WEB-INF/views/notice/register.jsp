@@ -15,22 +15,31 @@ var csrfHeaderName = "${_csrf.headerName}";
 var csrfTokenValue = "${_csrf.token}";
 
 $(document).ready(function() {
-	
+	board.nextIndex($(".write_box").find(".uploadImg").length);
 	var formObj = $("form[role='form']");
-	var cloneObj = $(".uploadDiv").clone();
-	
-	$("button[type='upload']").on("click", function(e) {
-		e.preventDefault();
-		$(".input_upload").click();
-	})
-	
 	$("button[type='submit']").on("click", function(e) {
 		e.preventDefault();
 		var str = "";
+
+		if(!board.checkEmptyDataBeforeSubmit()){
+			alert("글을 등록하기 위해서는, 제목과 내용을 입력하셔야 합니다.")
+			return;
+		};
 		
-		$(".uploadResult ul li").each(function(i, obj) {
+		/** 첨부파일 인덱스를 다시 0부터 순차적으로 매긴다 **/
+		$(".write_box").find(".uploadImg").each(function(index, item) {
+			// console.log($(item).data("index"));
+			$(item).attr("data-index", index);
+		})
+		$(".uploadResult .file_li").each(function(index, item) {
+			console.log($(item).data("index"));
+			$(item).attr("data-index", index);
+		})
+		 
+		$("textarea").html($(".write_box").html());
+		// 각각의 첨부파일마다 서버로 저장할 정보들을 저장한다. 
+		$(".uploadResult ul .file_li").each(function(i, obj) {
 			var jobj = $(obj);
-			
 			str += "<input type='hidden' name='attachList[" + i + "].fileName' value='"+jobj.data("filename")+"'>";
 			str += "<input type='hidden' name='attachList[" + i + "].uuid' value='"+jobj.data("uuid")+"'>";
 			str += "<input type='hidden' name='attachList["+ i +"].uploadPath' value='"+jobj.data("path")+"'>";
@@ -38,6 +47,11 @@ $(document).ready(function() {
 		})
 		formObj.append(str);
 		formObj.submit();
+	})
+	
+	$("button[type='upload']").on("click", function(e) {
+		e.preventDefault();
+		$(".input_upload").click();
 	})
 	
 	$(document).on("click", ".uploadResult .close_btn" ,function () {
@@ -72,7 +86,6 @@ $(document).ready(function() {
 		})	
 	}) // $(document).on("click", ".uploadResult .close_btn" ,function () {}
 
-	
 	/* 첨부파일 추가 */
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880;
@@ -82,7 +95,6 @@ $(document).ready(function() {
 			alert("파일 사이즈 초과 !!");
 			return false;
 		}
-	
 		if (regex.test(fileName)) {
 			alert("해당 종류의 파일은 업로드 할 수 없습니다.");
 			return false;
@@ -91,6 +103,7 @@ $(document).ready(function() {
 	} // checkExtension(fileName, fileSize)
 	
 	
+	/** 파일 업로드 **/
 	$("input[type='file']").change(function(e) { // 파일업로드의 input 값이 변하면 자동으로 실행 되게끔 처리
 		var formData = new FormData();
 		var inputFile = $("input[name='uploadFile']");
@@ -105,7 +118,6 @@ $(document).ready(function() {
 			formData.append("uploadFile",
 					files[i]);
 		}
-
 		$.ajax({
 			url : "/uploadAjaxAction",
 			processData : false,
@@ -117,17 +129,16 @@ $(document).ready(function() {
 			type : "post",
 			dataType : "json",
 			success : function(result) {
-				$(".uploadDiv").html(
-						cloneObj.html());
+				// $(".uploadDiv").html(cloneObj.html());
 				board.showUploadedFile(result);
+				$("input[type='file']").val("");
 			},
 			error : function (request,status,error) {
 		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		}) // $.ajax()
-
-	}) // $("input[type='file']").change
-
+	}) // $("input[type='file']").change	
+	
 	/** 이미지 복사 붙여넣기 막는 이벤트 **/
 	$(".write_box").on("paste", function(e) {
 		e.preventDefault();
@@ -184,10 +195,9 @@ $(document).ready(function() {
 						
 				board.refreshFileUploadPreview($(".uploadResult ul"), "", 15, 5, $(".uploadResult").find(".file_li").length);
 		}
-	}); // $(".write_box").on("keyup", function(e) {}	
-})
+	}); // $(".write_box").on("keyup", function(e) {}
+}); //document.ready
 </script>
-
 <title>Insert title here</title>
 </head>
 <body>

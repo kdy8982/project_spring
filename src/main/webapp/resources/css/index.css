@@ -277,11 +277,16 @@
 .container .desc_content_box .content {
 	position: relative;
     padding-top: 2em;
-    white-space: pre;
-    line-height: 0.5rem;
+    white-space: normal;
+    line-height: 1.4;
+    height: 14em;
     font-size: 1rem;
-    height: calc(100% - 4.5em);
     overflow: hidden;
+    text-align: left;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
 }
 
 .book_li li .thumb img {
@@ -289,8 +294,8 @@
 }
 
 .book_li li .desc {
-	padding: 1.5em;
-	padding-top: 1em;
+	padding: 2.5em;
+	padding-top: 2em;
 	height: calc(100% - 2.5rem);
 }
 

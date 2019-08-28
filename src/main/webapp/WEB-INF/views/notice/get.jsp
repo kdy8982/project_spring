@@ -25,32 +25,8 @@ $(document).ready(function() {
 		e.preventDefault();
 		openForm.append("<input type='hidden' id='boardType' name='boardType' value='notice'>")
 		openForm.attr("action", "/notice/modify").submit();
-	})
-	
-	
-	/* 첨부파일 조회 AJAX */
-	var bno = '<c:out value="${notice.bno}"/>';
-	$.getJSON("/board/getAttachList" , {bno : bno}, function (arr) {
-		console.log(arr);
-		
-		var str="";
-		
-		$(arr).each(function(i, attach) {
-			//image type (썸네일)
-				var fileCallPath = encodeURIComponent(attach.uploadPath+"/"+attach.uuid+ "_" + attach.fileName);
-				
-				str += "<li class='image_li' data-path='"+ attach.uploadPath +"' data-uuid='"+ attach.uuid +"' data-filename='"+ attach.fileName +"' data-type='"+ attach.fileType +"' >";
-				str += "<div>";
-				str += "<img src='/display?fileName="+ fileCallPath +"'>";
-				str += "</div>"
-				str += "</li>";
-		});
-		
-		$(".image_box ul").html(str);
-	})
-})
-
-
+	});
+});
 </script>
 
 <title>Insert title here</title>
@@ -93,11 +69,6 @@ $(document).ready(function() {
 					<div class="row notice_content_box">
 						<div class="notice_content">
 							${notice.content }
-						</div>
-						
-						<div class="image_box">
-							<ul>
-							</ul>
 						</div>
 					</div>
 					
