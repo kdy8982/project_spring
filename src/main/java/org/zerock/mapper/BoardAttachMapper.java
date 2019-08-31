@@ -10,7 +10,7 @@ public interface BoardAttachMapper {
 	
 	public void insert(BoardAttachVO vo);
 	
-	public void delete(String uuid);
+	public int delete(String uuid);
 	
 	public void deleteAll(Long bno);
 	

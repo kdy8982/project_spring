@@ -146,8 +146,8 @@
 }
 
 .bx-wrapper .notice_box {
-    border: 1px solid black;
-    /* padding: 1.5em; */
+	border: 1px solid #CCC;
+	position: relative;
     width: 18vw;
     height: 14vw;
 }
@@ -184,7 +184,7 @@
 
 .notice_box a {}
 
-.notice_box a .main_notice {
+.notice_box .main_notice {
 	position: absolute;
     top: 25%;
     left: 10%;
@@ -197,7 +197,7 @@
     line-height: 1.2;
 }
 
-.notice_box a .sub_notice {
+.notice_box .sub_notice {
 	font-size: 0.9rem;
 	font-weight: 600;
 	color: #808080;
@@ -232,8 +232,9 @@
 .viewmore_btn {
   display: block;
   text-align: right;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-decoration: underline;
+  text-underline-position: under;
 }
 
 .book_li {
@@ -242,6 +243,7 @@
   position: relative;
   justify-content: center;
   align-items: center;
+  min-height: 30vh;
 }
 
 .main_row3 li {
@@ -315,7 +317,9 @@
   margin-top: 10px;
 }
 
-.main_row2 .gallery_li {}
+.main_row2 .gallery_li {
+	min-height: 24vh;
+}
 
 .content .gallery_li {}
 

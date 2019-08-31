@@ -23,7 +23,7 @@ $(document).ready(function() {
 				<li><a href="/notice/list">새소식</a></li>
 				<li><a href="/photo/list">사진</a></li>
 				<li><a href="/essay/list">더사랑 이야기</a></li>
-				<li><a href="/essay/list">더사랑 교회</a></li>
+				<li><a href="/introduce/church">더사랑 교회</a></li>
 				<li class="login_area normal-font	">				
 					<sec:authorize access="isAuthenticated()">
 						

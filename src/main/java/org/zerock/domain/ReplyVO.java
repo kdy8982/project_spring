@@ -22,6 +22,7 @@ public class ReplyVO {
 	
 	private String photo;
 	private String thumbPhoto;
+	private Long deleted;
 	
 	public void setThumbPhoto() throws UnsupportedEncodingException {
 		if(this.photo == null) {

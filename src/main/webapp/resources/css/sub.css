@@ -316,6 +316,94 @@
     background-color : #f8f8f8;
 }
 
+.container .church_introduce_menubar {
+    flex-wrap: wrap;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+	font-size: 1.2rem;
+	margin-top: 4em;
+	margin-bottom: 2em;
+	font-weight: 600;
+	cursor:pointer;
+}
+
+.container .church_introduce_menu {
+	margin: 1em;
+}
+.container .content.church {
+	font-size: 1rem;
+	position: relative;
+	font-family: 'Noto Serif KR', 'Montserrat', Dotum, '돋움', sans-serif;
+}
+.container .content.church:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+.container .content.church p {
+    float: left;
+    width: 50%;
+    box-sizing:border-box;
+    padding: 0.8em;
+	line-height: 2em;
+}
+.container .content.church p img{
+	width: 100%;
+}
+.container .content.church p.imgp {
+}
+
+.container .footprints {
+	
+}
+.container .footprints .history_box {
+	position: relative;
+	padding: 0 0 0 33%;
+}
+.container .footprints .history_box .hitory_bar{
+	position: absolute;
+	width: 1.3em;
+	top:0;
+	bottom:0;
+    z-index: -1;
+}
+.container .footprints .history_box .hitory_bar .bar{
+    position: absolute;
+    background: #ccc;
+    width: 4px;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.container .footprints .history_box .history_line {
+}
+.container .footprints .history_box .year {
+    padding-bottom: 3em;
+}
+.container .footprints .history_box .year>.title {
+	margin-bottom: 0.3em;
+	padding-left: 35px;
+	font-size: 2rem;
+    font-weight: 600;
+    color: #8BD2ED;
+}
+.container .footprints .history_box .monthLine {
+}
+.container .footprints .history_box .monthLine>li {
+	position: relative;
+    font-weight: 600;
+	padding-left: 66px;
+	line-height:3em;
+	background: url(/resources/images/common/monthcheckimg.jpg) no-repeat left 11px;
+}
+.container .footprints .history_box .monthLine>li .month {
+	position: absolute;
+    left: 36px;
+}
+
 
 .notice_table {
 	width: 100%;
@@ -494,9 +582,12 @@
 }
 
 .login_wrap {
-	position : relative;
+	position : absolute;
+   	top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
     width: 31vw;
-    margin: 15vh auto;
     text-align: center;
 }
 
@@ -523,8 +614,8 @@
 }
 
 .layer.login{
+	position: relative;	
 	background: rgba( 255, 255, 255, 0.8);
-    margin-top: -69px;
 }
 
 .profile_wrap {

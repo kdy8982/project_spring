@@ -45,7 +45,7 @@
 }
 
 #header .header_inner nav li.login_area{
-	font-size:1rem;
+	font-size:0.9rem;
 	margin-left: 1em;
 	margin-right: 1em;
 	position: relative;
@@ -167,8 +167,10 @@
 }
 
 .page_wrap {
-    padding-bottom: 100px;
-    padding-top:69px;
+    position: relative;
+    min-height: calc(100vh - 110px);
+    padding-top: 70px;
+    padding-bottom: 110px;
 }
 
 .page_wrap.login{
@@ -211,6 +213,14 @@
     font-weight:600;
 }
 
+.container .notice_wrap {
+    min-height:20vh;
+}
+
+.container .content {
+    min-height:30vh;
+}
+
 #mask {
 	  position:absolute;  
       z-index:9000;  
@@ -238,9 +248,9 @@
     z-index: 9999;
     background-color: white;
     border-radius: 5px;
-    display: none;
     
    box-shadow: 4px 4px 17px 1px grey;
+   display: none;
 }
 
 .modal .row {
@@ -249,16 +259,27 @@
 .modal .modal_header {
 	text-align: left;	
 	border-bottom : 1px solid #e6e6e6;
-	
 	padding-left: 20px
 }
 .modal .modal_title {
-	font-size : 1.3rem;
+	font-size : 1rem;
 	display : inline-block;
 }
 .modal .modal_body {
 	font-size:1.0rem;
+	border-bottom: 1px solid #e6e6e6;
+	text-align: center;
 }
+.modal .modal_body.footprints_modal {
+	text-align: left;
+}
+.modal .modal_body.footprints_modal .footprints_content {
+	margin-top: 0.5em;
+}
+.modal .modal_body.footprints_modal .footprints_content>p{
+	margin-bottom: 0.5em;
+}
+
 
 .close_btn{
 	display : inline-block;
@@ -318,11 +339,6 @@
     width: 5.5rem;
    	border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-}
-
-.modal .modal_body {
-	border-bottom: 1px solid #e6e6e6;
-	text-align: center;
 }
 
 .modal .modal_footer {

@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.AttachFileDTO;
+import org.zerock.domain.BoardVO;
+import org.zerock.service.UploadService;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -38,6 +41,9 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Controller
 @Log4j
 public class UploadController {
+	
+	@Autowired
+	UploadService uploadSerivce;
 	
 	@GetMapping("/uploadForm")
 	public void uploadForm() {
@@ -212,9 +218,8 @@ public class UploadController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value="/deleteFile" , produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
 	@ResponseBody
-	public ResponseEntity<String> deleteFile(String fileName, String uploadPath, String type) {
+	public ResponseEntity<String> deleteFile(String fileName, String uploadPath) {
 		log.info("deleteFile : " + fileName);
-		log.info("type : " + type);
 		log.info("uploadPath : " + uploadPath);
 		
 		try {
@@ -228,6 +233,18 @@ public class UploadController {
 		}
 		
 		return new ResponseEntity<String> ("첨부파일이 삭제되었습니다." , HttpStatus.OK);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value="/deleteAttachFile" , produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
+	@ResponseBody
+	public ResponseEntity<String> deleteAttachFile(AttachFileDTO attachFileDto) {
+		log.info(attachFileDto);
+		if(uploadSerivce.removeAttachFile(attachFileDto)) {
+			return new ResponseEntity<String> ("첨부파일이 삭제되었습니다." , HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String> ("삭제에 실패했습니다." , HttpStatus.INTERNAL_SERVER_ERROR); 
+		}
 	}
 
 	// 파일 저장할 때, 날짜별로 폴더를 디렉토리를 생성하는 메서드 

@@ -120,17 +120,17 @@ $(document).ready(function() {
 					<div class="swipe_wrap controls">
 						<c:forEach items="${noticeList}" var="notice">
 							<div>
-								<div class="notice_box">
-									<a class="move" href='<c:out value="${notice.bno}"/>' data-type="notice" data-url="/notice/get" data-amount="10">
-										<p class="main_notice">
-											<c:out value="${notice.title}"></c:out>
-										</p>
-										<p class="sub_notice">
-											<fmt:formatDate pattern="yyyy-MM-dd"
-												value="${notice.regdate}" />
-										</p>
-									</a>
-								</div>
+								<a class="move" href='<c:out value="${notice.bno}"/>' data-type="notice" data-url="/notice/get" data-amount="10">
+									<div class="notice_box">
+											<p class="main_notice">
+												<c:out value="${notice.title}"></c:out>
+											</p>
+											<p class="sub_notice">
+												<fmt:formatDate pattern="yyyy-MM-dd"
+													value="${notice.regdate}" />
+											</p>
+									</div>
+								</a>
 							</div>
 						</c:forEach>
 					</div>

@@ -132,7 +132,7 @@
 			
 			
 			$('.modal_body').html(result);
-			//모달 같은 거 띄운다.
+			//모달 띄운다.
 			$('.modal').css("display", "block");
 			//$(".modal").show();
 		}
@@ -208,7 +208,6 @@
 	} 
 
 	function changeProfilePhoto() {
-		alert("click change Profile Photo !");
 		$(".input_upload").click();
 	}
 	

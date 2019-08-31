@@ -40,7 +40,7 @@
 			
 			
 			$('.modal_body').html(result);
-			//모달 같은 거 띄운다.
+			//모달 띄운다.
 			$('.modal').css("display", "block");
 			//$(".modal").show();
 		}
@@ -95,8 +95,8 @@
 			</div>
 		</div>
 		
+		<jsp:include page="inc/footer.jsp" flush="true"></jsp:include>
 	</div>
-	<jsp:include page="inc/footer.jsp" flush="true"></jsp:include>
 	
 </body>
 </html>

@@ -56,9 +56,17 @@ $(document).ready(function() {
 	
 	$(document).on("click", ".reply_btn.remove", function(e) {
 		var rno = $(this).data("rno");
+		var reply = "작성자에 의해 삭제된 댓글 입니다.";
 		var replyer = $(this).data("replyer");
-		replyService.remove(rno, replyer, function(result) {
+		var reply = {
+			rno : rno,
+			replyer : replyer,
+			reply : reply,
+			deleted : 1
+		}
+		replyService.update(reply, function(result) {
 			alert(result);
+			$(".reply_ul").remove();
 			showList(1);
 		});
 	})
@@ -159,8 +167,8 @@ $(document).ready(function() {
 		};
 		
 		replyService.add(reply , function(result) {
-			console.log(result);
 			alert(result);
+			$(".reply_ul").remove();
 			showList(1);
 			inputReply.val("");
 		});
@@ -191,6 +199,7 @@ $(document).ready(function() {
 	
 	function showList(page) {
 		replyService.getList({bno:bnoValue, page:page||1}, function (data) {
+			console.log(data);
 			var replyCnt = data.replyCnt;
 			if(replyCnt != 0) {
 				$(".bottom_wrap").prepend("<ul class='reply_ul'></ul>");
@@ -225,7 +234,7 @@ $(document).ready(function() {
 					str += "</div> ";
 					str += "<div class='reply_content_box'>" + rep.reply + "</div>";
 					str += "<div class='reply_btn_wrap'>"
-					if(rep.replyer == loginuser) {
+					if((rep.replyer == loginuser) && (rep.deleted != 1)) {
 						str += '<button class="reply_btn remove" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-times" aria-hidden="true"></i></button>';
 						str += '<button class="reply_btn modify" data-rno="' + rep.rno + '" data-replyer="' + rep.replyer + '"><i class="fa fa-pencil" aria-hidden="true"></i></button>';
 					}
