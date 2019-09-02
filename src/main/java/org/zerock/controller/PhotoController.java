@@ -72,17 +72,16 @@ public class PhotoController {
 		model.addAttribute("photo" , boardService.getBoard(vo));
 	}
 	
-	
-	  @RequestMapping(value="/modify", method= {RequestMethod.POST})
-	  @PreAuthorize("isAuthenticated() and #vo.writer == principal.username") 
-	  public void modify(Model model, Criteria cri, BoardVO vo) {
-		  log.info("photo modify get ... "); 
+
+	@RequestMapping(value="/modify", method= {RequestMethod.POST})
+	@PreAuthorize("isAuthenticated() and #vo.writer == principal.username") 
+	public void modify(Model model, Criteria cri, BoardVO vo) {
+		log.info("photo modify get ... "); 
 		  
-		  vo.setBoardType("photo"); 
-		  model.addAttribute("photo", boardService.getBoard(vo)); 
-		  
-	  }
-	 
+		vo.setBoardType("photo"); 
+		model.addAttribute("photo", boardService.getBoard(vo)); 
+	}
+ 
 	
 	@RequestMapping ("/modifySubmit")
 	@PreAuthorize("isAuthenticated() and #vo.writer == principal.username")

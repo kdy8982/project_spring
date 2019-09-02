@@ -39,6 +39,7 @@ public class CommonExceptionAdvice {
 	
 	@ExceptionHandler(AccessDeniedException.class)
 	public String accessDenied(AccessDeniedException ex, Model model) {
+		log.info("call Access Denied Method Call...");
 		model.addAttribute("exception", "권한이 없습니다.");
 		return "customNotAllowedRequest";
 	}

@@ -8,5 +8,9 @@ import org.zerock.domain.FootprintsVO;
 public interface IntroduceService {
 
 	Map<String, List<FootprintsVO>> get();
+
+	int add(FootprintsVO vo);
+
+	int delete(FootprintsVO vo);
 	
 }

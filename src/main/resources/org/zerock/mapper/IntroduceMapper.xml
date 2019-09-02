@@ -5,4 +5,19 @@
 	<select id="get" resultType="org.zerock.domain.FootprintsVO">
 		select fno, year, LPAD(month,2,'0') month, title, writer from tbl_footprints order by fno desc
 	</select>
+	
+	<insert id="add">
+		<selectKey keyProperty="fno" order="BEFORE"
+			resultType="long">
+			select seq_footprints.nextval from dual
+		</selectKey>
+	
+		insert into tbl_footprints (fno, year, month, title, writer)
+		values(#{fno}, #{year}, #{month}, #{title}, #{writer})
+	</insert>
+	
+	<delete id="delete">
+		delete tbl_footprints where fno = #{fno}
+	
+	</delete>
 </mapper>

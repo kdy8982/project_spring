@@ -28,8 +28,9 @@
 		</div>
 		
 		<div class="church_introduce_menubar">
-			<div class="church_introduce_menu" style="text-decoration: underline; text-underline-position: under;">교회 소개</div>
-			<div class="church_introduce_menu">담임목사</div>
+			<div class="church_introduce_menu" OnClick="location.href ='/introduce/church'">교회 소개</div>
+			<div class="church_introduce_menu" OnClick="location.href ='/introduce/footprints'">발자취</div>
+			<div class="church_introduce_menu" style="text-decoration: underline; text-underline-position: under;" OnClick="location.href ='/introduce/seniorpastor'">담임목사</div>
 			<div class="church_introduce_menu">사역</div>
 			<div class="church_introduce_menu">예배 안내</div>
 		</div>

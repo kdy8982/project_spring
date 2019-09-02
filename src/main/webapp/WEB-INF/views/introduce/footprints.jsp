@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.zerock.domain.*"%>
@@ -14,6 +15,9 @@
 <meta charset="UTF-8">
 <script type="text/javascript" src="/resources/js/board.js"></script>
 <script>
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
 function showModal() {
 	wrapWindowByMask();
 }
@@ -63,10 +67,82 @@ $(document).ready(function() {
     $("#modal_month  > option[value="+nmon+"]").attr("selected", "true"); 
     
     $(".modal").find("button").on("click", function() {
+    	var year = $("#modal_year option:selected").val();
+    	var month = $("#modal_month option:selected").val();
+    	var title = $("#FootprintsModal").find("textarea").val();
+    	var writer = null;
+    	'<sec:authorize access="isAuthenticated()">'
+    		writer = '<sec:authentication property="principal.username"/>'
+   		'</sec:authorize>'
+   		
+    	var history = {
+    		year : year,
+    		month : month,
+    		title : title,
+    		writer : writer
+    	}
+    	
+		$.ajax({
+			type : 'post',
+			url : '/introduce/footprints/add',
+			data : JSON.stringify(history),
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(result, status, xhr) {
+				alert("11111")
+				alert(result)
+				console.log(status)
+				location.reload();
+			},
+			error : function(xhr, status, er) {
+				alert("22222")
+				console.log(er);
+			}
+		})
+    	
     	$('html, body').css({'overflow': 'auto', 'height': '100%'}); //scroll hidden 해제
     	$('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
     	$(".modal").css("display", "none");
     })
+    
+    $(".history_box .monthLine li").mouseenter(function() {
+		$(this).find(".eventModBtn_box").css("display", "inline-block");
+    }).mouseleave(function() {
+    	$(this).find(".eventModBtn_box").hide();
+    });
+    
+    $(".deleteHistory").on("click", function() {
+    	alert("delete..")
+    	var fno = $(this).data("fno");
+    	console.log(fno);
+    	var history = {
+    		fno : fno
+    	}
+		$.ajax({
+			type : 'post',
+			url : '/introduce/footprints/delete',
+			data : JSON.stringify(history),
+			contentType : "application/json; charset=utf-8",
+			beforeSend : function(xhr) {
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(result, status, xhr) {
+				console.log(result)
+				console.log(status)
+				// location.reload();
+			},
+			error : function(xhr, status, er) {
+				console.log(er);
+			}
+		})
+    })
+    
+    $(".modifyHistory").on("click", function(){
+    	alert("modify..")
+    })    
+    
 })
 </script>
 
@@ -99,6 +175,14 @@ $(document).ready(function() {
 									<li>
 										<p class="month">${fpMonth.month}</p>
 										${fpMonth.title}
+										<div class="eventModBtn_box">
+											<span class="modifyHistory" data-fno="${fpMonth.fno}">
+												<i class="fa fa-pencil" aria-hidden="true"></i>
+											</span>
+											<span class="deleteHistory" data-fno="${fpMonth.fno}">
+												<i class="fa fa-times" aria-hidden="true"></i>
+											</span>
+										</div>
 									</li>
 								</c:forEach>
 							</ol>
@@ -106,6 +190,7 @@ $(document).ready(function() {
 					</c:forEach>
 				</ol>
 			</div>
+			<button class="addBtn normal_btn" OnClick="showModal()">새로운 발자취 남기기</button>
 		</div>
 	</div>
 
@@ -131,7 +216,7 @@ $(document).ready(function() {
 				<button class="btn normal_btn close">확인</button>
 			</div>
 	</div>
-	<button OnClick="showModal()">버튼</button>
+	
 	<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 	
 </div>

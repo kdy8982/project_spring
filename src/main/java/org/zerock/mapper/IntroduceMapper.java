@@ -8,4 +8,8 @@ public interface IntroduceMapper {
 
 	List<FootprintsVO> get();
 
+	int add(FootprintsVO vo);
+
+	int delete(FootprintsVO vo);
+
 }

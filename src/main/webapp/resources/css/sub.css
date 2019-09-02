@@ -323,7 +323,7 @@
     justify-content: center;
     align-items: center;
 	font-size: 1.2rem;
-	margin-top: 4em;
+	margin-top: 2em;
 	margin-bottom: 2em;
 	font-weight: 600;
 	cursor:pointer;
@@ -356,8 +356,17 @@
 }
 
 .container .footprints {
+	position: relative;
+}
+
+.container .footprints .addBtn{
+	position: absolute;
+	right: 0;
+	bottom: 0;
 	
 }
+
+
 .container .footprints .history_box {
 	position: relative;
 	padding: 0 0 0 33%;
@@ -402,6 +411,18 @@
 .container .footprints .history_box .monthLine>li .month {
 	position: absolute;
     left: 36px;
+}
+.container .footprints .history_box .monthLine>li .eventModBtn_box {
+	display: inline-block;
+    margin-left: 1em;
+    display: none;
+}
+.container .footprints .history_box .monthLine>li .eventModBtn_box .modifyHistory {
+	cursor: pointer;
+}
+.container .footprints .history_box .monthLine>li .eventModBtn_box .deleteHistory {
+	cursor: pointer;
+	margin-left:0.3em;
 }
 
 

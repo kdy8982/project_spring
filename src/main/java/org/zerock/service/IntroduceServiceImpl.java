@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -27,10 +28,9 @@ public class IntroduceServiceImpl implements IntroduceService {
 	public Map<String, List<FootprintsVO>> get() {
 		
 		List<FootprintsVO> footDBList = introduceMapper.get();
-		Map<String, List<FootprintsVO>> footprintsMap = new TreeMap<String, List<FootprintsVO>>(Collections.reverseOrder());
+		Map<String, List<FootprintsVO>> footprintsMap = new TreeMap<String, List<FootprintsVO>>(Collections.reverseOrder()); // 연도를 순서대로 나열하기 위해, Collections.reverseOrder()을 사용한다.
 		
 		for(int i=0; i < footDBList.size(); i++) {
-			log.info(footDBList.get(i).getYear());
 			footprintsMap.put(footDBList.get(i).getYear(), null);
 		}
 
@@ -41,10 +41,26 @@ public class IntroduceServiceImpl implements IntroduceService {
 					imsiList.add(footDBList.get(i));
 				}
 			}
+			log.info(imsiList);
+			Collections.sort(imsiList, new Comparator<FootprintsVO>() {
+				@Override
+				public int compare(FootprintsVO obj1, FootprintsVO obj2) { // 같은 연도안에서, 월을 순서대로 나열하기 위해 Collection.sort를 호출한다. 
+					return obj2.getMonth().compareTo(obj1.getMonth());
+				}
+			});
 			footprintsMap.put(key, imsiList);
 		}
-		log.info(footprintsMap);
 		return footprintsMap;
+	}
+
+	@Override
+	public int add(FootprintsVO vo) {
+		return introduceMapper.add(vo);
+	}
+
+	@Override
+	public int delete(FootprintsVO vo) {
+		return introduceMapper.delete(vo);
 	}
 
 }
