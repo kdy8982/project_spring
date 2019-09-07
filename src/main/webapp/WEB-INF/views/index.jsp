@@ -11,6 +11,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script type="text/javascript" src="/resources/js/board.js"></script>
+<script type="text/javascript" src="/resources/js/index.js"></script>
 <script type="text/javascript">
 $(window).scroll(
 		function() {
@@ -37,31 +39,12 @@ $(window).scroll(
 });
 
 $(document).ready(function() {
-	var slider = $('.swipe_wrap').bxSlider({
-		mode : 'horizontal',// 가로 방향 수평 슬라이드
-		nextText : '<i class="fa fa-chevron-right" aria-hidden="true"></i>',
-		prevText : '<i class="fa fa-chevron-left" aria-hidden="true"></i>',
-		speed : 500, // 이동 속도를 설정
-		pause : 2000, // 페이지 넘김 속도를 조절
-		pager : false, // 현재 위치 페이징 표시 여부 설정
-		moveSlides : 1, // 슬라이드 이동시 개수
-		slideWidth : 400, // 슬라이드 너비
-		minSlides : 4, // 최소 노출 개수
-		maxSlides : 4, // 최대 노출 개수
-		slideMargin : 20, // 슬라이드간의 간격
-		auto : false, // 자동 실행 여부
-		autoHover : true, // 마우스 호버시 정지 여부
-		controls : true, // 이전 다음 버튼 노출 여부
-		responsive : false,
-		touchEnabled : (navigator.maxTouchPoints > 0)
-	});
-	
-	$(window).resize(function() {
-		slider.reloadSlider();
-	}) // bxSlider : 창크기가 조절될때마다 slider 사이즈 자동 조절. 
-	
+	var windowSize = $(window).width();
+	indexService.bxrolling.init();
+	indexService.init(windowSize);
+	/*
 	var actionForm = $("#actionForm");
-	$(".move").on("click", function(e) {
+	$(document).on("click", ".move", function(e) {
 		e.preventDefault();
 		console.log($(this).attr('href'));
 		actionForm.append("<input type='hidden' name='amount' value='"
@@ -76,13 +59,8 @@ $(document).ready(function() {
 		actionForm.attr("action", $(this).data("url"));
 		actionForm.submit();
 	})
-
-	/** 더사랑이야기 게시판 리스트를 뿌려줄 때, 이미지를 제외한 순수한 텍스트만 보여주기 위해 추가 **/
-	$(".desc_content_box .content").each(function(i, obj){
-		$(this).html(obj.innerText);
-	})
+	*/
 })
-
 					
 </script>
 
@@ -112,15 +90,14 @@ $(document).ready(function() {
 
 			<section class="main_row1" id="section01">
 			<div class="container">
-				<div class="title_wrap">
-					<h2 class="main_tit title-font">새소식</h2>
+				<div class="index_title">
+					<span class="main_tit normal-font">새소식</span>
 				</div>
-
 				<div class="notice_wrap">
 					<div class="swipe_wrap controls">
 						<c:forEach items="${noticeList}" var="notice">
 							<div>
-								<a class="move" href='<c:out value="${notice.bno}"/>' data-type="notice" data-url="/notice/get" data-amount="10">
+								<a class="move" href='/notice/get?pageNum=1&boardType=notice&bno=<c:out value="${notice.bno}"/>' data-type="notice" data-url="/notice/get" data-amount="10">
 									<div class="notice_box">
 											<p class="main_notice">
 												<c:out value="${notice.title}"></c:out>
@@ -134,57 +111,29 @@ $(document).ready(function() {
 							</div>
 						</c:forEach>
 					</div>
+					<span id="bxslider_prev" class="bxslider_btn"></span>
+					<span id="bxslider_next" class="bxslider_btn"></span>
 				</div>
 				<div class="viewmore_wrap">
-					<a class="viewmore_btn" href="/notice/list">view more</a>
+					<span>
+						<a class="viewmore_btn" href="/notice/list">view more</a>
+					</span>
 				</div>
 			</div>
 			</section>
 
 
 			<section class="main_row2 even_row" id="section03">
-			<div class="container">
-				<div class="title_wrap title-font">
-					<h2 class="main_tit">사진</h2>
-				</div>
-				<ul class="gallery_li">
-					<c:forEach var="photo" items="${photoList}" varStatus="status">
-						<li class="yesupload bg1"><c:set var="attach" value="${photo.attachList[0].uploadPath}/s_${photo.attachList[0].uuid}_${photo.attachList[0].fileName}" />
-							<a class="move" href="${photo.bno}" data-type="photo" data-url="/photo/get" data-amount="12">
-									<%
-										String url = (String) pageContext.getAttribute("attach");
-										pageContext.setAttribute("filepath", URLEncoder.encode(url));
-									%>
-									<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
-										<c:if test="${photo_photoCount[status.index] eq '0'}" >
-											<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>
-										</c:if>
-										<c:if test="${photo_photoCount[status.index] ne '0'}" >
-											<p class="photo-cntbox">
-												<i class="fa fa-camera-retro" aria-hidden="true"></i>
-												+${photo_photoCount[status.index]}
-											</p>
-										</c:if>
-									</div>
-							</a>
-						</li>
-					</c:forEach>
-					
-					<c:if test="${fn:length(photoList) eq 1}">
-						<li style="visibility: hidden"></li>
-						<li style="visibility: hidden"></li>
-						<li style="visibility: hidden"></li>
-					</c:if>
-					<c:if test="${fn:length(photoList) eq 2}">
-						<li style="visibility: hidden"></li>
-						<li style="visibility: hidden"></li>
-					</c:if>
-					<c:if test="${fn:length(photoList) eq 3}">
-						<li style="visibility: hidden"></li>
-					</c:if>		
+				<div class="container">
+					<div class="index_title normal-font">
+						<span>사진</span>
+					</div>
+					<ul class="gallery_li">
 					</ul>
 					<div class="viewmore_wrap">
-						<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
+						<span>
+							<a class="viewmore_btn" href="/photo/list?amount=12">view more</a>
+						</span>
 					</div>
 				</div>
 			</section>
@@ -193,46 +142,15 @@ $(document).ready(function() {
 			<section class="main_row3 " id="section03">
 			<div class="container">
 
-				<div class="title_wrap title-font">
-					<h2 class="main_tit">더사랑 이야기</h2>
+				<div class="index_title normal-font">
+					<span>더사랑 이야기</span>
 				</div>
 				<ul class="book_li">
-
-					<c:forEach var="essay" items="${essayList}" varStatus="status">
-						<li><a class="move" href="<c:out value='${essay.bno}'/>" data-amount="6" data-type="essay" data-url="/essay/get"> 
-						<c:set var="attach"	value="${essay.attachList[0].uploadPath}/s_${essay.attachList[0].uuid}_${essay.attachList[0].fileName}" />
-								<%
-									String url = (String) pageContext.getAttribute("attach");
-										pageContext.setAttribute("filepath", URLEncoder.encode(url));
-								%>
-									<div class="thumb" style="background: url(/display?fileName=<c:url value='${filepath}'/>)no-repeat top center; background-size: cover; background-position: center;">
-										<c:if test="${essay_photoCount[status.index] eq '0'}" >
-											<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>
-										</c:if>
-										<c:if test="${essay_photoCount[status.index] ne '0'}">
-											<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i> +${essay_photoCount[status.index]}</p>
-										</c:if>
-									</div>
-									<div class="desc_content_box">
-									<div class="desc">
-										<h3 class="book_title">${essay.title}</h3>
-										<p>${essay.writer}</p>
-										<div class="content">${essay.content}</div>
-									</div>
-								</div>
-						</a></li>
-
-					</c:forEach>
-					<c:if test="${fn:length(essayList) eq 1}">
-						<li style="visibility: hidden"></li>
-						<li style="visibility: hidden"></li>
-					</c:if>
-					<c:if test="${fn:length(essayList) eq 2}">
-						<li style="visibility: hidden"></li>
-					</c:if>
 				</ul>
 				<div class="viewmore_wrap">
-					<a class="viewmore_btn" href="/essay/list">view more</a>
+					<span>
+						<a class="viewmore_btn" href="/essay/list">view more</a>
+					</span>
 				</div>
 			</div>
 			</section>

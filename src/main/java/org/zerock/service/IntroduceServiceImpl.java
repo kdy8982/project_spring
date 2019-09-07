@@ -63,4 +63,9 @@ public class IntroduceServiceImpl implements IntroduceService {
 		return introduceMapper.delete(vo);
 	}
 
+	@Override
+	public boolean modify(FootprintsVO vo) {
+		return introduceMapper.modify(vo) == 1 ? true : false;
+	}
+
 }

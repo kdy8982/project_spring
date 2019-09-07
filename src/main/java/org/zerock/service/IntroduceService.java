@@ -12,5 +12,7 @@ public interface IntroduceService {
 	int add(FootprintsVO vo);
 
 	int delete(FootprintsVO vo);
+
+	boolean modify(FootprintsVO vo);
 	
 }

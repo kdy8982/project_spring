@@ -262,6 +262,10 @@
     text-align: right;
 }
 
+.container .sub_title span{
+	font-size: 0.9rem;
+}
+
 .container .list_wrap.notice_wrap form label {
 	display : block;
 	margin-bottom: 5px;
@@ -316,6 +320,51 @@
     background-color : #f8f8f8;
 }
 
+.title_church {
+	position:relative;
+    height: 27vw;
+    background-size: cover;
+    background-position: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url(/resources/images/sub/topview.jpg);
+    color: white;
+}
+
+.title_pastor {
+	position:relative;
+    height: 27vw;
+    background-size: cover;
+    background-position: 0% 0%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url(/resources/images/sub/bread2.jpg);
+    color: white;
+}
+
+.title_footprints {
+	position:relative;
+    height: 27vw;
+    background-size: cover;
+    background-position: 0% 60%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url(/resources/images/sub/child.jpg);
+    color: white;
+}
+.title_ministry {
+	position:relative;
+    height: 27vw;
+    background-size: cover;
+    background-position: 0% 60%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)), url(/resources/images/sub/ministry2.jpg);
+    color: white;
+}
+
+
+#title_wrap .title {
+	position: absolute;
+	font-size:3vw;
+	right: 0;
+	bottom: 0;
+	text-align: right;
+	padding:2em;
+}
+
 .container .church_introduce_menubar {
     flex-wrap: wrap;
     display: flex;
@@ -323,96 +372,137 @@
     justify-content: center;
     align-items: center;
 	font-size: 1.2rem;
-	margin-top: 2em;
-	margin-bottom: 2em;
+	margin-bottom: 3vh;
 	font-weight: 600;
 	cursor:pointer;
 }
 
 .container .church_introduce_menu {
-	margin: 1em;
+	margin: 1vw;
 }
-.container .content.church {
-	font-size: 1rem;
+.container.introduce .content {
 	position: relative;
+    margin: 0 auto;
+	margin-bottom: 3em;
+    width: 80%;
+	font-size: 1rem;
 	font-family: 'Noto Serif KR', 'Montserrat', Dotum, '돋움', sans-serif;
 }
-.container .content.church:after{
+.container.introduce .content_title{
+    padding-left: 2vw;
+    line-height: 1.5;
+	font-size: 2rem;
+    font-weight: 600;
+}
+.container.introduce .content_title:before{
+    content: "";
+    display: block;
+    width: 55px;
+    border-bottom: 5px solid #A9D3DB;
+	margin-bottom: 0.5vw;
+}
+.container.introduce .content:after{
 	content: "";
 	display: block;
 	clear: both;
 }
-.container .content.church p {
+.container.introduce .content .sectionp {
     float: left;
     width: 50%;
     box-sizing:border-box;
-    padding: 0.8em;
 	line-height: 2em;
+	padding: 2vw;
 }
-.container .content.church p img{
+.container.introduce .content p img {
 	width: 100%;
 }
-.container .content.church p.imgp {
+.container.introduce .content p.leftp {
+}
+.container.introduce .content.ministry .rightp.imagep {
+    background: url(/resources/images/sub/ministry2.jpg)no-repeat top center;
+    background-size: cover;
+    background-position: center;
+    background-clip: content-box;
+    height: 30vw;
+}
+.container.introduce .content.ministry .leftp.imagep {
+    background: url(/resources/images/sub/studyroom2.jpg)no-repeat top center;
+    background-size: cover;
+    background-position: center;
+    background-clip: content-box;
+    height: 30vw;
 }
 
-.container .footprints {
+.container.introduce .footprints {
 	position: relative;
 }
 
-.container .footprints .addBtn{
+.container.introduce .footprints .addBtn{
 	position: absolute;
 	right: 0;
 	bottom: 0;
 	
 }
-
-
-.container .footprints .history_box {
+.container.introduce .footprints .history_box {
 	position: relative;
-	padding: 0 0 0 33%;
+  	padding-left: 13vw;
 }
-.container .footprints .history_box .hitory_bar{
+.container.introduce .footprints .history_box .hitory_bar{
 	position: absolute;
-	width: 1.3em;
 	top:0;
 	bottom:0;
-    z-index: -1;
+    /* z-index: -1; */
+    padding: 10px;
 }
-.container .footprints .history_box .hitory_bar .bar{
+.container.introduce .footprints .history_box .hitory_bar .bar{
     position: absolute;
     background: #ccc;
-    width: 4px;
+    width: 6px;
     top: 0;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+/*     left: 50%;
+    transform: translateX(-50%); */
 }
-.container .footprints .history_box .history_line {
+.container.introduce .footprints .history_box .history_line {
 }
-.container .footprints .history_box .year {
-    padding-bottom: 3em;
+.container.introduce .footprints .history_box .year {
+    padding-bottom: 1em;
 }
-.container .footprints .history_box .year>.title {
+.container.introduce .footprints .history_box .year>.title {
 	margin-bottom: 0.3em;
 	padding-left: 35px;
 	font-size: 2rem;
     font-weight: 600;
     color: #8BD2ED;
 }
-.container .footprints .history_box .monthLine {
+.container.introduce .footprints .history_box .monthLine {
 }
-.container .footprints .history_box .monthLine>li {
-	position: relative;
+.container.introduce .footprints .history_box .monthLine>li {
+	padding-left: 75px;
+	margin-bottom: 2em;
+    position: relative;
     font-weight: 600;
-	padding-left: 66px;
-	line-height:3em;
-	background: url(/resources/images/common/monthcheckimg.jpg) no-repeat left 11px;
+    line-height: 1.5;
 }
-.container .footprints .history_box .monthLine>li .month {
+.container.introduce .footprints .history_box .monthLine>li .pointer {
+	position: absolute;
+    left: 5px;
+    top: -5px;
+    color: #8BD2ED;
+    font-size: 20px;
+}
+.container.introduce .footprints .history_box .monthLine>li .month {
 	position: absolute;
     left: 36px;
+    top: -1px;
+    font-size:1rem;
 }
-.container .footprints .history_box .monthLine>li .eventModBtn_box {
+.container.introduce .footprints .history_box .monthLine>li .title {
+	display: inline-block;
+	white-space: pre;
+	font-size:1rem;
+}
+.container.introduce .footprints .history_box .monthLine>li .eventModBtn_box {
 	display: inline-block;
     margin-left: 1em;
     display: none;
@@ -425,6 +515,9 @@
 	margin-left:0.3em;
 }
 
+.container.introudce .content {
+	margin-bottom: 2em;
+}
 
 .notice_table {
 	width: 100%;
@@ -514,6 +607,7 @@
 .notice_get_wrap #table .notice_info .notice_date{
 	display : inline-block;
 	font-size:15px;
+	width: 18%;
 }
 
 .notice_get_wrap #table .notice_content_box {
@@ -607,9 +701,13 @@
    	top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
     width: 31vw;
     text-align: center;
+    padding: 5vw;
+    border-radius: 11px;
+}
+.login_wrap.memberDetail {
+    background-color: white;
 }
 
 .login_wrap .top_title {
@@ -721,4 +819,59 @@
     border-radius: 7px;
     line-height: 2rem;
     width: 27rem;
+}
+
+@media ( max-width: 768px ) { /* tablet braek point */
+	.container.introduce .footprints .history_box {
+    	padding-left: 4vw;
+	}
+	
+	.container.introduce .footprints .history_box .monthLine>li .title {
+		font-size: 0.8rem;
+	}
+	
+	.container .church_introduce_menubar {
+		font-size: 1rem;
+	}
+		
+	.container.introduce .content_title{
+		font-size: 1.5rem;
+	}
+	
+	.container.introduce .content .sectionp {
+		width : 100%;
+	}
+	
+	.container.introduce .content {
+		font-size : 0.8rem;
+	}
+	
+	.container.introduce .footprints .history_box .monthLine>li .pointer {
+    position: absolute;
+    left: 6px;
+    top: 0px;
+    color: #8BD2ED;
+    font-size: 15px;
+	}
+	
+	.container.introduce .content_title:before{
+		width: 41px;
+	}
+
+}
+
+@media ( max-width: 425px ) { /* Mobile L braek point */
+	.container .church_introduce_menubar {
+	    font-size: 0.8rem;
+	}
+	.container.introduce .content_title {
+		font-size: 1.3rem;
+	}
+	.container.introduce .content_title:before{
+   	 	width: 33px;
+   		border-bottom: 3px solid #A9D3DB;
+	}
+	.login_wrap {
+	    width: 80%;
+	}
 }

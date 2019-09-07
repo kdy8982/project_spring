@@ -18,7 +18,9 @@ public interface BoardAttachMapper {
 
 	public List<BoardAttachVO> getPreviewImg();
 	
-	public List<BoardAttachVO> getPhotoList(Criteria cri);
+	public List<BoardVO> getPhotoList(Criteria cri);
 
-	public List getPhotoCount(Criteria cri);	
+	public List getPhotoCount(Criteria cri);
+	
+	public int getCount(BoardVO vo);
 }

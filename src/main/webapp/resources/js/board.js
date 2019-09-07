@@ -1,7 +1,7 @@
 console.log("Board Module..................");
 
 /** board 클로저 **/
-var board = (function() { 
+var board = (function() {
 	var nextIndex = 0; // 자유변수. 메서드의 호출 이후에도 계속해서 값이 유지가 된다.
 	
 	nextIndex = function (index) {
@@ -26,7 +26,6 @@ var board = (function() {
 	}
 	
 	function refreshFileUploadPreview(ulTag, str, allPhotoCount, aRowCount, photoCount) {
-		
 		var oldFileLi;
 		var emptyLi;
 		

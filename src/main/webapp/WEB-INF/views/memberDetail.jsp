@@ -263,7 +263,7 @@
 
 	<jsp:include page="inc/top.jsp" flush="true"></jsp:include>
 	<div class="page_wrap">
-	<div class="login_wrap">
+	<div class="login_wrap memberDetail">
 		<h2><c:out value="${error}" /></h2>
 		<h2><c:out value="${logout}"/></h2>	
 		

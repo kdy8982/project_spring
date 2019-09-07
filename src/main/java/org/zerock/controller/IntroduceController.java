@@ -3,6 +3,7 @@ package org.zerock.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +29,10 @@ public class IntroduceController {
 	}
 
 	@RequestMapping("/footprints")
-	public void footprints (Model model) {
+	public void footprints (Model model) throws Exception {
 		model.addAttribute("footprintsList", introduceService.get());
+		// throw new Exception();
+		//throw new AccessDeniedException("AA");
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -37,7 +40,8 @@ public class IntroduceController {
 	public ResponseEntity<String> footprintsAdd (@RequestBody FootprintsVO vo) {
 		log.info(vo);
 		log.info("footprints add method is calling..");
-		return introduceService.add(vo) == 1 ? new ResponseEntity<String>("성공적으로 등록되었습니다.", HttpStatus.OK) : new ResponseEntity<String>("등록에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		introduceService.add(vo);
+		return new ResponseEntity<String>("성공적으로 등록되었습니다.", HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -48,9 +52,22 @@ public class IntroduceController {
 		introduceService.delete(vo);
 		return new ResponseEntity<String>("삭제되었습니다.", HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value="/footprints/modify", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE, "text/plain;charset=UTF-8"})
+	public ResponseEntity<String> footprintsModify (@RequestBody FootprintsVO vo) {
+		log.info(vo);
+		log.info("footprints modify method is calling..");
+		introduceService.modify(vo);
+		return new ResponseEntity<String>("변경되었습니다.", HttpStatus.OK);
+	}
+
 
 	@RequestMapping("/seniorpastor")
 	public void seniorPastor (Model model) {
-		
+	}
+	
+	@RequestMapping("/ministry")
+	public void ministry (Model model) {
 	}
 }

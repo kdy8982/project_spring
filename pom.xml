@@ -197,6 +197,11 @@
 			<version>0.4.8</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		 </dependency>
 
 		<!-- 스프링 시큐리티 시작 -->
 

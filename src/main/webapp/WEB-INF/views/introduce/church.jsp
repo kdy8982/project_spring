@@ -22,17 +22,28 @@
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
 <div class="page_wrap">
-	<div class="container page_container">
+	<div id="title_wrap" class="title_wrap title_church">
+		<div class="title title-font">
+			<p>하나님 나라,</p>
+			<p>이곳에 내려오다.</p>
+		</div>
+	</div>
+	
+	<div class="container page_container introduce">
 		<div class="church_introduce_menubar">
 			<div class="church_introduce_menu" style="text-decoration: underline; text-underline-position: under;" OnClick="location.href ='/introduce/church'">교회 소개</div>
-			<div class="church_introduce_menu" OnClick="location.href ='/introduce/footprints'">발자취</div>
 			<div class="church_introduce_menu" OnClick="location.href ='/introduce/seniorpastor'">담임목사</div>
-			<div class="church_introduce_menu">사역</div>
+			<div class="church_introduce_menu" OnClick="location.href ='/introduce/footprints'">발자취</div>
+			<div class="church_introduce_menu" OnClick="location.href ='/introduce/ministry'">사역</div>
 			<div class="church_introduce_menu">예배 안내</div>
 		</div>
 		
 		<div class="content church">
-			<p>
+			<div class="content_title normal-font">
+				<p>더욱 사랑하는 공간,<br>
+				 더사랑 교회입니다.</p>
+			</div>
+			<p class="sectionp leftp">
 				이네들은 너무나 멀리 있습니다, 별이 아슬히 멀 듯이<br>
 				어머님, 그리고 당신은 북간도에 계십니다<br>
 				나는 무엇인지 그리워<br>
@@ -45,7 +56,7 @@
 				내 이름자 묻힌 언덕 우에도<br>
 				자랑처럼 풀이 무성할 게외다<br>
 				</p>
-			<p class="imgp"><img src="/resources/images/index/index2.jpg"></img></p>
+			<p class="sectionp rightp"><img src="/resources/images/index/index2.jpg"></img></p>
 		</div>
 	</div>
 	<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>

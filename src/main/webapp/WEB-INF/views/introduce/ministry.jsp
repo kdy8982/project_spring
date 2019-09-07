@@ -22,27 +22,22 @@
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
 <div class="page_wrap">
-	<div id="title_wrap" class="title_wrap title_pastor">
+	<div id="title_wrap" class="title_wrap title_ministry">
 		<div class="title title-font">
 			<p>하나님 나라,</p>
 			<p>이곳에 내려오다.</p>
 		</div>
 	</div>
-	
 	<div class="container page_container introduce">
 		<div class="church_introduce_menubar">
 			<div class="church_introduce_menu" OnClick="location.href ='/introduce/church'">교회 소개</div>
-			<div class="church_introduce_menu" style="text-decoration: underline; text-underline-position: under;" OnClick="location.href ='/introduce/seniorpastor'">담임목사</div>
+			<div class="church_introduce_menu" OnClick="location.href ='/introduce/seniorpastor'">담임목사</div>
 			<div class="church_introduce_menu" OnClick="location.href ='/introduce/footprints'">발자취</div>
-			<div class="church_introduce_menu" OnClick="location.href ='/introduce/ministry'">사역</div>
+			<div class="church_introduce_menu" OnClick="location.href ='/introduce/ministry'" style="text-decoration: underline; text-underline-position: under;" >사역</div>
 			<div class="church_introduce_menu">예배 안내</div>
 		</div>
-		
-		<div class="content church">
-			<div class="content_title normal-font">
-				<p>하나님의 종으로,<br>
-				 열심히 섬기겠습니다.</p>
-			 </div>
+		<div class="content ministry">
+			<div class="content_title normal-font"><p>더사랑데이</p></div>
 			<p class="sectionp leftp">	
 				당신의 시처럼 하늘을 우러러<br>
 				한 점 부끄러움이 없길<br>
@@ -60,8 +55,31 @@
 				차가운 창살 건너편의<br>
 				하늘과 별을 바라봐야했네<br>
 			</p>
-			<p class="sectionp rightp"><img src="/resources/images/sub/lys.jpg"></img></p>
+			<p class="sectionp rightp imagep"></p>
 		</div>
+		<div class="content ministry">
+			<div class="content_title normal-font">더사랑 공부방</div>
+			<p class="sectionp leftp imagep"></p>
+			<p class="sectionp rightp">	
+				당신의 시처럼 하늘을 우러러<br>
+				한 점 부끄러움이 없길<br>
+				당신의 삶처럼 모든 죽어가는 것을<br>
+				사랑할 수 있길<br>
+				<br>​
+				때론 사는 게 허무하고 무기력할 때<br>
+				당신의 육첩방을 밝혔던<br>
+				등불을 기억할게<br>
+				난 왜 느끼지 못하고 외우려했을까<br>
+				용기내지 못하고<br>
+				뒤로 숨으려 했을까<br>
+				그에게 총칼 대신<br>
+				연필 끝에 힘이 있었기에<br>
+				차가운 창살 건너편의<br>
+				하늘과 별을 바라봐야했네<br>
+			</p>
+			
+		</div>
+		
 	</div>
 	<jsp:include page="../inc/footer.jsp" flush="true"></jsp:include>
 </div>

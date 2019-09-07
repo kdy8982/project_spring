@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="inc/headTop.jsp" flush="true"></jsp:include>    
+<jsp:include page="../inc/headTop.jsp" flush="true"></jsp:include>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,6 @@
 		<div class="error_box center_wrap">
 			<div class="error_message">
 				<p class="title-font" style="font-size: 1.2rem; text-align: center; font-weight: 600; margin-bottom: 0.7em;">ERROR</p>
-				<p>${exception}</p>
 				<p>계속해서 같은 문제가 발생하면 관리자에게 문의해주세요.</p>
 			</div>
 		</div>

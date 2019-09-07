@@ -12,4 +12,6 @@ public interface IntroduceMapper {
 
 	int delete(FootprintsVO vo);
 
+	int modify(FootprintsVO vo);
+
 }

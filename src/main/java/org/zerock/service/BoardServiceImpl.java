@@ -40,11 +40,18 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public Object getList(Criteria cri) {
+		
 		if(cri.getBoardType() == "notice" || cri.getBoardType() == null) {
 			log.info("getList.. - notice or all");
 			return mapper.getListWithPaging(cri);
 		} else if (cri.getBoardType() == "photo" || cri.getBoardType() == "essay") {
-			return attachMapper.getPhotoList(cri);
+			
+			List<BoardVO> list =  attachMapper.getPhotoList(cri);
+			/*
+			 * for(BoardVO vo : list) { vo.setPhotoCnt(attachMapper.getCount(vo)); }
+			 * 
+			 */
+			return list;
 		}
 		return null;
 		

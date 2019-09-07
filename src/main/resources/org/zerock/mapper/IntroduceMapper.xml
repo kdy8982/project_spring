@@ -18,6 +18,14 @@
 	
 	<delete id="delete">
 		delete tbl_footprints where fno = #{fno}
-	
 	</delete>
+	
+	<update id="modify">
+		update tbl_footprints 
+		set year = #{year},
+		month = #{month},
+		title = #{title},
+		writer = #{writer}
+		where fno = #{fno}
+	</update>
 </mapper>

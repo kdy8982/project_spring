@@ -66,7 +66,22 @@ $(document).ready(function() {
     $("#modal_year  > option[value="+nyear+"]").attr("selected", "true");    
     $("#modal_month  > option[value="+nmon+"]").attr("selected", "true"); 
     
+    
+    $(".history_box .monthLine li").mouseenter(function() {
+		$(this).find(".eventModBtn_box").css("display", "inline-block");
+    }).mouseleave(function() {
+    	$(this).find(".eventModBtn_box").hide();
+    });
+    
+    // 새 발자취 남기기 버튼
+    $(".footprints button.addBtn").on("click",function() {
+    	$("#FootprintsModal button").attr("data-worktype", "add")
+    })
+    
+    // 모달창 서버 전송 버튼
     $(".modal").find("button").on("click", function() {
+    	var workType = $(this).data("worktype");
+    	var fno;
     	var year = $("#modal_year option:selected").val();
     	var month = $("#modal_month option:selected").val();
     	var title = $("#FootprintsModal").find("textarea").val();
@@ -75,30 +90,34 @@ $(document).ready(function() {
     		writer = '<sec:authentication property="principal.username"/>'
    		'</sec:authorize>'
    		
+   		if(workType == "modify") {
+   			fno = $(this).data("fno");
+   		}
+   		
     	var history = {
+   			fno: fno,
     		year : year,
     		month : month,
     		title : title,
     		writer : writer
     	}
-    	
+   		console.log(history)
+		console.log(workType)    	
 		$.ajax({
 			type : 'post',
-			url : '/introduce/footprints/add',
+			url : '/introduce/footprints/' + workType , // add
 			data : JSON.stringify(history),
 			contentType : "application/json; charset=utf-8",
 			beforeSend : function(xhr) {
 				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 			},
 			success : function(result, status, xhr) {
-				alert("11111")
 				alert(result)
-				console.log(status)
 				location.reload();
 			},
 			error : function(xhr, status, er) {
-				alert("22222")
-				console.log(er);
+				alert("권한이 없습니다.")
+				location.reload();
 			}
 		})
     	
@@ -107,18 +126,20 @@ $(document).ready(function() {
     	$(".modal").css("display", "none");
     })
     
-    $(".history_box .monthLine li").mouseenter(function() {
-		$(this).find(".eventModBtn_box").css("display", "inline-block");
-    }).mouseleave(function() {
-    	$(this).find(".eventModBtn_box").hide();
-    });
-    
+    // 댓글 삭제 버튼
     $(".deleteHistory").on("click", function() {
-    	alert("delete..")
     	var fno = $(this).data("fno");
-    	console.log(fno);
+    	var year = $(this).closest("li").data("year");
+    	var month = $(this).closest("li").data("month");
+    	var title = $(this).closest("li").data("title");
+    	var writer = $(this).closest("li").data("writer");
+    	
     	var history = {
-    		fno : fno
+    		fno : fno,
+    		year : year,
+    		month : month,
+    		title : title,
+    		writer : writer
     	}
 		$.ajax({
 			type : 'post',
@@ -129,19 +150,48 @@ $(document).ready(function() {
 				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
 			},
 			success : function(result, status, xhr) {
-				console.log(result)
-				console.log(status)
-				// location.reload();
+				alert(result)
+				location.reload();
 			},
 			error : function(xhr, status, er) {
-				console.log(er);
+				alert("권한이 없습니다.")
+				location.reload();
 			}
 		})
     })
     
-    $(".modifyHistory").on("click", function(){
-    	alert("modify..")
+    // 댓글 수정 버튼
+    $(".modifyHistory").on("click", function() {
+    	var fno = $(this).data("fno");
+    	var year = $(this).closest("li").data("year");
+    	var month = $(this).closest("li").data("month");
+    	var title = $(this).closest("li").data("title");
+    	var writer = $(this).closest("li").data("writer");
+    	var history = {
+    		fno : fno,
+    		year : year,
+    		month : month,
+    		title : title,
+    		writer : writer
+    	}
+    	$("#FootprintsModal .footprints_content>textarea").val(title)
+    	$("#FootprintsModal .footprints_content>#modal_year").val(year).prop("selected", true);
+    	$("#FootprintsModal .footprints_content>#modal_month").val(month).prop("selected", true);
+    	$("#FootprintsModal button").attr("data-worktype", "modify")
+    	$("#FootprintsModal button").attr("data-fno", fno)
+    	showModal();
     })    
+    
+    
+    // textarea 글자수 제한 및 카운팅
+    $('#counter').html($(this).val().length + '/40');
+    $(".footprints_content textarea").on('keyup', function() {
+    	if($(this).val().length > 40) {
+    		alert("글자수는 40자로 이내로 제한됩니다.");
+    		$(this).val($(this).val().substring(0, 40));
+    	}
+    	$('#counter').html($(this).val().length + '/40');
+    });
     
 })
 </script>
@@ -152,12 +202,18 @@ $(document).ready(function() {
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
 <div class="page_wrap">
-	<div class="container page_container">
+	<div id="title_wrap" class="title_wrap title_footprints">
+		<div class="title title-font">
+			<p>하나님 나라,</p>
+			<p>이곳에 내려오다.</p>
+		</div>
+	</div>
+	<div class="container page_container introduce">
 		<div class="church_introduce_menubar">
 			<div class="church_introduce_menu" OnClick="location.href ='/introduce/church'">교회 소개</div>
-			<div class="church_introduce_menu" style="text-decoration: underline; text-underline-position: under;" OnClick="location.href ='/introduce/footprints'">발자취</div>
 			<div class="church_introduce_menu" OnClick="location.href ='/introduce/seniorpastor'">담임목사</div>
-			<div class="church_introduce_menu">사역</div>
+			<div class="church_introduce_menu" style="text-decoration: underline; text-underline-position: under;" OnClick="location.href ='/introduce/footprints'">발자취</div>
+			<div class="church_introduce_menu" OnClick="location.href ='/introduce/ministry'">사역</div>
 			<div class="church_introduce_menu">예배 안내</div>
 		</div>
 		
@@ -166,23 +222,29 @@ $(document).ready(function() {
 				<div class="hitory_bar"><div class="bar"></div></div>
 				<ol class="history_line">
 					<c:forEach items="${footprintsList}" var="footprint">
-						<li class="year 2000year">
+						<li class="year ${footprint.key}year">
 							<div class="title">
 								${footprint.key}
 							</div>
 							<ol class="month monthLine">
 								<c:forEach items="${footprint.value}" var="fpMonth">	
-									<li>
-										<p class="month">${fpMonth.month}</p>
-										${fpMonth.title}
-										<div class="eventModBtn_box">
-											<span class="modifyHistory" data-fno="${fpMonth.fno}">
-												<i class="fa fa-pencil" aria-hidden="true"></i>
-											</span>
-											<span class="deleteHistory" data-fno="${fpMonth.fno}">
-												<i class="fa fa-times" aria-hidden="true"></i>
-											</span>
-										</div>
+									<li data-year ="${footprint.key}" data-fno="${fpMonth.fno}" data-month="${fpMonth.month}" data-title="${fpMonth.title}" data-writer="${fpMonth.writer}">
+										<span class="pointer"><i class="fa fa-circle" aria-hidden="true"></i></span>
+										<span class="month">${fpMonth.month}</span>
+										<span class="title">${fpMonth.title}</span>
+										<sec:authorize access="isAuthenticated()">
+											<sec:authentication property="principal.member.authList" var="authList"/>
+											<c:if test="${authList[0].auth eq 'ROLE_ADMIN'}">
+												<div class="eventModBtn_box">
+													<span class="modifyHistory" data-fno="${fpMonth.fno}">
+														<i class="fa fa-pencil" aria-hidden="true"></i>
+													</span>
+													<span class="deleteHistory" data-fno="${fpMonth.fno}">
+														<i class="fa fa-times" aria-hidden="true"></i>
+													</span>
+												</div>
+											</c:if>
+										</sec:authorize>
 									</li>
 								</c:forEach>
 							</ol>
@@ -190,7 +252,13 @@ $(document).ready(function() {
 					</c:forEach>
 				</ol>
 			</div>
-			<button class="addBtn normal_btn" OnClick="showModal()">새로운 발자취 남기기</button>
+			
+			<sec:authorize access="isAuthenticated()">
+				<sec:authentication property="principal.member.authList" var="authList"/>
+				<c:if test="${authList[0].auth eq 'ROLE_ADMIN'}">
+					<button class="addBtn normal_btn" OnClick="showModal()">새로운 발자취 남기기</button>
+				</c:if>
+			</sec:authorize>
 		</div>
 	</div>
 
@@ -208,7 +276,8 @@ $(document).ready(function() {
 				</div>
 				<div class="event footprints_content">
 					<p>내용</p>
-					<textarea row=3 cols=20></textarea>
+					<textarea row=2 cols=20></textarea>
+					<span id="counter"></span>
 				</div>
 			</div>
 			

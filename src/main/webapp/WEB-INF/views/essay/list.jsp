@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.zerock.domain.*"%>
@@ -95,18 +96,21 @@ $(document).ready(function() {
 <jsp:include page="../inc/top.jsp" flush="true"></jsp:include>
 	
 	<div class="page_wrap list">
-		<div class="container page_container">
-			<div class="title_wrap">
-				<h2 class="wrap-inner main_tit title-font">더사랑 이야기</h2>
+		<div class="title_wrap essay">
+			<div class="main_title_wrap">
+				<h2 class="wrap-inner main_title normal-font">더사랑 이야기</h2>
 			</div>
-			
-			<div class="sub_title title-font">
+			<div class="sub_title_wrap title-font">
+				<span>
 				"그래서 우리는 위로를 받았습니다.<br> 
 				또한 우리가 받은 위로 위에 디도의 기쁨이 겹쳐서, 우리는 더욱 기뻐하게 되었습니다.<br>
 				 그는 여러분 모두로부터 환대를 받고, 마음에 안정을 얻었던 것입니다."<br>
 				고린도후서 7장 13절
+				</span>
 			</div>
-			
+		</div>
+	
+		<div class="container page_container">
 			<div class="content">
 				<ul class="book_li">
 					<c:forEach var="essay" items="${essayList}" varStatus="status">
@@ -128,8 +132,8 @@ $(document).ready(function() {
 									</div> 
 									<div class="desc_content_box">
 										<div class="desc">
-											<h3>${essay.title}</h3>
-											<p>${essay.writer}</p>
+											<p class="desc_title">${essay.title}</p>
+											<p class="desc_writer">${essay.writer}</p>
 											<div class="content">${essay.content}</div>
 										</div>
 									</div>
@@ -179,9 +183,11 @@ $(document).ready(function() {
 						<button class="btn normal_btn search_btn">검색</button>
 					</form>
 				</div>
+				<sec:authorize access="isAuthenticated()">
 				<div class="notice_btn">
 					<button class="btn normal_btn middle" onclick="location.href='/essay/register'">글쓰기</button>
 				</div>
+				</sec:authorize>
 			</div>
 			<div class="modal">
 					<div class="modal_header row">
