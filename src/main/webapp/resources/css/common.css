@@ -229,7 +229,7 @@
     transform: translate(-50%, -50%);
 }
 .main_title {
-    font-size: 3rem;
+    font-size: 2rem;
     text-transform: uppercase;
     display : inline-block;
     font-weight:600;

@@ -23,7 +23,7 @@
 	<div class="page_wrap">
 		<div class="title_wrap essay">
 			<div class="main_title_wrap">
-				<h2 class="wrap-inner main_title normal-font">더사랑 이야기</h2>
+				<h2 class="wrap-inner main_title title-font">더사랑 이야기</h2>
 			</div>
 			<div class="sub_title_wrap title-font">
 				<span>

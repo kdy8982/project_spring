@@ -25,7 +25,7 @@ modify.init(notice);
 <div class="page_wrap">
 	<div class="title_wrap notice">
 		<div class="main_title_wrap">
-			<h2 class="wrap-inner main_title normal-font">새소식</h2>
+			<h2 class="wrap-inner main_title title-font">새소식</h2>
 		</div>
 		<div class="sub_title_wrap title-font">
 			<span>

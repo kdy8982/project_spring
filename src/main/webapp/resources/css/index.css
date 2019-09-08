@@ -74,7 +74,23 @@
     text-align: center;
     padding-top: 2vw;
     padding-bottom: 2vw;
+    height: 40px;
 }
+.main_tit {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+.main_tit:before {
+	content: "";
+    display: block;
+    width: 80%;
+    border-bottom: 4px solid #A9D3DB;
+    margin-bottom: 0.5vw;
+    text-align: center;
+    margin: 0 auto;
+}
+
 .even_row {
   background-color: #F1F1F1;
 }
@@ -134,6 +150,7 @@
 .bx-wrapper .notice_box {
 	border: 1px solid #CCC;
     width: 99%;
+    background-color: #f2f2f2;
     height: 14vw;
 }
 #bxslider_prev {
@@ -212,7 +229,7 @@
 }
 
 .viewmore_wrap {
-    margin-top: 0.5em;
+    margin-top: 0.8em;
 }
 .viewmore_wrap span {
    display: block;
@@ -236,16 +253,18 @@
 }
 
 .viewmore_btn {
-  font-size: 0.9rem;
-  text-decoration: underline;
-  text-underline-position: under;
+	font-size: 0.7rem;
+	background-color: #f2f2f2;
+	padding: 0.3em;
+	border-radius: 13px;
+	border: 1px solid #CCC;
 }
 
 .book_li {
   flex-wrap: wrap;
   display: flex;
   position: relative;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -254,8 +273,6 @@
 	display: flex;
 	height: 32vw;
 	width: 22vw;
-	margin-left: 1em;
-	margin-right: 1em;	
 	overflow: hidden;
 	cursor: pointer;
 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
@@ -336,15 +353,14 @@
   flex-wrap: wrap;
   display: flex;
   position: relative;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
 .gallery_li li {
-  margin: 0.59em;
   display: flex;
-  height: 16vw;
-  width: 16vw;
+  height: 18vw;
+  width: 18vw;
   position: relative;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
@@ -606,13 +622,17 @@ section .gallery_li .thumb {
 	    height: 25vw;
 	}
 	#bxslider_prev {
-    left: -30px;
+    	left: -30px;
 	}
 	#bxslider_next {
-    right: -30px;
+    	right: -30px;
 	}
 	.bxslider_btn {
-    font-size: 1.5rem;
+    	font-size: 1.5rem;
+	}
+	
+	.book_li li .book_title {
+		font-size: 0.8rem;
 	}
 }
 

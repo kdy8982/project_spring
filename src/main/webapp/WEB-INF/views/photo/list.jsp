@@ -95,7 +95,7 @@ $(document).ready(function() {
 <div class="page_wrap">
 	<div class="title_wrap photo">
 		<div class="main_title_wrap">
-			<h2 class="wrap-inner main_title normal-font">사진</h2>
+			<h2 class="wrap-inner main_title title-font">사진</h2>
 		</div>
 		<div class="sub_title_wrap title-font">
 			<span>

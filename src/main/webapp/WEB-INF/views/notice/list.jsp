@@ -43,7 +43,7 @@ $(document).ready(function() {
 <div class="page_wrap">
 	<div class="title_wrap notice">
 		<div class="main_title_wrap">
-			<span class="wrap-inner main_title normal-font">새소식</span>
+			<span class="wrap-inner main_title title-font">새소식</span>
 		</div>
 		<div class="sub_title_wrap title-font">
 			<span>

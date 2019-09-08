@@ -126,7 +126,7 @@ $(document).ready(function() {
 			<section class="main_row2 even_row" id="section03">
 				<div class="container">
 					<div class="index_title normal-font">
-						<span>사진</span>
+						<span class="main_tit normal-font">사진</span>
 					</div>
 					<ul class="gallery_li">
 					</ul>
@@ -143,7 +143,7 @@ $(document).ready(function() {
 			<div class="container">
 
 				<div class="index_title normal-font">
-					<span>더사랑 이야기</span>
+					<span class="main_tit normal-font">더사랑 이야기</span>
 				</div>
 				<ul class="book_li">
 				</ul>

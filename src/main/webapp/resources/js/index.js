@@ -87,8 +87,9 @@ var indexService = (function() {
 						$.each(result, function(key, value) {
 							if(key =='photoList') {
 								$.each(value, function (index, item) {
-									var uploadPath = item.attachList[0].uploadPath.replace(/\\/g, '/');
-									var fullFilePath = uploadPath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
+									console.log(item.attachList[0].uploadPath.replace(/\\/g, '/'));
+									var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
+									var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
 									var str = '';
 									str += '<li class="yesupload bg1">'
 									str += 	'<a class="move" href="/photo/get?pageNum=1&boardType=photo&bno='+ item.bno +'" data-type="photo" data-url="/photo/get" data-amount="12">'
@@ -102,17 +103,18 @@ var indexService = (function() {
 									str += '</li>'
 									$('.gallery_li').append(str);
 								})
-								if(value.length < 8) {
+								if(value.length < 4) {
+									console.log("here..!")
 									var str = '';
-									for(var i=0; i<8-value.length; i++ ) {
+									for(var i=0; i<4-value.length; i++ ) {
 										str += "<li style='visibility: hidden'></li>";
 									}
 									$('.gallery_li').append(str);
 								}
 							} else if (key == 'essayList') {
 								$.each(value, function (index, item) {
-									var uploadPath = item.attachList[0].uploadPath.replace(/\\/g, '/');
-									var fullFilePath = uploadPath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
+									var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
+									var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
 									var str = '';
 									str += '<li>'
 									str	+= 	'<a class="move" href="/essay/get?pageNum=1&boardType=essay&bno='+ item.bno +'" data-type="essay" data-url="/essay/get" data-amount="6">'
@@ -122,7 +124,7 @@ var indexService = (function() {
 									str +=   		'<div class="desc_content_box">'
 									str +=     			'<div class="desc">'
 									str +=     				'<h3 class="book_title">' + item.title + '</h3>'
-									str +=     				'<p>kdy8982</p>'
+									str +=     				'<p class="book_writer">kdy8982</p>'
 									str +=     				'<div class="content">'
 									str +=             	  		item.content
 									str +=           		'</div>'
@@ -157,8 +159,8 @@ var indexService = (function() {
 						$.each(result, function(key, value) {
 							if(key =='photoList') {
 								$.each(value, function (index, item) {
-									var uploadPath = item.attachList[0].uploadPath.replace(/\\/g, '/');
-									var fullFilePath = uploadPath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
+									var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
+									var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
 									var str = '';
 									str += '<li class="yesupload bg1">'
 									str += 	'<a class="move" href="/photo/get?pageNum=1&boardType=photo&bno='+ item.bno +'" data-type="photo" data-url="/photo/get" data-amount="12">'
@@ -181,8 +183,8 @@ var indexService = (function() {
 								}
 							} else if (key == 'essayList') {
 								$.each(value, function (index, item) {
-									var uploadPath = item.attachList[0].uploadPath.replace(/\\/g, '/');
-									var fullFilePath = uploadPath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
+									var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
+									var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
 									var str = '';
 									str += '<li>'
 									str +=   '<a class="move" href="' + item.bno + '" data-amount="6" data-type="essay" data-url="/essay/get"> '
@@ -192,7 +194,7 @@ var indexService = (function() {
 									str +=   		'<div class="desc_content_box">'
 									str +=     			'<div class="desc">'
 									str +=     				'<h3 class="book_title">' + item.title + '</h3>'
-									str +=     				'<p>kdy8982</p>'
+									str +=     				'<p class="book_writer">kdy8982</p>'
 									str +=     				'<div class="content">'
 									str +=             	  		item.content
 									str +=           		'</div>'
