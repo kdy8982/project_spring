@@ -86,23 +86,36 @@ var indexService = (function() {
 					success: function(result) {
 						$.each(result, function(key, value) {
 							if(key =='photoList') {
+								var str = '';
 								$.each(value, function (index, item) {
-									console.log(item.attachList[0].uploadPath.replace(/\\/g, '/'));
-									var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
-									var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
-									var str = '';
-									str += '<li class="yesupload bg1">'
-									str += 	'<a class="move" href="/photo/get?pageNum=1&boardType=photo&bno='+ item.bno +'" data-type="photo" data-url="/photo/get" data-amount="12">'
-									str += 			'<div class="thumb" style="background: url(/display?fileName=' + fullFilePath + ')no-repeat top center; background-size: cover; background-position: center;">'
-									str += 					'<p class="photo-cntbox">'
-									str += 						'<i class="fa fa-camera-retro" aria-hidden="true"></i>+'
-									str += 						 item.photoCnt
-									str += 					'</p>'				
-									str += 			'</div>'
-									str += 	'</a>'
-									str += '</li>'
-									$('.gallery_li').append(str);
+									if(item.attachList.length != 0) {
+										var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
+										var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
+										str += '<li class="yesupload bg1">';
+										str += 	'<a class="move" href="/photo/get?pageNum=1&boardType=photo&bno='+ item.bno +'" data-type="photo" data-url="/photo/get" data-amount="12">';
+										str += 			'<div class="thumb" style="background: url(/display?fileName=' + fullFilePath + ')no-repeat top center; background-size: cover; background-position: center;">';
+										str += 					'<p class="photo-cntbox">';
+										str += 						'<i class="fa fa-camera-retro" aria-hidden="true"></i>+';
+										str += 						 item.photoCnt;
+										str += 					'</p>';
+										str += 			'</div>';
+										str += 	'</a>';
+										str += '</li>';
+									} else if(item.attachList.length == 0) {
+										str += '<li class="yesupload bg1">';
+										str += 	'<a class="move" href="/photo/get?pageNum=1&boardType=photo&bno='+ item.bno +'" data-type="photo" data-url="/photo/get" data-amount="12">';
+										str += 			'<div class="thumb">';
+										str += 					'<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>'
+										str += 					'<p class="photo-cntbox">';
+										str += 						'<i class="fa fa-camera-retro" aria-hidden="true"></i>+';
+										str += 						 item.photoCnt;
+										str += 					'</p>';
+										str += 			'</div>';
+										str += 	'</a>';
+										str += '</li>';
+									}
 								})
+								$('.gallery_li').append(str);
 								if(value.length < 4) {
 									console.log("here..!")
 									var str = '';
@@ -112,33 +125,51 @@ var indexService = (function() {
 									$('.gallery_li').append(str);
 								}
 							} else if (key == 'essayList') {
+								var str = '';
 								$.each(value, function (index, item) {
-									var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
-									var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
-									var str = '';
-									str += '<li>'
-									str	+= 	'<a class="move" href="/essay/get?pageNum=1&boardType=essay&bno='+ item.bno +'" data-type="essay" data-url="/essay/get" data-amount="6">'
-									str +=   		'<div class="thumb" style="background: url(/display?fileName=' + fullFilePath + ' )no-repeat top center; background-size: cover; background-position: center;">'
-									str +=   			'<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i>+' + item.photoCnt + '</p>'
-									str +=   		'</div>'
-									str +=   		'<div class="desc_content_box">'
-									str +=     			'<div class="desc">'
-									str +=     				'<h3 class="book_title">' + item.title + '</h3>'
-									str +=     				'<p class="book_writer">kdy8982</p>'
-									str +=     				'<div class="content">'
-									str +=             	  		item.content
-									str +=           		'</div>'
-									str +=     			'</div>'
-									str +=   		'</div>'
-									str +=   '</a>'
-									str += '</li>'
-									$('.book_li').append(str);
-									
-									$(".desc_content_box .content").each(function(i, obj){
-										$(this).html(obj.innerText);
-									})
+									if(item.attachList.length != 0) {
+										var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
+										var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
+										str += '<li>';
+										str	+= 	'<a class="move" href="/essay/get?pageNum=1&boardType=essay&bno='+ item.bno +'" data-type="essay" data-url="/essay/get" data-amount="6">';
+										str +=   		'<div class="thumb" style="background: url(/display?fileName=' + fullFilePath + ' )no-repeat top center; background-size: cover; background-position: center;">';
+										str +=   			'<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i>+' + item.photoCnt + '</p>';
+										str +=   		'</div>';
+										str +=   		'<div class="desc_content_box">';
+										str +=     			'<div class="desc">';
+										str +=     				'<h3 class="book_title">' + item.title + '</h3>';
+										str +=     				'<p class="book_writer">kdy8982</p>';
+										str +=     				'<div class="content">';
+										str +=             	  		item.content;
+										str +=           		'</div>';
+										str +=     			'</div>';
+										str +=   		'</div>';
+										str +=   '</a>';
+										str += '</li>';
+									} else if (item.attachList.length == 0) {
+										str += '<li>';
+										str	+= 	'<a class="move" href="/essay/get?pageNum=1&boardType=essay&bno='+ item.bno +'" data-type="essay" data-url="/essay/get" data-amount="6">';
+										str +=   		'<div class="thumb">';
+										str += 				'<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>'
+										str +=   			'<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i>+' + item.photoCnt + '</p>';
+										str +=   		'</div>';
+										str +=   		'<div class="desc_content_box">';
+										str +=     			'<div class="desc">';
+										str +=     				'<h3 class="book_title">' + item.title + '</h3>';
+										str +=     				'<p class="book_writer">kdy8982</p>';
+										str +=     				'<div class="content">';
+										str +=             	  		item.content;
+										str +=           		'</div>';
+										str +=     			'</div>';
+										str +=   		'</div>';
+										str +=   '</a>';
+										str += '</li>';
+									}
 								})
-								
+								$('.book_li').append(str);
+								$(".desc_content_box .content").each(function(i, obj){
+									$(this).html(obj.innerText);
+								})
 								if(value.length < 3) {
 									var str = '';
 									for(var i=0; i<3-value.length; i++ ) {
@@ -158,23 +189,41 @@ var indexService = (function() {
 					success: function(result) {
 						$.each(result, function(key, value) {
 							if(key =='photoList') {
+								var str = '';
 								$.each(value, function (index, item) {
-									var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
-									var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
-									var str = '';
-									str += '<li class="yesupload bg1">'
-									str += 	'<a class="move" href="/photo/get?pageNum=1&boardType=photo&bno='+ item.bno +'" data-type="photo" data-url="/photo/get" data-amount="12">'
-									str += 			'<div class="thumb" style="background: url(/display?fileName=' + fullFilePath + ')no-repeat top center; background-size: cover; background-position: center;">'
-									str += 					'<p class="photo-cntbox">'
-									str += 						'<i class="fa fa-camera-retro" aria-hidden="true"></i>+'
-									str += 						item.photoCnt
-									str += 					'</p>'				
-									str += 			'</div>'
-									str += 	'</a>'
-									str += '</li>'
-									$('.gallery_li').append(str);
+									console.log(item.attachList.length)
+									if(item.attachList.length != 0) {
+										var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
+										var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
+										str += '<li class="yesupload bg1">';
+										str += 	'<a class="move" href="/photo/get?pageNum=1&boardType=photo&bno='+ item.bno +'" data-type="photo" data-url="/photo/get" data-amount="12">';
+										str += 			'<div class="thumb" style="background: url(/display?fileName=' + fullFilePath + ')no-repeat top center; background-size: cover; background-position: center;">';
+										str += 					'<p class="photo-cntbox">';
+										str += 						'<i class="fa fa-camera-retro" aria-hidden="true"></i>+';
+										str += 						 item.photoCnt;
+										str += 					'</p>';
+										str += 			'</div>';
+										str += 	'</a>';
+										str += '</li>';
+									} else if(item.attachList.length == 0) {
+										str += '<li class="yesupload bg1">';
+										str += 	'<a class="move" href="/photo/get?pageNum=1&boardType=photo&bno='+ item.bno +'" data-type="photo" data-url="/photo/get" data-amount="12">';
+										str += 			'<div class="thumb">';
+										str += 					'<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>'
+										str += 					'<p class="photo-cntbox">';
+										str += 						'<i class="fa fa-camera-retro" aria-hidden="true"></i>+';
+										str += 						 item.photoCnt;
+										str += 					'</p>';
+										str += 			'</div>';
+										str += 	'</a>';
+										str += '</li>';
+										
+										
+									}
 								})
+								$('.gallery_li').append(str);
 								if(value.length < 2) {
+									console.log("here..!")
 									var str = '';
 									for(var i=0; i<2-value.length; i++ ) {
 										str += "<li style='visibility: hidden'></li>";
@@ -182,30 +231,50 @@ var indexService = (function() {
 									$('.gallery_li').append(str);
 								}
 							} else if (key == 'essayList') {
+								var str = '';
 								$.each(value, function (index, item) {
-									var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
-									var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
-									var str = '';
-									str += '<li>'
-									str +=   '<a class="move" href="' + item.bno + '" data-amount="6" data-type="essay" data-url="/essay/get"> '
-									str +=   		'<div class="thumb" style="background: url(/display?fileName=' + fullFilePath + ' )no-repeat top center; background-size: cover; background-position: center;">'
-									str +=   			'<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i>+'+ item.photoCnt +'</p>'
-									str +=   		'</div>'
-									str +=   		'<div class="desc_content_box">'
-									str +=     			'<div class="desc">'
-									str +=     				'<h3 class="book_title">' + item.title + '</h3>'
-									str +=     				'<p class="book_writer">kdy8982</p>'
-									str +=     				'<div class="content">'
-									str +=             	  		item.content
-									str +=           		'</div>'
-									str +=     			'</div>'
-									str +=   		'</div>'
-									str +=   '</a>'
-									str += '</li>'
-									$('.book_li').append(str);
-									$(".desc_content_box .content").each(function(i, obj){
-										$(this).html(obj.innerText);
-									})
+									if(item.attachList.length != 0) {
+										var filePath = item.attachList[0].uploadPath.replace(/\\/g, '/');
+										var fullFilePath = filePath + '/s_' +item.attachList[0].uuid + '_' + item.attachList[0].fileName;
+										str += '<li>';
+										str	+= 	'<a class="move" href="/essay/get?pageNum=1&boardType=essay&bno='+ item.bno +'" data-type="essay" data-url="/essay/get" data-amount="6">';
+										str +=   		'<div class="thumb" style="background: url(/display?fileName=' + fullFilePath + ' )no-repeat top center; background-size: cover; background-position: center;">';
+										str +=   			'<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i>+' + item.photoCnt + '</p>';
+										str +=   		'</div>';
+										str +=   		'<div class="desc_content_box">';
+										str +=     			'<div class="desc">';
+										str +=     				'<h3 class="book_title">' + item.title + '</h3>';
+										str +=     				'<p class="book_writer">kdy8982</p>';
+										str +=     				'<div class="content">';
+										str +=             	  		item.content;
+										str +=           		'</div>';
+										str +=     			'</div>';
+										str +=   		'</div>';
+										str +=   '</a>';
+										str += '</li>';
+									} else if (item.attachList.length == 0) {
+										str += '<li>';
+										str	+= 	'<a class="move" href="/essay/get?pageNum=1&boardType=essay&bno='+ item.bno +'" data-type="essay" data-url="/essay/get" data-amount="6">';
+										str +=   		'<div class="thumb">';
+										str += 				'<div class="center_wrap no_image"><i class="fa fa-picture-o" aria-hidden="true"></i></div>'
+										str +=   			'<p class="photo-cntbox"><i class="fa fa-camera-retro" aria-hidden="true"></i>+' + item.photoCnt + '</p>';
+										str +=   		'</div>';
+										str +=   		'<div class="desc_content_box">';
+										str +=     			'<div class="desc">';
+										str +=     				'<h3 class="book_title">' + item.title + '</h3>';
+										str +=     				'<p class="book_writer">kdy8982</p>';
+										str +=     				'<div class="content">';
+										str +=             	  		item.content;
+										str +=           		'</div>';
+										str +=     			'</div>';
+										str +=   		'</div>';
+										str +=   '</a>';
+										str += '</li>';
+									}
+								})
+								$('.book_li').append(str);
+								$(".desc_content_box .content").each(function(i, obj){
+									$(this).html(obj.innerText);
 								})
 								if(value.length < 2) {
 									var str = '';

@@ -272,7 +272,7 @@
 	position: relative;
 	display: flex;
 	height: 32vw;
-	width: 22vw;
+	width: 25vw;
 	overflow: hidden;
 	cursor: pointer;
 	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
@@ -358,6 +358,7 @@
 }
 
 .gallery_li li {
+  margin-bottom: 2.5vw;
   display: flex;
   height: 18vw;
   width: 18vw;
@@ -409,7 +410,6 @@ section .gallery_li .thumb {
 }
 
 .gallery_li .yesupload .thumb {
-  background-color: #fde7e7;
 }
 
 .gallery_li .noupload .thumb {
@@ -613,7 +613,10 @@ section .gallery_li .thumb {
 @media ( max-width: 768px ) { /* tablet braek point */
 	.gallery_li li {
 	    height: 25vw;
-	    width: 36vw;	
+        width: 38vw;	
+	}
+	.main_row3 li {
+		width: 38vw;
 	}
 	.index_title {
 		font-size: 1.6rem;

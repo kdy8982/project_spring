@@ -48,7 +48,7 @@ public class HomeController {
 		log.info("call Mobile Index..");
 		JSONObject obj = new JSONObject();
 		obj.put("photoList", boardService.getList(new Criteria(1, 2, "photo")));
-		obj.put("essayList", boardService.getList(new Criteria (1, 3, "essay")));
+		obj.put("essayList", boardService.getList(new Criteria (1, 2, "essay")));
 		return obj;
 	}
 	
@@ -57,7 +57,7 @@ public class HomeController {
 		log.info("call PC Index..");
 		JSONObject obj = new JSONObject();
 		obj.put("photoList", boardService.getList(new Criteria(1, 8, "photo")));
-		obj.put("essayList", boardService.getList(new Criteria (1, 2, "essay")));
+		obj.put("essayList", boardService.getList(new Criteria (1, 3, "essay")));
 		return obj;
 	}
 
